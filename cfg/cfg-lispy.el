@@ -36,11 +36,20 @@
 
          :map emacs-lisp-mode-map
          ("s-\\ s-\\" . eval-last-sexp)
-         )
+         ("s-j" . eval-last-sexp-and-replace)
+         ("s-." . describe-function))
 
   :init
   (progn
-    (dolist (hook '(emacs-lisp-mode-hook))
-      (add-hook hook (lambda () (lispy-mode 1)))))
+    (defun eval-last-sexp-and-replace ()
+      "Replace the preceding sexp with its value."
+      (interactive)
+      (backward-kill-sexp)
+      (insert (current-kill 0))
+      (insert "\n;; => ")
+      (prin1 (eval (read (current-kill 0)))
+             (current-buffer))
+      (insert "\n\n"))
 
-  )
+    (dolist (hook '(emacs-lisp-mode-hook))
+      (add-hook hook (lambda () (lispy-mode 1))))))

@@ -32,16 +32,19 @@
   :config
   (sayid-setup-package))
 
-(use-package cider-eval-sexp-fu
-  :config
-  (progn
-    (defun init-sexp-fu ()
-      (turn-on-eval-sexp-fu-flash-mode))
-    (add-hook 'clojure-mode-hook #'init-sexp-fu)
-    (add-hook 'emacs-lisp-mode-hook #'init-sexp-fu)
-    ;; works even though it's commented out...?
-    (add-hook 'pixie-mode-hook #'init-sexp-fu)
-    ))
+;; disabled, breaks eval in elisp?
+;; do I have sexp-fu?
+
+;; (use-package cider-eval-sexp-fu
+;;   :config
+;;   (progn
+;;     (defun init-sexp-fu ()
+;;       (turn-on-eval-sexp-fu-flash-mode))
+;;     (add-hook 'clojure-mode-hook #'init-sexp-fu)
+;;     (add-hook 'emacs-lisp-mode-hook #'init-sexp-fu)
+;;     ;; works even though it's commented out...?
+;;     (add-hook 'pixie-mode-hook #'init-sexp-fu)
+;;     ))
 
 
 (use-package cider
