@@ -103,9 +103,36 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make emacs usable by someone with VIM muscle memory
 
+(use-package general)
+
 ;; this is required for evil-collection which is better than evil-integration
 (setq evil-want-integration nil)
 (use-package evil
+  :general
+  (general-define-key
+   :keymaps 'normal
+   "SPC" 'avy-goto-char-timer
+   :prefix ","
+   :keymaps 'normal
+   "b."     'next-buffer
+   "b,"     'previous-buffer
+   "bd"     'kill-buffer
+   "bl"     'buffer-menu
+   "b SPC"  'ido-switch-buffer
+   "wd"     'delete-window
+   "wb"     'delete-other-windows
+   "bk"     'kill-buffer-and-window
+   "bd"     'kill-buffer
+   "br"     'revert-buffer
+   ",s"     'shell
+   "pa"     'projectile-ag
+   ",/"     'ido-find-file
+   ",."     'ido-dired
+   ",x"     'smex
+   ",b"     'ivy-switch-buffer
+   ",,x"    'smex-major-mode-commands
+   ",w"     'make-frame
+   "gs"     'magit-status)
   :demand t
   :config
   (progn
@@ -113,32 +140,7 @@
     (ido-mode)
     (ido-everywhere 1)
     (ido-ubiquitous-mode 1)
-    (ido-vertical-mode)
-
-
-    (unbind-key "," evil-motion-state-map)
-    (bind-keys* :map evil-normal-state-map
-                ("SPC" . avy-goto-char-timer)
-                :prefix-map evil-leader-prefix-map
-                :prefix ","
-                ("b."     . next-buffer)
-                ("b,"     . previous-buffer)
-                ("bd"     . kill-buffer)
-                ("bl"     . buffer-menu)
-                ("b SPC"  . ido-switch-buffer)
-
-                ("wd"     . delete-window)
-                ("wb"     . delete-other-windows)
-                ("bk"     . kill-buffer-and-window)
-                ("bd"     . kill-buffer)
-                ("br"     . revert-buffer)
-                (",s"     . shell)
-                (",/"     . ido-find-file)
-                (",x"     . smex)
-                (",b"     . ivy-switch-buffer)
-                (",,x"    . smex-major-mode-commands)
-                (",w"     . make-frame)
-                ("gs"     . magit-status))))
+    (ido-vertical-mode)))
 
 (use-package evil-collection
   :after evil
