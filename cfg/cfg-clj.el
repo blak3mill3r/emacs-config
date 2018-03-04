@@ -1,29 +1,3 @@
-;; this is not clj specific and I should move it
-;; (use-package aggressive-indent
-;;   :after lispy
-;;   :init
-;;   (progn
-;;     ;; hack to workaround *very slow* saving of large clojure files, which is caused by aggressive-indent-mode
-;;     ;; currently no option to disable it *just* for the saving of the buffer, so this does that:
-;;     ;; This doesn't work and I'm not sure why
-;;     (defun disable-aggressive-indent ()
-;;       (when (eq major-mode 'clojure-mode)
-;; 	(message "Yeah, turn it off...")
-;;         (aggressive-indent-mode -1)))
-;;     (defun reenable-aggressive-indent ()
-;;       (when (eq major-mode 'clojure-mode)
-;; 	(message "Yeah, turn it back on...")
-;;         (aggressive-indent-mode 1)))
-
-;;     (add-hook 'before-save-hook #'disable-aggressive-indent)
-;;     (add-hook 'after-save-hook #'reenable-aggressive-indent))
-;;   :config
-;;   (progn
-;;     ;; modes to aggressive-indent (consider trying out c++ at least)
-;;     ;; (add-hook 'css-mode-hook #'aggressive-indent-mode)
-;;     (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-;;     (add-hook 'clojure-mode-hook #'aggressive-indent-mode)))
-
 (use-package clojure-mode
   :mode ("\\.edn$" . clojure-mode)
   :mode ("\\.clj$" . clojure-mode)
@@ -34,23 +8,22 @@
     (add-hook 'clojure-mode-hook
               #'(lambda ()
                   (lispy-mode)
-                  ;; (aggressive-indent-mode)
+                  (aggressive-indent-mode)
                   (yas-minor-mode 1)
-                  ;; (clj-refactor-mode 1)
+                  (clj-refactor-mode 1)
                   (modify-syntax-entry ?_ "w")
                   (modify-syntax-entry ?- "w")
                   (modify-syntax-entry ?> "w")))))
 
-
+;; not sure if I like it yet... it seems pretty cool but maybe a bit heavy/bloated
+;; play with it more for sure
 ;; (use-package sayid
 ;;   :after clojure-mode
 ;;   :config
 ;;   (sayid-setup-package))
 
-;; disabled, breaks eval in elisp?
-;; do I have sexp-fu?
-
 ;; (use-package cider-eval-sexp-fu
+;;   :commands (init-sexp-fu)
 ;;   :config
 ;;   (progn
 ;;     (defun init-sexp-fu ()
@@ -77,7 +50,8 @@
   (progn
 
     (add-hook 'cider-mode-hook #'company-mode)
-    (add-hook 'cider-mode-hook #'company-quickhelp-mode)
+    (add-hook 'cider-mode-hook #'company-quickhelp-mode) ;; This seems to be broken if I have clj-refactor enabled
+    ;; (add-hook 'cider-mode-hook #'init-sexp-fu)
 
     ;; copied from https://github.com/otijhuis/emacs.d/blob/master/config/lisp-settings.el
     (setq nrepl-hide-special-buffers t)
@@ -111,9 +85,9 @@
                ("s-m" . lispy-alt-multiline)
                ("s-SPC" . nrepl-reset))
 
-    ;; clj-refactor disabled because it breaks company
-    ;; (require 'clj-refactor)
-    ;; (cljr-add-keybindings-with-prefix "s-p")
+    ;; conflicts! arrg
+    (require 'clj-refactor)
+    (cljr-add-keybindings-with-prefix "s-p")
 
     (defun nrepl-reset ()
       (interactive)
@@ -161,7 +135,9 @@
 
 
 
+    ;; this was deprecated in favor of whatever "C-c SPC" runs, which is built into clojure-mode
     ;;(define-key clojure-mode-map (kbd "s-="   ) 'align-cljlet)
+
     ;; wtf does this even do? if I redefine the macro and run it, it doesn't pick up the change...
     ;; (define-key cider-macroexpansion-mode (kbd "s-m"     ) 'cider-macroexpand-again)
     ;;  upcoming? in cider master...
@@ -257,6 +233,10 @@
             ))))
 
 
-;; unfortunately clj-refactor BREAKS company completion with cider
-;; (use-package clojure-snippets)
-;; (use-package clj-refactor)
+(use-package clojure-snippets)
+(use-package clj-refactor)
+
+;; with cider-nrepl > 0.16.0 I've been having problems, lispy-clojure.clj doesn't load and other funny stuff
+;; lispy does some funky shit to load its own deps
+;; and, since I specify cider-nrepl in profiles.clj it doesn't get the version it wants and is missing
+;; blah.blah.tools.java/parser from cider, which uses tools.jar (but I have tools.jar on the classpath)

@@ -1,4 +1,3 @@
-
 ;; don't break parens with vi editing commands
 (use-package lispyville
   :after lispy
@@ -10,9 +9,10 @@
   :after lispy
   :config
   (progn
-    (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+    ;; modes to aggressive-indent (consider trying out c++ at least)
     ;; (add-hook 'css-mode-hook #'aggressive-indent-mode)
-    ))
+    (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+    (add-hook 'clojure-mode-hook #'aggressive-indent-mode)))
 
 ;; C-k inserts digraphs?
 
