@@ -109,30 +109,29 @@
 (setq evil-want-integration nil)
 (use-package evil
   :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC" 'avy-goto-char-timer
-   :prefix ","
-   :keymaps 'normal
-   "b."     'next-buffer
-   "b,"     'previous-buffer
-   "bd"     'kill-buffer
-   "bl"     'buffer-menu
-   "b SPC"  'ido-switch-buffer
-   "wd"     'delete-window
-   "wb"     'delete-other-windows
-   "bk"     'kill-buffer-and-window
-   "bd"     'kill-buffer
-   "br"     'revert-buffer
-   ",s"     'shell
-   "pa"     'projectile-ag
-   ",/"     'ido-find-file
-   ",."     'ido-dired
-   ",x"     'smex
-   ",b"     'ivy-switch-buffer
-   ",,x"    'smex-major-mode-commands
-   ",w"     'make-frame
-   "gs"     'magit-status)
+  (:keymaps 'normal
+            "SPC" 'avy-goto-char-timer
+            :prefix ","
+            :keymaps 'normal
+            "b."     'next-buffer
+            "b,"     'previous-buffer
+            "bd"     'kill-buffer
+            "bl"     'buffer-menu
+            "b SPC"  'ido-switch-buffer
+            "wd"     'delete-window
+            "wb"     'delete-other-windows
+            "bk"     'kill-buffer-and-window
+            "bd"     'kill-buffer
+            "br"     'revert-buffer
+            ",s"     'shell
+            "pa"     'projectile-ag
+            ",/"     'ido-find-file
+            ",."     'ido-dired
+            ",x"     'smex
+            ",b"     'ivy-switch-buffer
+            ",,x"    'smex-major-mode-commands
+            ",w"     'make-frame
+            "gs"     'magit-status)
   :demand t
   :config
   (progn
