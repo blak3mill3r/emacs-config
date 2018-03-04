@@ -26,7 +26,7 @@
 ;; in my legacy emacs config I had butchered magit in order to have reasonable keybindings for my vim-muscle-memory
 ;; now the community has done that for me (see evil-magit below)
 ;; I still do not use ~80% of what magit provides, and I want to learn
-(use-package magit :commands (magit-status)) ;; TODO move me
+(use-package magit :commands (magit-status))
 
 (use-package evil-magit
   :demand t
