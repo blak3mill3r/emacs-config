@@ -72,3 +72,5 @@ Lisp function does not specify a special indentation."
                                         indent-point normal-indent))
                  (method
                   (funcall method indent-point state)))))))))
+
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
