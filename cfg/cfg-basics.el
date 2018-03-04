@@ -121,6 +121,7 @@
    "wd"     'delete-window
    "wb"     'delete-other-windows
    ;; general utilities
+   "ds"     'desktop-save-in-desktop-dir
    ",s"     'shell
    ",x"     'smex
    ",,x"    'smex-major-mode-commands
