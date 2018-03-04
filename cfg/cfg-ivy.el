@@ -9,11 +9,16 @@
 (use-package ag)
 
 (use-package projectile
-  :bind (:map evil-normal-state-map
-         (",pf" . projectile-find)
-         (",pa" . projectile-ag)
-         (",pr" . projectile-replace)
-         (",p!" . projectile-commander)))
+  :general
+  (:keymaps 'normal
+   :prefix ","
+   ;; project-aware things:
+   ;; "pc"     'projectile-commander ;; I don't think I like this interface
+   "pa" 'projectile-ag                 ;; find file by name
+   "pr" 'projectile-replace            ;; globally replace a string
+   "pR" 'projectile-replace-regexp     ;; globally replace a regexp
+   "pd" 'projectile-dired-other-window ;; dired the project
+   ))
 
 (use-package counsel
   :general
@@ -27,11 +32,11 @@
    "uc" 'counsel-unicode-char
    "pl" 'counsel-list-processes
    ;; searching for files or for strings in files
-   "pa"     'counsel-ag                 ;; grep(ish) current directory interactively
-   ",/"     'counsel-find-file          ;; the way I usually find *nearby* files
-   ",?"     'counsel-git                ;; same as the above but only for git-tracked files
-   "/l"     'counsel-locate             ;; quickly find files *on the entire filesystem*
-   "gg"     'counsel-git-grep           ;; git-grep for a string
+   ;; "pa"     'counsel-ag                 ;; is there any utility to this with pa? what if there's no project? what does counsel-ag search?
+   ",/"     'counsel-find-file ;; the way I usually find *nearby* files
+   ",?"     'counsel-git ;; same as the above but only for git-tracked files
+   "/l"     'counsel-locate ;; quickly find files *on the entire filesystem*
+   "gg"     'counsel-git-grep ;; git-grep for a string
    ",."     'ido-dired
    ;; todo (do I want rhythmbox?)
    ;; 'counsel-rhythmbox

@@ -110,8 +110,8 @@
 (use-package evil
   :general
   (:keymaps 'normal
-   "SPC" 'avy-goto-char-timer
-   :prefix ","
+   "SPC" 'avy-goto-char-timer)
+  (:prefix ","
    :keymaps 'normal
    ;; buffers
    "b."     'next-buffer
@@ -131,6 +131,14 @@
    ",x"     'smex
    ",,x"    'smex-major-mode-commands
    "gs"     'magit-status)
+  (:keymaps 'visual
+   "|"     'align-regexp)
+  (:keymaps 'motion
+   ;; I sometimes accidentally hit these instead of C-w k (move between splits in vim)
+   "C-w C-k" 'evil-window-up
+   "C-w C-j" 'evil-window-down
+   "C-w C-h" 'evil-window-left
+   "C-w C-l" 'evil-window-right)
   :demand t
   :config
   (progn
