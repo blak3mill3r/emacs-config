@@ -30,24 +30,24 @@
 
 (use-package evil-magit
   :demand t
-  :bind (:map magit-status-mode-map
-              ;; TODO consider making better choices about magit bindings
-              ;; push & pull from upstream should be matching pairs perhaps, s-] ... which are normally push&pop
-              (",,ps" . magit-push-current-to-upstream)
-              ("s-]" . magit-push-current-to-upstream)
-              (",,F"  . magit-pull-from-upstream)
-              ("s-["  . magit-pull-from-upstream)
-              (",,c"  . magit-commit)
-              (",,ac" . magit-commit-amend)
-              (",,f"  . magit-fetch-all)
-              (",,gc" . magit-git-command)
-              (",,t"  . magit-tag)
-              (",,s"  . magit-stash)
-              ("}"    . magit-diff-more-context)
-              ("{"    . magit-diff-less-context)
-              :map git-commit-mode-map
-              ("<C-return>" . with-editor-finish)
-              ("<C-backspace>" . with-editor-cancel))
-  :config
-  (progn
-    ))
+  :general
+  (:keymaps 'magit-status-mode-map
+            ;; my new favorite push/pull
+            "s-]"   'magit-push-current-to-upstream
+            "s-["   'magit-pull-from-upstream
+            ;; backwards compatible for myself if I forget, and for others who may share my old config
+            ",,ps"  'magit-push-current-to-upstream
+            ",,F"   'magit-pull-from-upstream
+            ;; grow/shrink chunks
+            "}"     'magit-diff-more-context
+            "{"     'magit-diff-less-context
+            ;; most common git actions are under the prefix ,,
+            ",,c"   'magit-commit
+            ",,ac"  'magit-commit-amend
+            ",,f"   'magit-fetch-all
+            ",,gc"  'magit-git-command
+            ",,t"   'magit-tag
+            ",,s"   'magit-stash
+            :keymaps 'git-commit-mode-map
+            "<C-return>"     'with-editor-finish
+            "<C-backspace>"  'with-editor-cancel))
