@@ -4,6 +4,7 @@
 (use-package ido-vertical-mode    :demand t)
 (use-package ido-completing-read+ :demand t)
 (use-package solarized-dark-theme :straight (solarized-dark-theme :host github :repo "bbatsov/solarized-emacs"))
+(use-package diminish)
 
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
@@ -85,14 +86,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customize some of the built-in emacs modes
 ;;  TODO check out help+ mode and the other + modes for builtins
-(bind-keys :map help-mode-map
-           ("s-]" . help-go-forward)
-           ("s-[" . help-go-back))
-(bind-keys :map emacs-lisp-mode-map
-           ("s-]" . find-function-at-point)
-           ("s-[" . help-go-back)
-           ("s-r" . eval-region)
-           ("s-b" . eval-buffer))
+(general-define-key
+ :keymaps 'help-mode-map
+ "s-]" 'help-go-forward
+ "s-[" 'help-go-back)
+(general-define-key
+ :keymaps 'emacs-lisp-mode-map
+ "s-]" 'xref-find-definitions           ;; navigate elisp definitions
+ "s-[" 'xref-pop-marker-stack
+ "s-r" 'eval-region
+ "s-b" 'eval-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Completion framework

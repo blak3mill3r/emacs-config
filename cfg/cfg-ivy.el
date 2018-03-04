@@ -1,5 +1,6 @@
 (use-package ivy
   :demand t
+  :diminish ivy-mode
   :config
   (progn
     (ivy-mode 1)
