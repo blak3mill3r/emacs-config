@@ -234,7 +234,7 @@
 
 
 (use-package clojure-snippets)
-(use-package clj-refactor)
+(use-package clj-refactor) ;; breaks/unbreaks company-quickhelp-mode for cider, filed https://github.com/expez/company-quickhelp/issues/79
 
 ;; with cider-nrepl > 0.16.0 I've been having problems, lispy-clojure.clj doesn't load and other funny stuff
 ;; lispy does some funky shit to load its own deps
