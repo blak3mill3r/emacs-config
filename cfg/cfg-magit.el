@@ -34,7 +34,9 @@
               ;; TODO consider making better choices about magit bindings
               ;; push & pull from upstream should be matching pairs perhaps, s-] ... which are normally push&pop
               (",,ps" . magit-push-current-to-upstream)
+              ("s-]" . magit-push-current-to-upstream)
               (",,F"  . magit-pull-from-upstream)
+              ("s-["  . magit-pull-from-upstream)
               (",,c"  . magit-commit)
               (",,ac" . magit-commit-amend)
               (",,f"  . magit-fetch-all)
