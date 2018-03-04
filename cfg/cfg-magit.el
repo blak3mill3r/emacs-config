@@ -28,8 +28,8 @@
 ;; I still do not use ~80% of what magit provides, and I want to learn
 (use-package magit :commands (magit-status)) ;; TODO move me
 
-
 (use-package evil-magit
+  :demand t
   :bind (:map magit-status-mode-map
               ;; TODO consider making better choices about magit bindings
               ;; push & pull from upstream should be matching pairs perhaps, s-] ... which are normally push&pop
