@@ -1,11 +1,3 @@
-(use-package hydra)
-(use-package dash)
-(use-package smex                 :demand t)
-(use-package ido-vertical-mode    :demand t)
-(use-package ido-completing-read+ :demand t)
-(use-package solarized-dark-theme :straight (solarized-dark-theme :host github :repo "bbatsov/solarized-emacs"))
-(use-package diminish)
-
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
 (menu-bar-mode -1)
@@ -92,7 +84,8 @@
  "s-[" 'help-go-back)
 (general-define-key
  :keymaps 'emacs-lisp-mode-map
- "s-]" 'xref-find-definitions           ;; navigate elisp definitions
+ ;; "s-]" 'find-function-at-point
+ "s-]" 'xref-find-definitions
  "s-[" 'xref-pop-marker-stack
  "s-r" 'eval-region
  "s-b" 'eval-buffer)
@@ -105,8 +98,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make emacs usable by someone with VIM muscle memory
-
-(use-package general)
 
 ;; this is required for evil-collection which is better than evil-integration
 (setq evil-want-integration nil)

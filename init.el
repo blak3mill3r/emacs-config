@@ -21,6 +21,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/cfg/")
 
+(load "cfg-prelude.el")
 (load "cfg-elisp.el")
 (load "cfg-basics.el")
 (load "cfg-ivy.el")

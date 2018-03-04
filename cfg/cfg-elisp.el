@@ -1,3 +1,13 @@
+
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
+
+(general-define-key
+ :keymaps 'emacs-lisp-mode-map
+ "s-]" 'xref-find-definitions           ;; navigate elisp definitions
+ "s-[" 'xref-pop-marker-stack
+ "s-r" 'eval-region
+ "s-b" 'eval-buffer)
+
 ;; this is from https://github.com/Fuco1/.emacs.d/blob/af82072196564fa57726bdbabf97f1d35c43b7f7/site-lisp/redef.el#L20-L94
 ;; which I found by reading https://github.com/noctuid/general.el#use-package-keyword
 ;; it fixes the auto-indentation behavior of lists with keywords in them in elisp
@@ -72,5 +82,3 @@ Lisp function does not specify a special indentation."
                                         indent-point normal-indent))
                  (method
                   (funcall method indent-point state)))))))))
-
-(add-hook 'emacs-lisp-mode-hook 'company-mode)
