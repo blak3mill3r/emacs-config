@@ -26,7 +26,7 @@
 ;; in my legacy emacs config I had butchered magit in order to have reasonable keybindings for my vim-muscle-memory
 ;; now the community has done that for me (see evil-magit below)
 ;; I still do not use ~80% of what magit provides, and I want to learn
-(use-package magit) ;; TODO move me
+(use-package magit :commands (magit-status)) ;; TODO move me
 
 
 (use-package evil-magit
@@ -35,6 +35,14 @@
               ;; push & pull from upstream should be matching pairs perhaps, s-] ... which are normally push&pop
               (",,ps" . magit-push-current-to-upstream)
               (",,F" . magit-pull-from-upstream)
+              (",,c" . magit-commit)
+              (",,ac" . magit-commit-amend)
+              (",,f" . magit-fetch-all)
+              (",,gc" . magit-git-command)
+              (",,t" . magit-tag)
+              (",,s" . magit-stash)
+              ("}" . magit-diff-more-context)
+              ("{" . magit-diff-less-context)
               ;; TODO shrink/grow chunks ...  magit-diff-less-context (and more context)
               :map git-commit-mode-map
               ("<C-return>" . with-editor-finish)
