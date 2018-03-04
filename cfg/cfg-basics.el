@@ -86,8 +86,9 @@
            ("s-[" . help-go-back))
 (bind-keys :map emacs-lisp-mode-map
            ("s-]" . find-function-at-point)
-           ("s-[" . help-go-back))
-
+           ("s-[" . help-go-back)
+           ("s-r" . eval-region)
+           ("s-b" . eval-buffer))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Completion framework
