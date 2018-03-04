@@ -113,24 +113,23 @@
    "SPC" 'avy-goto-char-timer
    :prefix ","
    :keymaps 'normal
+   ;; buffers
    "b."     'next-buffer
    "b,"     'previous-buffer
    "bd"     'kill-buffer
    "bl"     'buffer-menu
+   "br"     'revert-buffer
    "b SPC"  'ido-switch-buffer
-   "wd"     'delete-window
-   "wb"     'delete-other-windows
    "bk"     'kill-buffer-and-window
    "bd"     'kill-buffer
-   "br"     'revert-buffer
-   ",s"     'shell
-   "pa"     'projectile-ag
-   ",/"     'ido-find-file
-   ",."     'ido-dired
-   ",x"     'smex
-   ",b"     'ivy-switch-buffer
-   ",,x"    'smex-major-mode-commands
+   ;; frames and windows
    ",w"     'make-frame
+   "wd"     'delete-window
+   "wb"     'delete-other-windows
+   ;; general utilities
+   ",s"     'shell
+   ",x"     'smex
+   ",,x"    'smex-major-mode-commands
    "gs"     'magit-status)
   :demand t
   :config
