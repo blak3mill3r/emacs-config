@@ -22,8 +22,10 @@
 ;;   :config
 ;;   (sayid-setup-package))
 
+;; had this working but now it's broken, bah
+;; (use-package highlight  :demand t)
 ;; (use-package cider-eval-sexp-fu
-;;   :commands (init-sexp-fu)
+;;   :demand t
 ;;   :config
 ;;   (progn
 ;;     (defun init-sexp-fu ()
