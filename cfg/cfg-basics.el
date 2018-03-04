@@ -12,6 +12,10 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; I use compton for x compositing and without this incantation emacs doesn't cooperate (it's on top of my xmonad-electric overlay)
+(set-frame-parameter (selected-frame) 'alpha '(100 . 85))
+(add-to-list 'default-frame-alist '(alpha . (100 . 85)))
+
 ;; this is the analogue of
 ;; :set nowrap
 (setq-default truncate-lines t)
