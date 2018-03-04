@@ -34,16 +34,15 @@
               ;; TODO consider making better choices about magit bindings
               ;; push & pull from upstream should be matching pairs perhaps, s-] ... which are normally push&pop
               (",,ps" . magit-push-current-to-upstream)
-              (",,F" . magit-pull-from-upstream)
-              (",,c" . magit-commit)
+              (",,F"  . magit-pull-from-upstream)
+              (",,c"  . magit-commit)
               (",,ac" . magit-commit-amend)
-              (",,f" . magit-fetch-all)
+              (",,f"  . magit-fetch-all)
               (",,gc" . magit-git-command)
-              (",,t" . magit-tag)
-              (",,s" . magit-stash)
-              ("}" . magit-diff-more-context)
-              ("{" . magit-diff-less-context)
-              ;; TODO shrink/grow chunks ...  magit-diff-less-context (and more context)
+              (",,t"  . magit-tag)
+              (",,s"  . magit-stash)
+              ("}"    . magit-diff-more-context)
+              ("{"    . magit-diff-less-context)
               :map git-commit-mode-map
               ("<C-return>" . with-editor-finish)
               ("<C-backspace>" . with-editor-cancel))
