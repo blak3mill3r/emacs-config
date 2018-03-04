@@ -19,5 +19,12 @@
 (load "cfg-lispy.el")
 (load "cfg-clj.el")
 
+;; *always* byte-compile *everything* (trying this out)
+;; this is a total disaster
+;; lots of packages have tests, examples, bullshit in their repos that doesn't compile
+;; need to back waaay up and read the docs for straight.el
+;; I tried rm -rf uncompilable bullshit from my straight/repos/** but couldn't make it work and got frustrated
+;; (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+
 (custom-set-variables
  '(inhibit-startup-screen t))

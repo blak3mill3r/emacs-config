@@ -1,13 +1,28 @@
-(use-package aggressive-indent
-  :after lispy
-  :config
-  (progn
-    ;; (add-hook 'css-mode-hook #'aggressive-indent-mode)
-    (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-    (add-hook 'clojure-mode-hook #'aggressive-indent-mode)))
+;; this is not clj specific and I should move it
+;; (use-package aggressive-indent
+;;   :after lispy
+;;   :init
+;;   (progn
+;;     ;; hack to workaround *very slow* saving of large clojure files, which is caused by aggressive-indent-mode
+;;     ;; currently no option to disable it *just* for the saving of the buffer, so this does that:
+;;     ;; This doesn't work and I'm not sure why
+;;     (defun disable-aggressive-indent ()
+;;       (when (eq major-mode 'clojure-mode)
+;; 	(message "Yeah, turn it off...")
+;;         (aggressive-indent-mode -1)))
+;;     (defun reenable-aggressive-indent ()
+;;       (when (eq major-mode 'clojure-mode)
+;; 	(message "Yeah, turn it back on...")
+;;         (aggressive-indent-mode 1)))
 
-(use-package clojure-snippets)
-(use-package clj-refactor)
+;;     (add-hook 'before-save-hook #'disable-aggressive-indent)
+;;     (add-hook 'after-save-hook #'reenable-aggressive-indent))
+;;   :config
+;;   (progn
+;;     ;; modes to aggressive-indent (consider trying out c++ at least)
+;;     ;; (add-hook 'css-mode-hook #'aggressive-indent-mode)
+;;     (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+;;     (add-hook 'clojure-mode-hook #'aggressive-indent-mode)))
 
 (use-package clojure-mode
   :mode ("\\.edn$" . clojure-mode)
@@ -21,16 +36,16 @@
                   (lispy-mode)
                   ;; (aggressive-indent-mode)
                   (yas-minor-mode 1)
-                  (clj-refactor-mode 1)
+                  ;; (clj-refactor-mode 1)
                   (modify-syntax-entry ?_ "w")
                   (modify-syntax-entry ?- "w")
                   (modify-syntax-entry ?> "w")))))
 
 
-(use-package sayid
-  :after clojure-mode
-  :config
-  (sayid-setup-package))
+;; (use-package sayid
+;;   :after clojure-mode
+;;   :config
+;;   (sayid-setup-package))
 
 ;; disabled, breaks eval in elisp?
 ;; do I have sexp-fu?
@@ -54,14 +69,15 @@
               (",cr" . cider-switch-to-repl-buffer)
               (",cc" . cider-connect)
               (",c/" . cider-jump-to-compilation-error)
-              :map clojure-mode-map
               (",cns" . cider-repl-set-ns)
-              :map clojurescript-mode-map
-              (",cljs" . cider-figwheel-repl)
-              (",cj" . cider-jack-in-clojurescript)
+              ;; (",cljs" . cider-figwheel-repl)
+              ;; (",cljj" . cider-jack-in-clojurescript)
               )
-:init
+  :init
   (progn
+
+    (add-hook 'cider-mode-hook #'company-mode)
+    (add-hook 'cider-mode-hook #'company-quickhelp-mode)
 
     ;; copied from https://github.com/otijhuis/emacs.d/blob/master/config/lisp-settings.el
     (setq nrepl-hide-special-buffers t)
@@ -92,18 +108,22 @@
                ("s-." . lispy-arglist-inline)
                ("s-j" . lispy-eval-and-comment)
                ("s-k" . cider-eval-last-sexp-and-replace)
-               ("s-m" . lispy-alt-multiline))
+               ("s-m" . lispy-alt-multiline)
+               ("s-SPC" . nrepl-reset))
 
-    (require 'clj-refactor)
-    (cljr-add-keybindings-with-prefix "s-p")
+    ;; clj-refactor disabled because it breaks company
+    ;; (require 'clj-refactor)
+    ;; (cljr-add-keybindings-with-prefix "s-p")
 
     (defun nrepl-reset ()
       (interactive)
       (save-some-buffers)
       (set-buffer "*cider-repl localhost*")
       (goto-char (point-max))
-      (insert "(user/reset)")
-      (nrepl-return))
+      (insert "(in-ns 'user) (dev)")
+      (cider-repl-return)
+      (insert "(reset)")
+      (cider-repl-return))
 
     (setq nrepl-sync-request-timeout 300)
     (setq nrepl-hide-special-buffers t)
@@ -235,3 +255,8 @@
             ;;∾ ⊺ ⋔ ⫚ ⟊ ⟔ ⟓ ⟡ ⟢ ⟣ ⟤ ⟥
             ;;      ("" . ? )
             ))))
+
+
+;; unfortunately clj-refactor BREAKS company completion with cider
+;; (use-package clojure-snippets)
+;; (use-package clj-refactor)
