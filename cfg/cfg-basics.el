@@ -102,6 +102,7 @@
 ;; this is required for evil-collection which is better than evil-integration
 (setq evil-want-integration nil)
 (use-package evil
+  :demand 't
   :general
   (:keymaps 'normal
    "SPC" 'avy-goto-char-timer)
