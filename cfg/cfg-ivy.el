@@ -11,7 +11,7 @@
 
 (use-package projectile
   :general
-  (:keymaps 'normal
+  (:states '(normal visual)
    :prefix ","
    ;; project-aware things:
    ;; "pc"     'projectile-commander ;; I don't think I like this interface

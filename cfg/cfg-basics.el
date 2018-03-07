@@ -1,13 +1,14 @@
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
 (menu-bar-mode -1)
-(tooltip-mode -1)
+(tooltip-mode 1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
 ;; I use compton for x compositing and without this incantation emacs doesn't cooperate (it's on top of my xmonad-electric overlay)
-(set-frame-parameter (selected-frame) 'alpha '(100 . 85))
-(add-to-list 'default-frame-alist '(alpha . (100 . 85)))
+;;(set-frame-parameter (selected-frame) 'alpha '(100 . 85))
+(set-frame-parameter nil 'alpha nil)
+;;(add-to-list 'default-frame-alist '(alpha . nil))
 
 ;; this is the analogue of
 ;; :set nowrap
@@ -144,6 +145,9 @@
     (ido-ubiquitous-mode 1)
     (ido-vertical-mode)))
 
+;; multiple cursors that are compatible with evil
+(use-package evil-mc)
+
 (use-package evil-collection
   :after evil
   :custom (evil-collection-setup-minibuffer t)
@@ -153,9 +157,6 @@
 
 ;; this is how vim behaves, I think? It's a subtle difference
 (setq evil-move-cursor-back t)
-
-;; multiple cursors that are compatible with evil
-(use-package evil-mc)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs "windows"

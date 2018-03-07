@@ -22,6 +22,7 @@
 (add-to-list 'load-path "~/.emacs.d/cfg/")
 
 (load "cfg-prelude.el")
+(load "cfg-multiple-cursors.el")
 (load "cfg-elisp.el")
 (load "cfg-basics.el")
 (load "cfg-ivy.el")
@@ -36,5 +37,6 @@
 ;; I tried rm -rf uncompilable bullshit from my straight/repos/** but couldn't make it work and got frustrated
 ;; (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
 
-(custom-set-variables
- '(inhibit-startup-screen t))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
