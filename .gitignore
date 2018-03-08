@@ -1,0 +1,9 @@
+.mc-lists.el
+auto-save-list/
+ido.last
+nrepl-history
+recentf
+savehist
+smex-items
+straight/repos
+straight/build
