@@ -1,8 +1,9 @@
 (use-package lispy
-  :straight
-  (lispy :type git :files (:defaults "lispy-clojure.clj" "lispy-clojure-test.clj") :host github :repo "blak3mill3r/lispy" :branch "fix/cider-may-not-be-loaded-yet"
-         :upstream (:host github
-                    :repo "abo-abo/lispy"))
+  ;; :straight
+  ;; (lispy :type git :files (:defaults "lispy-clojure.clj" "lispy-clojure-test.clj") :host github :repo "blak3mill3r/lispy" :branch "fix/cider-may-not-be-loaded-yet"
+  ;;        :upstream (:host github
+  ;;                   :repo "abo-abo/lispy"))
+
   :commands
   (lispy-mode)
 
