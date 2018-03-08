@@ -98,6 +98,24 @@
 (use-package company-quickhelp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Undo tree (undo/redo never forgets anything)
+;; persists on disk as well
+(use-package undo-tree
+  :demand t
+  :diminish undo-tree-mode
+  :custom
+  (undo-tree-auto-save-history t)
+  (undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree")))
+  :general
+  (:keymaps 'undo-tree-visualizer-mode-map
+   :states '(normal motion)
+   :prefix ","
+   "bd" 'kill-buffer)
+  :init
+  (global-undo-tree-mode))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make emacs usable by someone with VIM muscle memory
 
 ;; this is required for evil-collection which is better than evil-integration
@@ -112,7 +130,6 @@
    ;; buffers
    "b."     'next-buffer
    "b,"     'previous-buffer
-   "bd"     'kill-buffer
    "bl"     'buffer-menu
    "br"     'revert-buffer
    "b SPC"  'ido-switch-buffer
