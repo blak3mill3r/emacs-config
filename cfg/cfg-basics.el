@@ -1,6 +1,8 @@
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
+
 (menu-bar-mode -1)
+
 (tooltip-mode 1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -105,15 +107,19 @@
   :diminish undo-tree-mode
   :custom
   (undo-tree-auto-save-history t)
-  (undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree")))
   :general
   (:keymaps 'undo-tree-visualizer-mode-map
    :states '(normal motion)
    :prefix ","
    "bd" 'kill-buffer)
   :init
+  ;; Do not litter undo-tree files all over the place, because that is super annoying
+  (setq undo-tree-auto-save-history t
+        undo-tree-history-directory-alist
+        `(("." . "~/.emacs.d/undo")))
+  (unless (file-exists-p "~/.emacs.d/undo")
+    (make-directory "~/.emacs.d/undo"))
   (global-undo-tree-mode))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make emacs usable by someone with VIM muscle memory
