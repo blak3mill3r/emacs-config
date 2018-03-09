@@ -153,6 +153,8 @@
    "gs"     'magit-status)
   (:keymaps 'visual
    "|"     'align-regexp)
+  (:states '(normal motion visual insert)
+   "M-x"    'smex)
   (:keymaps 'motion
    ;; I sometimes accidentally hit these instead of C-w k (move between splits in vim)
    "C-w C-k" 'evil-window-up
