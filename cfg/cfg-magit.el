@@ -26,7 +26,14 @@
 ;; in my legacy emacs config I had butchered magit in order to have reasonable keybindings for my vim-muscle-memory
 ;; now the community has done that for me (see evil-magit below)
 ;; I still do not use ~80% of what magit provides, and I want to learn
-(use-package magit)
+(use-package magit
+  :config
+  (setq
+   magit-diff-refine-hunk 'all
+   magit-log-margin '(t "%Y-%m-%d %H:%M" magit-log-margin-width t 18)
+   magit-diff-highlight-indentation '((".*" . tabs))
+   magit-branch-rename-push-target 'local-only)
+  (add-to-list 'magit-log-arguments "--follow"))
 
 (use-package evil-magit
   :demand t                             ;; without this I don't get evil-magit bindings in git-status buffer

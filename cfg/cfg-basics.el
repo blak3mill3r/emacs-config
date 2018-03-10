@@ -16,6 +16,20 @@
 ;; :set nowrap
 (setq-default truncate-lines t)
 
+;; whitespace! booo!
+(setq show-trailing-whitespace t)
+;; (use-package ws-butler
+;;   :diminish ws-butler-mode
+;;   :commands (ws-butler-mode)
+;;   :init
+;;   (add-hook 'prog-mode-hook #'ws-butler-mode)
+;;   (add-hook 'org-mode-hook #'ws-butler-mode)
+;;   (add-hook 'text-mode-hook #'ws-butler-mode)
+;;   (add-hook 'proof-mode-hook #'ws-butler-mode)
+;;   (add-hook 'bibtex-mode-hook #'ws-butler-mode)
+;;   :config
+;;   (setq ws-butler-convert-leading-tabs-or-spaces t))
+
 ;; use UTF-8 for new buffers by default (subtle, I don't really understand fully, what is the default behavior?)
 (prefer-coding-system 'utf-8)
 
@@ -98,6 +112,29 @@
 (use-package company)
 ;; (global-company-mode)
 (use-package company-quickhelp)
+
+(use-package company-restclient
+  :defer t
+  :general
+  (:keymaps 'restclient-mode-map
+   :states '(normal insert visual)
+   "s-\\ s-\\" 'restclient-http-send-current-stay-in-window)
+  :init
+  (defun my--company-restclient ()
+    (setq-local company-backends
+                (add-to-list 'company-backends 'company-restclient)))
+
+  (add-hook 'restclient-mode-hook #'my--company-restclient))
+
+;; (use-package company-emoji
+;;   :defer t
+
+;;   :init
+;;   (defun my--company-emoji ()
+;;     (add-to-list 'company-backends 'company-emoji t))
+
+;;   (add-hook 'global-company-mode-hook #'my--company-emoji))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Undo tree (undo/redo never forgets anything)
@@ -234,3 +271,6 @@
 
 ;; TODO a hydra for opening interactive environments like repls, database clients, etc... including TRAMP
 ;; or, should that be xmonad-electric's domain?
+
+(use-package yaml-mode
+  :defer t)

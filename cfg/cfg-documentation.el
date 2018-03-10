@@ -1,10 +1,12 @@
-(use-package vmd-mode
-  :commands (vmd-mode))
+
 
 (use-package markdown-mode
-  :mode  (("\\.markdown\\'" . gfm-mode)
-          ("\\.md\\'" . gfm-mode))
+  :mode  (("\\.markdown\\'" . markdown-mode)
+          ("\\.md\\'" . markdown-mode))
   :init
+  (use-package vmd-mode
+    :demand t
+    :commands (vmd-mode))
   (defun md-insert-clojure ()
     (interactive)
     (insert "```clojure\n\n```")
@@ -19,19 +21,7 @@
    :prefix "s-\\"
    "clj" 'md-insert-clojure)
   :init
-  (add-hook 'markdown-mode-hook #'visual-line-mode))
-
-(setq show-trailing-whitespace t)
-
-;; ws-butler (unobtrusive whitespace remover)
-(use-package ws-butler
-  :diminish ws-butler-mode
-  :commands (ws-butler-mode)
-  :init
-  (add-hook 'prog-mode-hook #'ws-butler-mode)
-  (add-hook 'org-mode-hook #'ws-butler-mode)
-  (add-hook 'text-mode-hook #'ws-butler-mode)
-  (add-hook 'proof-mode-hook #'ws-butler-mode)
-  (add-hook 'bibtex-mode-hook #'ws-butler-mode)
-  :config
-  (setq ws-butler-convert-leading-tabs-or-spaces t))
+  (defun my-markdown-mode-hook ()
+    (add-to-list 'company-backends 'vmd-mode-company-backend)
+    (company-mode))
+  (add-hook 'markdown-mode-hook #'my-markdown-mode-hook))

@@ -10,6 +10,12 @@
 (use-package ag)
 
 (use-package projectile
+  :config
+  (setq projectile-mode-line
+        '(:eval
+          (if (or (file-remote-p default-directory) (not (projectile-project-p)))
+              " ℘"
+            (format " ℘[%s]" (projectile-project-name)))))
   :general
   (:states '(normal visual)
    :prefix ","
