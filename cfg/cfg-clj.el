@@ -2,10 +2,27 @@
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+(use-package flycheck
+  :defer 5
+  :config
+  ;; (global-flycheck-mode)
+  (add-hook 'prog-mode-hook #'flycheck-mode)
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc coq))
+  :general (:states '(normal visual)
+            :keymaps 'prog-mode-map
+            "s-n" 'flycheck-next-error
+            "s-p" 'flycheck-previous-error
+            ))
+
+(use-package flycheck-joker
+  :demand t
+  ;; :defer 5
+  )
+
 (use-package clojure-mode
-  :mode ("\\.edn$" . clojure-mode)
-  :mode ("\\.clj$" . clojure-mode)
-  :mode ("\\.cljx$" . clojure-mode)
+  :mode "\\.edn$"
+  :mode "\\.clj$"
+  :mode "\\.cljx$"
   :general (:states '(normal insert visual)
             :keymaps 'clojure-mode-map
             "s-|"    'clojure-align)
@@ -21,11 +38,11 @@
                   (modify-syntax-entry ?- "w")
                   (modify-syntax-entry ?> "w")))))
 
-(use-package eval-sexp-fu)
-(use-package cider-eval-sexp-fu
-  :commands (turn-on-eval-sexp-fu-flash-mode)
-  :demand t ;; annoying, tried to get rid of :demand without success
-  :hook ((cider-mode emacs-lisp-mode) . turn-on-eval-sexp-fu-flash-mode))
+;; (use-package eval-sexp-fu)
+;; (use-package cider-eval-sexp-fu
+;;   :commands (turn-on-eval-sexp-fu-flash-mode)
+;;   :demand t ;; annoying, tried to get rid of :demand without success
+;;   :hook '((cider-mode emacs-lisp-mode) . turn-on-eval-sexp-fu-flash-mode))
 
 (use-package cider
   :straight
@@ -33,6 +50,10 @@
   (cider :type git :host github :repo "clojure-emacs/cider" :branch "v0.16.0")
 
   :custom
+  (cider-known-endpoints
+   '(("ropes-blake" "7887")
+     ("ropes-blake" "7888")))
+
   ;; this isn't supported it 0.16.0
   ;; (cider-jdk-src-paths '("/usr/lib/jvm/openjdk-8/src.zip"
   ;;                        "~/src/clojure-1.9.0-sources.jar"))
@@ -53,44 +74,20 @@
   (cider-repl-history-file "~/.emacs.d/nrepl-history")
   (cljr-warn-on-eval nil) ;; just *do not* write effectful namespaces! https://github.com/clojure-emacs/clj-refactor.el/#in-case-refactor-nrepl-used-for-advanced-refactorings
   
-  :init
-  (progn
-    (add-to-list 'same-window-buffer-names "*cider-repl localhost*")
-    (add-hook 'cider-mode-hook
-              #'(lambda ()
-                  (require 'cider-macroexpansion)
-                  (require 'cider-browse-ns)
-                  (message "my CIDER MODE hook")
-                  (eldoc-mode)
-                  (company-mode)
-                  ;; not working yet, with no x toolkit anyway... I don't know if it requires that
-                  ;; had it working at home
-                  (company-quickhelp-mode)
-                  (clj-refactor-mode 1)
-                  (yas-minor-mode 1)
-                  (turn-on-eval-sexp-fu-flash-mode)
-                  (cljr-add-keybindings-with-prefix "s-,")))
-    (add-hook 'cider-repl-mode-hook
-              #'(lambda ()
-                  (message "my CIDER REPL MODE hook")
-                  (eldoc-mode)
-                  (lispy-mode)
-                  (rainbow-delimiters-mode))))
-
   :general
   (:states '(normal insert visual)
    :keymaps 'clojure-mode-map
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
    "s-\\"     'cider-eval-defun-at-point
-   "s-n"      'cider-eval-ns-form
+   ;; "s-n"      'cider-eval-ns-form
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
    "s-m"      'cider-macroexpand-1-inplace
    "s-S-m"    'cider-macroexpand-1
    "s-o"      'cider-pprint-eval-last-sexp
-   "s-p s-\\" 'cider-pprint-eval-defun-at-point
-   "s-p s-s"  'cider-eval-print-last-sexp
+   ;; "s-p s-\\" 'cider-pprint-eval-defun-at-point
+   ;; "s-p s-s"  'cider-eval-print-last-sexp
    "s-d"      'cider-debug-defun-at-point
    "s-i s-r"  'cider-inspect-last-result
    "s-SPC"    'cider-nrepl-reset
@@ -123,12 +120,42 @@
    "<s-return>" 'cider-inspector-operate-on-point
    "s-j"        'cider-inspector-next-inspectable-object
    "s-k"        'cider-inspector-previous-inspectable-object)
+
+  :init
+  (progn
+    (add-to-list 'same-window-buffer-names "*cider-repl localhost*")
+    (add-hook 'cider-mode-hook
+              #'(lambda ()
+                  (require 'cider-macroexpansion)
+                  (require 'cider-browse-ns)
+                  (message "my CIDER MODE hook")
+                  (eldoc-mode)
+                  (company-mode)
+
+                  ;; this shouldn't be necessary
+                  ;; (lispy--clojure-middleware-load)
+
+                  ;; not working yet, with no x toolkit anyway... I don't know if it requires that
+                  ;; had it working at home
+                  (company-quickhelp-mode)
+
+                  (clj-refactor-mode 1)
+                  (yas-minor-mode 1)
+                  ;; (turn-on-eval-sexp-fu-flash-mode)
+                  (cljr-add-keybindings-with-prefix "s-,")))
+    (add-hook 'cider-repl-mode-hook
+              #'(lambda ()
+                  (message "my CIDER REPL MODE hook")
+                  (eldoc-mode)
+                  (lispy-mode)
+                  (rainbow-delimiters-mode))))
   
   :config
   (defun cider-nrepl-reset ()
     (interactive)
     (save-some-buffers)
-    (set-buffer "*cider-repl localhost*")
+    ;; (set-buffer "*cider-repl localhost*")
+    (cider-switch-to-repl-buffer)
     (goto-char (point-max))
     (insert "(in-ns 'user) (dev)")
     (cider-repl-return)
