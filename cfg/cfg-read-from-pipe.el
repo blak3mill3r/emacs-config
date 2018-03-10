@@ -21,9 +21,9 @@
 
 (defun eval-read-fifo (pid)
   (let ((s (read-fifo pid)))
-    (set-buffer "shit")
-    (end-of-buffer)
-    (insert s)
+    ;; (set-buffer "shit")
+    ;; (end-of-buffer)
+    ;; (insert s)
     (eval (read s))))
 
 (defun eval-read-fifo-for-my-pid ()
