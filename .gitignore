@@ -8,3 +8,4 @@ smex-items
 straight/repos
 straight/build
 straight/build-cache.el
+.pipe-into-emacs/

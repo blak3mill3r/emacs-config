@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euf -o pipefail
+
+PID=$1
+ELISP=$2
+
+echo $ELISP > ~/.emacs.d/.pipe-into-emacs/pipes/$PID &
+
+kill -USR1 $PID
