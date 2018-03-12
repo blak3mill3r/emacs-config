@@ -4,9 +4,9 @@
 
 (use-package flycheck
   :defer 5
+  :hook '(clojure-mode . flycheck-mode)
   :config
   ;; (global-flycheck-mode)
-  (add-hook 'prog-mode-hook #'flycheck-mode)
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc coq))
   :general (:states '(normal visual)
             :keymaps 'prog-mode-map
