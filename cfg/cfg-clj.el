@@ -34,8 +34,7 @@
     (modify-syntax-entry ?_ "w")
     (modify-syntax-entry ?- "w")
     (modify-syntax-entry ?> "w"))
-  (progn
-    (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)))
+  (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 
 ;; (use-package eval-sexp-fu)
 ;; (use-package cider-eval-sexp-fu

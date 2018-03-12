@@ -20,6 +20,10 @@
   :commands
   'lispy-mode
 
+  :config
+  ;; without this, lispy's special wrapping of "/" for lispy-splice, overrides cljr-slash so that / just self-inserts
+  (lispy-define-key lispy-mode-map "/" 'lispy-splice :inserter 'cljr-slash)
+
   :custom
   (lispy-eval-display-style "overlay")
 
