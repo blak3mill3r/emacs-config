@@ -12,13 +12,9 @@
 ;; ,,ps magit-push-current-to-upstream
 ;; ,,t magit-tag
 ;; ,,l magit-log
-;; ,,,s magit-stash
 
-;; these conflict with built-in magit ones that I might like to use, skipping between chunks and sections (with shift)
-;; that means choosing another binding for expand/contract
-      ;; (define-key map (kbd "[") 'magit-diff-less-context)
-      ;; (define-key map (kbd "]") 'magit-diff-more-context)
-
+(use-package git-gutter
+  :hook '((prog-mode markdown-mode) . git-gutter-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Git
@@ -44,19 +40,18 @@
    "s-]"   'magit-push-current-to-upstream
    "s-["   'magit-pull-from-upstream
    ;; backwards compatible for myself if I forget, and for others who may share my old config
-   ",,ps"  'magit-push-current-to-upstream
-   ",,F"   'magit-pull-from-upstream
+   ",ps"  'magit-push-current-to-upstream
+   ",F"   'magit-pull-from-upstream
    ;; grow/shrink chunks
    "}"     'magit-diff-more-context
    "{"     'magit-diff-less-context
    ;; most common git actions are under the prefix ,,
-   ",,c"   'magit-commit
-   ",,ac"  'magit-commit-amend
-   ",,f"   'magit-fetch-all
-   ",,gc"  'magit-git-command
-   ",,t"   'magit-tag
-   ",,s"   'magit-stash
-   )
+   ",c"   'magit-commit
+   ",ac"  'magit-commit-amend
+   ",f"   'magit-fetch-all
+   ",gc"  'magit-git-command
+   ",t"   'magit-tag
+   ",s"   'magit-stash)
   (:keymaps 'git-commit-mode-map
    "<C-return>"     'with-editor-finish
    "<C-backspace>"  'with-editor-cancel))
