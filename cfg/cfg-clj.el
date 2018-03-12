@@ -27,16 +27,15 @@
             :keymaps 'clojure-mode-map
             "s-|"    'clojure-align)
   :init
+  (defun my-clojure-mode-hook ()
+    (message "my CLOJURE MODE hook")
+    (lispy-mode 1)
+    (lispy-mode 0)
+    (modify-syntax-entry ?_ "w")
+    (modify-syntax-entry ?- "w")
+    (modify-syntax-entry ?> "w"))
   (progn
-    (add-hook 'clojure-mode-hook
-              #'(lambda ()
-                  (message "my CLOJURE MODE hook")
-                  (lispy-mode)
-                  ;; (yas-minor-mode 1)
-                  ;; (clj-refactor-mode 1)
-                  (modify-syntax-entry ?_ "w")
-                  (modify-syntax-entry ?- "w")
-                  (modify-syntax-entry ?> "w")))))
+    (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)))
 
 ;; (use-package eval-sexp-fu)
 ;; (use-package cider-eval-sexp-fu
@@ -122,40 +121,44 @@
    "s-k"        'cider-inspector-previous-inspectable-object)
 
   :init
-  (progn
-    (add-to-list 'same-window-buffer-names "*cider-repl localhost*")
-    (add-hook 'cider-mode-hook
-              #'(lambda ()
-                  (require 'cider-macroexpansion)
-                  (require 'cider-browse-ns)
-                  (message "my CIDER MODE hook")
-                  (eldoc-mode)
-                  (company-mode)
+  (defun my-cider-mode-hook ()
+    (message "MYCIDER: enable yas & clj-ref")
+    (yas-minor-mode 1)
+    (clj-refactor-mode 1)
+    (message "MYCIDER: enable eldoc")
+    (eldoc-mode 1)
+    (message "MYCIDER: enable company-mode")
+    (company-mode 1)
+    (message "MYCIDER: require macroexpansion and browse-ns")
+    (require 'cider-macroexpansion)
+    (require 'cider-browse-ns)
 
-                  ;; this shouldn't be necessary
-                  ;; (lispy--clojure-middleware-load)
+    ;; not working yet, with no x toolkit anyway... I don't know if it requires that
+    ;; had it working at home
+    ;; (company-quickhelp-mode)
 
-                  ;; not working yet, with no x toolkit anyway... I don't know if it requires that
-                  ;; had it working at home
-                  (company-quickhelp-mode)
-
-                  (clj-refactor-mode 1)
-                  (yas-minor-mode 1)
-                  ;; (turn-on-eval-sexp-fu-flash-mode)
-                  (cljr-add-keybindings-with-prefix "s-,")))
-    (add-hook 'cider-repl-mode-hook
-              #'(lambda ()
-                  (message "my CIDER REPL MODE hook")
-                  (eldoc-mode)
-                  (lispy-mode)
-                  (rainbow-delimiters-mode))))
+    ;; (turn-on-eval-sexp-fu-flash-mode)
+    (message "MYCIDER: add cljr submap")
+    (cljr-add-keybindings-with-prefix "s-,"))
+  (defun my-cider-connected-hook ()
+    ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
+    (message "MYCIDERCONNECT: load lispy middleware")
+    (lispy--clojure-middleware-load))
+  (defun my-cider-repl-mode-hook ()
+    (eldoc-mode)
+    (lispy-mode)
+    (rainbow-delimiters-mode))
+  ;; (add-to-list 'same-window-buffer-names "*cider-repl localhost*")
+  (add-hook 'cider-mode-hook #'my-cider-mode-hook)
+  (add-hook 'cider-connected-hook #'my-cider-connected-hook)
+  (add-hook 'cider-repl-mode-hook #'my-cider-repl-mode-hook)
   
   :config
   (defun cider-nrepl-reset ()
     (interactive)
     (save-some-buffers)
-    (set-buffer "*cider-repl localhost*")
-    ;; (cider-switch-to-repl-buffer)
+    ;; (set-buffer "*cider-repl localhost*")
+    (cider-switch-to-repl-buffer)
     (goto-char (point-max))
     (insert "(in-ns 'user) (dev)")
     (cider-repl-return)

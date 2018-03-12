@@ -1,9 +1,10 @@
 (use-package lispy
   :straight
   (lispy :type git
-         :files (:defaults "lispy-clojure.clj" "lispy-clojure-test.clj")
+         :files (:defaults "lispy-clojure.clj")
          :host github
-         :repo "abo-abo/lispy")
+         :repo "blak3mill3r/lispy"
+         :upstream (:host github :repo "abo-abo/lispy"))
 
   ;; (lispy :repo "abo-abo/lispy"
   ;;        :fetcher github
@@ -18,6 +19,9 @@
 
   :commands
   'lispy-mode
+
+  :custom
+  (lispy-eval-display-style "overlay")
 
   :general
   (:keymaps 'lispy-mode-map-special
