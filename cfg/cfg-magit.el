@@ -51,7 +51,8 @@
    ",f"   'magit-fetch-all
    ",gc"  'magit-git-command
    ",t"   'magit-tag
-   ",s"   'magit-stash)
+   ",s"   'magit-stash
+   ",S"   'magit-stash-pop)
   (:keymaps 'git-commit-mode-map
    "<C-return>"     'with-editor-finish
    "<C-backspace>"  'with-editor-cancel))
