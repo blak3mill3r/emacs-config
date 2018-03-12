@@ -187,7 +187,7 @@
    ",s"     'shell
    ",x"     'smex
    ",,x"    'smex-major-mode-commands
-   "gs"     'magit-status)
+   )
   (:keymaps 'visual
    "|"     'align-regexp)
   (:states '(normal motion visual insert)

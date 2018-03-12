@@ -29,12 +29,16 @@
    magit-log-margin '(t "%Y-%m-%d %H:%M" magit-log-margin-width t 18)
    magit-diff-highlight-indentation '((".*" . tabs))
    magit-branch-rename-push-target 'local-only)
-  (add-to-list 'magit-log-arguments "--follow"))
+  (add-to-list 'magit-log-arguments "--follow")
+  )
 
 (use-package evil-magit
-  :demand t                             ;; without this I don't get evil-magit bindings in git-status buffer
+  :demand t ;; without this I don't get evil-magit bindings in git-status buffer
   :commands (magit-status magit-log)
   :general
+  (:prefix ","
+   :keymaps 'normal
+   "gs"     'magit-status)
   (:keymaps 'magit-status-mode-map
    ;; my new favorite push/pull
    "s-]"   'magit-push-current-to-upstream
