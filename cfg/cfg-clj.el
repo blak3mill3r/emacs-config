@@ -159,8 +159,6 @@
     (cider-switch-to-repl-buffer)
     (goto-char (point-max))
     (insert "(in-ns 'user) (dev)")
-    (cider-repl-return)
-    (insert "(reset)")
     (cider-repl-return)))
 
 ;; not sure if I like it yet... it seems pretty cool but maybe a bit heavy/bloated
