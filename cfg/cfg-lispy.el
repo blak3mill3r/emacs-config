@@ -31,7 +31,8 @@
   (:keymaps 'lispy-mode-map-special
    "J" 'lispy-cursor-down
    "C-SPC" 'lispy-cursor-ace
-   "K" 'lispy-kill)
+   "K" 'special-lispy-kill ;; this was a bad idea
+   )
   (:keymaps 'lispy-mode-map
    "s-u" 'lispy-undo
    "s-." 'lispy-arglist-inline
