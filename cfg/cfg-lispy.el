@@ -29,10 +29,12 @@
   (lispy-eval-display-style "overlay")
 
   :general
+  (:states '(normal insert)
+   "C-K" 'lispy-kill-sentence)
   (:keymaps 'lispy-mode-map-special
    "J" 'lispy-cursor-down
    "C-SPC" 'lispy-cursor-ace
-   "K" 'special-lispy-kill ;; this was a bad idea
+   ;; "K" 'special-lispy-kill ;; there is no special-lispy-kill ?
    )
   (:keymaps 'lispy-mode-map
    "s-u" 'lispy-undo

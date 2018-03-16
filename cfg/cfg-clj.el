@@ -152,14 +152,26 @@
   (add-hook 'cider-repl-mode-hook #'my-cider-repl-mode-hook)
   
   :config
+  ;; https://www.reddit.com/r/emacs/comments/7au3hj/how_do_you_manage_your_emacs_windows_and_stay_sane/
+  (add-to-list 'display-buffer-alist
+               '("\\*cider-repl .*"
+                 (display-buffer-reuse-window display-buffer-in-side-window)
+                 (reusable-frames . visible)
+                 (side . bottom)
+                 (window-height . 0.2)))
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("\\*compilation\\*"
+  ;;                (display-buffer-reuse-window display-buffer-same-window)))
+
   (defun cider-nrepl-reset ()
     (interactive)
-    (save-some-buffers)
-    ;; (set-buffer "*cider-repl localhost*")
-    (cider-switch-to-repl-buffer)
-    (goto-char (point-max))
-    (insert "(in-ns 'user) (dev)")
-    (cider-repl-return)))
+    (save-excursion
+      (save-some-buffers)
+      ;; (set-buffer "*cider-repl localhost*")
+      (cider-switch-to-repl-buffer)
+      (goto-char (point-max))
+      (insert "(in-ns 'user) (dev)")
+      (cider-repl-return) )))
 
 ;; not sure if I like it yet... it seems pretty cool but maybe a bit heavy/bloated
 ;; play with it more for sure
