@@ -14,7 +14,7 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Load cfg/*.el
