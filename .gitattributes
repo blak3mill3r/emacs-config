@@ -1,0 +1,1 @@
+cfg/cfg-sensitive.el filter=git-crypt diff=git-crypt

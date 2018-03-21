@@ -22,6 +22,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/cfg/")
 
+(load "cfg-sensitive.el")
 (load "cfg-read-from-pipe.el")
 (load "cfg-prelude.el")
 (load "cfg-documentation.el")
@@ -32,6 +33,7 @@
 (load "cfg-magit.el")
 (load "cfg-lispy.el")
 (load "cfg-clj.el")
+(load "cfg-shells.el")
 
 ;; *always* byte-compile *everything* (trying this out)
 ;; this is a total disaster
