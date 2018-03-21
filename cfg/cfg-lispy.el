@@ -24,6 +24,8 @@
   ;; without this, lispy's special wrapping of "/" for lispy-splice, overrides cljr-slash so that / just self-inserts
   (lispy-define-key lispy-mode-map "/" 'lispy-splice :inserter 'cljr-slash)
   (lispy-define-key lispy-mode-map "=" 'lispy-oneline)
+  (lispy-define-key lispy-mode-map "J" 'lispy-cursor-down)
+  (lispy-define-key lispy-mode-map "K" 'lispy-kill)
 
   :custom
   (lispy-eval-display-style "overlay")
@@ -32,9 +34,7 @@
   (:states '(normal insert)
    "C-K" 'lispy-kill-sentence)
   (:keymaps 'lispy-mode-map-special
-   "J" 'lispy-cursor-down
    "C-SPC" 'lispy-cursor-ace
-   ;; "K" 'special-lispy-kill ;; there is no special-lispy-kill ?
    )
   (:keymaps 'lispy-mode-map
    "s-u" 'lispy-undo
