@@ -9,6 +9,17 @@
 (use-package yasnippet
   :after yasnippet-snippets)
 
+(defun cquery//enable ()
+  (condition-case nil
+      (lsp-cquery-enable)
+    (user-error nil)))
+
+;; (use-package lsp-mode)
+
+(use-package cquery
+  :commands lsp-cquery-enable
+  :init (add-hook 'c-mode-common-hook #'cquery//enable))
+
 (add-hook 'c-mode-hook #'yas-minor-mode)
 (add-hook 'cc-mode-hook #'yas-minor-mode)
 (add-hook 'c++-mode-hook #'yas-minor-mode)
