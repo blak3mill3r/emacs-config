@@ -13,6 +13,13 @@
 ;; ,,t magit-tag
 ;; ,,l magit-log
 
+(use-package browse-at-remote
+  :commands (browse-at-remote)
+  :general
+  (:prefix ","
+   :states '(normal visual)
+   "gho" 'browse-at-remote))
+
 (use-package git-gutter
   :hook '((prog-mode markdown-mode) . git-gutter-mode))
 
