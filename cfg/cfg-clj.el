@@ -142,7 +142,8 @@
   (defun my-cider-connected-hook ()
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
     (message "MYCIDERCONNECT: load lispy middleware")
-    (lispy--clojure-middleware-load))
+    ;; (lispy--clojure-middleware-load)
+    )
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
     (lispy-mode 1)
