@@ -173,7 +173,7 @@
    ;; buffers
    "b."     'next-buffer
    "b,"     'previous-buffer
-   "bl"     'buffer-menu
+   "bl"     'ibuffer
    "br"     'revert-buffer
    "b SPC"  'ido-switch-buffer
    "bk"     'kill-buffer-and-window
