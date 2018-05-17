@@ -29,10 +29,24 @@
 
 (use-package evil-org
   :commands (evil-org-mode)
+  :init
+  ;; this approach has some drawbacks: it's too dumb (doesn't understand nesting or indentation)
+  (defun org-insert-clojure ()
+    (interactive)
+    (insert "#+BEGIN_SRC clojure\n\n#+END_SRC")
+    (evil-beginning-of-line)
+    (evil-previous-line)
+    (org-edit-special))
   :general
   (:keymaps 'evil-org-mode-map
    :states '(normal)
    "^" 'evil-first-non-blank-of-visual-line)
+  (:keymaps 'evil-org-mode-map
+   :states '(insert)
+   :prefix "s-\\"
+   "s-\\" 'org-insert-clojure)
+  (:keymaps 'clojure-mode-map
+   "<s-return>" 'org-edit-src-exit)
   :hook '(org-mode . evil-org-mode)
   :config
   (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading)))
