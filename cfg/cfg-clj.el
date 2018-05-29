@@ -76,7 +76,8 @@
    :keymaps 'clojure-mode-map
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
-   "s-\\"     'cider-eval-defun-at-point
+   "s-\\"     'cider-eval-last-sexp
+   ;; "s-\\"     'cider-eval-defun-at-point
    ;; "s-n"      'cider-eval-ns-form
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
@@ -89,6 +90,8 @@
    "s-d"      'cider-debug-defun-at-point
    "s-i s-r"  'cider-inspect-last-result
    "s-SPC"    'cider-nrepl-reset
+   "C-n" 'lispy-outline-next
+   "C-p" 'lispy-outline-prev
    
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
    ;; "s-i s-s" 'cider-inspect-last-sexp
@@ -142,11 +145,12 @@
   (defun my-cider-connected-hook ()
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
     (message "MYCIDERCONNECT: load lispy middleware")
-    ;; (lispy--clojure-middleware-load)
+    (lispy--clojure-middleware-load)
     )
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
     (lispy-mode 1)
+    (aggressive-indent-mode 0)
     (rainbow-delimiters-mode 1))
   ;; (add-to-list 'same-window-buffer-names "*cider-repl localhost*")
   (add-hook 'cider-mode-hook #'my-cider-mode-hook)
@@ -170,9 +174,12 @@
     (save-excursion
       (save-some-buffers)
       ;; (set-buffer "*cider-repl localhost*")
+      (set-buffer "dev.clj")
+      (cider-eval-buffer)
       (cider-switch-to-repl-buffer)
       (goto-char (point-max))
-      (insert "(in-ns 'user) (dev)")
+      (insert "(in-ns 'user) (reset)")
+      ;; (insert "(in-ns 'dev) (reset)")
       (cider-repl-return) )))
 
 ;; not sure if I like it yet... it seems pretty cool but maybe a bit heavy/bloated
