@@ -47,6 +47,9 @@
    "s-\\" 'org-insert-clojure)
   (:keymaps 'clojure-mode-map
    "<s-return>" 'org-edit-src-exit)
+  (:keymaps 'evil-org-mode-map
+   :states '(normal insert visual)
+   "<s-return>" 'org-open-at-point)
   :hook '(org-mode . evil-org-mode)
   :config
   (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading)))
