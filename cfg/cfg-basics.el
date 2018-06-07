@@ -61,7 +61,7 @@
 ;; emacs history customization: put it somewhere sensible, never truncate, don't store dupes, remember kill-ring and search-ring
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
-(setq history-length t)
+(setq history-length 2048)
 (setq history-delete-duplicates t)
 (setq savehist-save-minibuffer-history 1)
 (setq savehist-additional-variables
