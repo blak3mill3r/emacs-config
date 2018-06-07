@@ -1,0 +1,15 @@
+* Speeding up startup
+** via byte-compiling elisp
+*** straight already byte-compiles all the deps, which is great
+*** I tried byte-compiling my own cfg/* files and it was a disaster, got frustrated and gave up
+*** not sure this is the best approach anyway
+** other ideas for speeding it up
+*** this crazy CRIU thing is a way to snapshot/restore an entire process's state:
+    * https://criu.org/Usage_scenarios#Slow-boot_services_speed_up
+    * so use that ^ and script something to rebuild the snapshot prior to the next launch if cfg has changed
+      * IOW, do something like storing a snapshot with a git SHA, never touch emacs cfg without committing (to a temp working branch which I squash-merge)
+      * instead of launching emacs directly:
+        * wrapper script checks SHA and if it does not match then
+          * launch emacs normally, when it is done loading init.el then CRIU snapshot it...
+        * if it does match then do the fast-path with CRIU snap
+          * but what about CLI args?
