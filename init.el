@@ -35,6 +35,7 @@
 (load "cfg-clj.el")
 (load "cfg-hy.el")
 (load "cfg-cpp.el")
+(load "cfg-go.el")
 (load "cfg-shells.el")
 
 ;; *always* byte-compile *everything* (trying this out)
