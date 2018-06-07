@@ -65,7 +65,7 @@
   (nrepl-log-messages t)
   (cider-repl-pop-to-buffer-on-connect nil)
   (cider-repl-use-clojure-font-lock t)
-  (cider-auto-jump-to-error t)
+  (cider-auto-jump-to-error 'errors-only)
   (cider-jump-to-compilation-error t)
   (nrepl-sync-request-timeout 300)
   (cider-repl-history-file "~/.emacs.d/nrepl-history")
