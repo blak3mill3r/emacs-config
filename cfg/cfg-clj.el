@@ -150,6 +150,7 @@
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
     (lispy-mode 1)
+    ;; (too-long-lines-mode 1)
     (aggressive-indent-mode 0)
     (rainbow-delimiters-mode 1))
   ;; (add-to-list 'same-window-buffer-names "*cider-repl localhost*")
