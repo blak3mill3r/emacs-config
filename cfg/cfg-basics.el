@@ -183,6 +183,7 @@
    "bl"     'ibuffer
    "br"     'revert-buffer
    "b SPC"  'ido-switch-buffer
+   ",b"     'ido-switch-buffer
    "bk"     'kill-buffer-and-window
    "bd"     'kill-buffer
    ;; frames and windows
