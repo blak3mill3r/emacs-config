@@ -10,6 +10,11 @@
     (make-directory dir t)
     (expand-file-name (concat dir (number-to-string pid)))))
 
+(defun fifo-for-pid-ack (pid)
+  (let ((dir (concat user-emacs-directory ".pipe-into-emacs/pipes/")))
+    (make-directory dir t)
+    (expand-file-name (concat dir (number-to-string pid) "-ack"))))
+
 (defun read-fifo (pid)
   "Read from the named pipe for pid, and return a string"
   (let ((fifo (fifo-for-pid pid)))
@@ -26,10 +31,17 @@
     ;; (insert s)
     (eval (read s))))
 
+(defun ack (emacs-pid)
+  (with-temp-buffer
+    (insert ":ok\n")
+    (append-to-file (point-min) (point-max) (fifo-for-pid-ack emacs-pid))))
+
 (defun eval-read-fifo-for-my-pid ()
   "Read elisp from the named pipe for this emacs instance's pid, and eval it"
   (interactive)
-  (eval-read-fifo (emacs-pid)))
+  (eval-read-fifo (emacs-pid))
+  (ack (emacs-pid)))
 
-(ensure-fifo (fifo-for-pid (emacs-pid)))
+(ensure-fifo (fifo-for-pid     (emacs-pid)))
+(ensure-fifo (fifo-for-pid-ack (emacs-pid)))
 (define-key special-event-map [sigusr1] #'eval-read-fifo-for-my-pid)

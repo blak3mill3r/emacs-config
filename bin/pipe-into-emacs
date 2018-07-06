@@ -8,3 +8,5 @@ ELISP=$2
 echo $ELISP > ~/.emacs.d/.pipe-into-emacs/pipes/$PID &
 
 kill -USR1 $PID
+
+echo $(< ~/.emacs.d/.pipe-into-emacs/pipes/$PID-ack)
