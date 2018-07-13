@@ -19,17 +19,70 @@
   ;; :defer 5
   )
 
+;; (comment
+;;  ;; (push '("\\geq" . ?≥) prettify-symbols-alist)
+;;  ;; (push '("\\leq" . ?≤) prettify-symbols-alist)
+;;  ;; (push '("\\neg" . ?¬) prettify-symbols-alist)
+;;  ;; (push '("\\rightarrow" . ?→) prettify-symbols-alist)
+;;  ;; (push '("\\leftarrow" . ?←) prettify-symbols-alist)
+;;  ;; (push '("\\infty" . ?∞) prettify-symbols-alist)
+;;  ;; (push '("-->" . ?→) prettify-symbols-alist)
+;;  ;; (push '("<--" . ?←) prettify-symbols-alist)
+;;  ;; (push '("\\exists" . ?∃) prettify-symbols-alist)
+;;  ;; (push '("\\nexists" . ?∄) prettify-symbols-alist)
+;;  ;; (push '("\\forall" . ?∀) prettify-symbols-alist)
+;;  ;; (push '("\\or" . ?∨) prettify-symbols-alist)
+;;  ;; (push '("\\and" . ?∧) prettify-symbols-alist)
+;;  ;; (push '(":)" . ?☺) prettify-symbols-alist)
+;;  ;; (push '("):" . ?☹) prettify-symbols-alist)
+;;  ;; (push '(":D" . ?☺) prettify-symbols-alist)
+;;  ;; (push '("\\checkmark" . ?✓) prettify-symbols-alist)
+;;  ;; (push '("\\check" . ?✓) prettify-symbols-alist)
+;;  ;; (push '("1/4" . ?¼) prettify-symbols-alist)
+;;  ;; (push '("1/2" . ?½) prettify-symbols-alist)
+;;  ;; (push '("3/4" . ?¾) prettify-symbols-alist)
+;;  ;; (push '("1/7" . ?⅐) prettify-symbols-alist)
+;;  ;; ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅛ ⅜ ⅝ ⅞
+;;  ;; (push '("ae" . ?æ) prettify-symbols-alist)
+;;  )
+
+;; ᎣლႰႪ
+;; ᴪᴫᴎᴂᵦᵧᵩᵫὫᾣῼ‡⁌⁍ጮፙ
+;; ፬፭፹፸፷፶፵፴፳፲፱፼፻፺
+;; ₰ᴪ
+(defun my/pretty-syms ()
+  (setq prettify-symbols-alist
+        '(("<=" . ?≤)
+          (">=" . ?≥)
+          ("<-" . ?←)
+          ("->" . ?→)
+          ("<=" . ?⇐)
+          ("=>" . ?⇒)
+          ("fn" . ?λ)
+          ("^_^" . ?☻)
+          ("transform" . ?ჳ)
+          ("multi-transform" . ?ჴ)
+          ("multi-path" . ?╞)
+          ("terminal" . ?Ꮿ)
+          ("terminal-val" . ?Ꮂ)
+          ("true" . ?ፐ)
+          ("false" . ?ፑ))))
+
+
 (use-package clojure-mode
   :mode "\\.edn$"
   :mode "\\.clj$"
   :mode "\\.cljx$"
   :general (:states '(normal insert visual)
             :keymaps 'clojure-mode-map
-            "s-|"    'clojure-align)
+            "s-|"    'clojure-align
+            "<f8>" 'prettify-symbols-mode)
   :init
   (defun my-clojure-mode-hook ()
     (message "my CLOJURE MODE hook")
     (lispy-mode 1)
+    (prettify-symbols-mode 1)
+    (my/pretty-syms)
     (modify-syntax-entry ?_ "w")
     (modify-syntax-entry ?- "w")
     (modify-syntax-entry ?> "w"))
@@ -78,9 +131,9 @@
    "s-["      'cider-pop-back
    "s-\\"     'cider-eval-last-sexp
    ;; "s-\\"     'cider-eval-defun-at-point
-   ;; "s-n"      'cider-eval-ns-form
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
+   "s-;"      'cider-eval-ns-form
    "s-m"      'cider-macroexpand-1-inplace
    "s-S-m"    'cider-macroexpand-1
    "s-o"      'cider-pprint-eval-last-sexp
@@ -198,7 +251,18 @@
 (use-package seq-25
   :straight 
   (seq-25 :type git :host github :repo "NicolasPetton/seq.el"))
-(use-package clj-refactor)
+(use-package clj-refactor
+  :config
+  (cljr-add-keybindings-with-prefix "s-i")
+  ;; :general
+  ;; '(:states (normal visual)
+  ;;   :keymaps clojure-mode-map
+  ;;   "s-n" 'flycheck-next-error
+  ;;   "s-p" 'flycheck-previous-error
+  ;;   )
+  
+  
+  )
 
 ;; breaks/unbreaks company-quickhelp-mode for cider, filed https://github.com/expez/company-quickhelp/issues/79
 
