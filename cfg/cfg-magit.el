@@ -45,7 +45,8 @@
   :general
   (:prefix ","
    :keymaps 'normal
-   "gs"     'magit-status)
+   "gs"     'magit-status
+   "gb"     'magit-blame)
   (:keymaps 'magit-status-mode-map
    ;; my new favorite push/pull
    "s-]"   'magit-push-current-to-upstream
