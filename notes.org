@@ -13,3 +13,18 @@
           * launch emacs normally, when it is done loading init.el then CRIU snapshot it...
         * if it does match then do the fast-path with CRIU snap
           * but what about CLI args?
+
+*** startup profiling
+    https://github.com/jschaf/esup
+
+* Interesting emacs integrations to try
+  * https://github.com/Silex/docker.el
+  * https://github.com/vermiculus/magithub
+  * https://gitlab.com/iankelling/spray <-- speed reading
+
+* press keys and get equivalent elisp (or, from a macro)
+  * https://github.com/Silex/elmacro
+
+* fun stuff
+  * https://github.com/vibhavp/emacs-xkcd
+

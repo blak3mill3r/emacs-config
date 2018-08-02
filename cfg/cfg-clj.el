@@ -108,7 +108,7 @@
   ;; (cider-jdk-src-paths '("/usr/lib/jvm/openjdk-8/src.zip"
   ;;                        "~/src/clojure-1.9.0-sources.jar"))
   (nrepl-hide-special-buffers t)
-  (cider-save-file-on-load 'always-save) 
+  (cider-save-file-on-load t) ;; always save without prompt
   (cider-repl-popup-stacktraces t)
   (cider-auto-select-error-buffer t)
   (cider-repl-use-pretty-printing t)
