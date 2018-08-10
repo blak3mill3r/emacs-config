@@ -83,6 +83,24 @@
 ;; first, I find it maddening to have an independent $PATH for emacs, so fix that:
 (use-package exec-path-from-shell :config (exec-path-from-shell-initialize))
 
+(defun x-urgency-hint (frame arg &optional source)
+  "Set the x-urgency hint for the frame to arg:
+
+- If arg is nil, unset the urgency.
+- If arg is any other value, set the urgency.
+
+If you unset the urgency, you still have to visit the frame to make the urgency setting disappear (at least in KDE)."
+  (let* ((wm-hints (append (x-window-property
+                            "WM_HINTS" frame "WM_HINTS"
+                            source nil t) nil))
+         (flags (car wm-hints)))
+                                        ; (message flags)
+    (setcar wm-hints
+            (if arg
+                (logior flags #x00000100)
+              (logand flags #x1ffffeff)))
+    (x-change-window-property "WM_HINTS" wm-hints frame "WM_HINTS" 32 t)))
+
 ;; XWindow urgency integrates with many other tools, including xmonad-electric
 ;; I've yet to make any use of this but it's a good idea
 ;; demo
