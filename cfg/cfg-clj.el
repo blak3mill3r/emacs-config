@@ -148,10 +148,14 @@
    "s-SPC"    'cider-nrepl-reset
    "C-n" 'lispy-outline-next
    "C-p" 'lispy-outline-prev
+
+   ;; muscle memory expects lispy-eval-and-comment, see cfg-lispy.el, but couldn't get that to work with bleeding-edge cider etc
+   "s-j" 'cider-pprint-eval-last-sexp
    
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
    ;; "s-i s-s" 'cider-inspect-last-sexp
    )
+
   (:keymaps 'cider-repl-mode-map
    "s-SPC" 'cider-repl-clear-buffer)
   (:states '(normal visual)

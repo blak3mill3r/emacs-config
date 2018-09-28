@@ -1,10 +1,10 @@
 (use-package lispy
-  :straight
-  (lispy :type git
-         :files (:defaults "lispy-clojure.clj")
-         :host github
-         :repo "blak3mill3r/lispy"
-         :upstream (:host github :repo "abo-abo/lispy"))
+  ;; :straight
+  ;; (lispy :type git
+  ;;        :files (:defaults "lispy-clojure.clj")
+  ;;        :host github
+  ;;        :repo "blak3mill3r/lispy"
+  ;;        :upstream (:host github :repo "abo-abo/lispy"))
 
   ;; (lispy :repo "abo-abo/lispy"
   ;;        :fetcher github
@@ -40,7 +40,7 @@
    "s-u" 'lispy-undo
    "s-." 'lispy-arglist-inline
    "s-/" 'lispy-describe-inline
-   "s-j" 'lispy-eval-and-comment
+   ;; "s-j" 'lispy-eval-and-comment
    "C-]" 'lispy-beginning-of-defun
    ))
 
