@@ -3,10 +3,12 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; recent file list, my "scratch buffers" are files with jibberish names
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
+;; disabled because of lock conflicts between multiple instances of emacs
+;; maybe look into https://github.com/ffevotte/sync-recentf if I miss recentf-mode
+(recentf-mode -1)
+;; (setq recentf-max-menu-items 25)
 ;; (global-set-key "\C-x\ \C-r" 'recentf-open-files)
-(run-at-time nil (* 5 60) 'recentf-save-list)
+;; (run-at-time nil (* 5 60) 'recentf-save-list)
 
 (menu-bar-mode -1)
 
