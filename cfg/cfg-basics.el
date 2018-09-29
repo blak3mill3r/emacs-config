@@ -302,3 +302,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 
 (use-package yaml-mode
   :defer t)
+
+;; good for learning new keybindings
+(use-package which-key
+  )
