@@ -47,6 +47,10 @@
    :keymaps 'normal
    "gs"     'magit-status
    "gb"     'magit-blame)
+  (:keymaps 'normal
+   ;; navigate through revision history of a file
+   "z j"   'magit-blob-next
+   "z k"   'magit-blob-previous)
   (:keymaps 'magit-status-mode-map
    ;; my new favorite push/pull
    "s-]"   'magit-push-current-to-upstream
