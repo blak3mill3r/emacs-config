@@ -312,3 +312,20 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 ;; good for learning new keybindings
 (use-package which-key
   )
+
+(use-package ibuffer
+  :config
+  ;; nearly all of this is the default layout
+  (setq ibuffer-formats
+        '((mark modified read-only " "
+                (name 60 60 :left :elide) ; change: 30s were originally 18s
+                " "
+                (filename-and-process 50 50 :left :elide)
+                " "
+                (size 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                )
+          (mark " "
+                (name 16 -1)
+                " " filename))) )
