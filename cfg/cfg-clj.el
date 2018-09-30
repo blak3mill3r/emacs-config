@@ -132,7 +132,9 @@
    :keymaps 'clojure-mode-map
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
-   "s-\\"     'cider-eval-last-sexp
+   "s-\\"     'lispy-eval
+   "s-t"      'cider-test-run-ns-tests
+   ;; "s-\\"     'cider-eval-last-sexp
    ;; "s-\\"     'cider-eval-defun-at-point
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
@@ -148,9 +150,6 @@
    "s-SPC"    'cider-nrepl-reset
    "C-n" 'lispy-outline-next
    "C-p" 'lispy-outline-prev
-
-   ;; muscle memory expects lispy-eval-and-comment, see cfg-lispy.el, but couldn't get that to work with bleeding-edge cider etc
-   "s-j" 'cider-pprint-eval-last-sexp
    
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
    ;; "s-i s-s" 'cider-inspect-last-sexp
@@ -203,10 +202,12 @@
     (message "MYCIDER: add cljr submap")
     (cljr-add-keybindings-with-prefix "s-,"))
   (defun my-cider-connected-hook ()
+    ;; see https://github.com/clojure-emacs/cider/issues/2464
+    (message "HACK TO EMULATE cider-default-connection")
+    (sesman-link-with-buffer (current-buffer) (car (hash-table-values sesman-sessions-hashmap)))
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
     (message "MYCIDERCONNECT: load lispy middleware")
-    (lispy--clojure-middleware-load)
-    )
+    (lispy--clojure-middleware-load))
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
     (lispy-mode 1)

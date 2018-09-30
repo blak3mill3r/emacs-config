@@ -25,6 +25,7 @@
    "pr" 'projectile-replace            ;; globally replace a string
    "pR" 'projectile-replace-regexp     ;; globally replace a regexp
    "pd" 'projectile-dired-other-window ;; dired the project
+   "pt" 'projectile-find-implementation-or-test-other-window ;; open associated test or implementation
    ))
 
 (use-package counsel

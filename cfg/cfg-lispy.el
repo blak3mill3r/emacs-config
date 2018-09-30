@@ -40,7 +40,7 @@
    "s-u" 'lispy-undo
    "s-." 'lispy-arglist-inline
    "s-/" 'lispy-describe-inline
-   ;; "s-j" 'lispy-eval-and-comment
+   "s-j" 'lispy-eval-and-comment
    "C-]" 'lispy-beginning-of-defun
    ))
 

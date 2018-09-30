@@ -136,7 +136,13 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Completion framework
-(use-package company)
+(use-package company
+  :config
+  ;; CAREFUL, perhaps should do this per-mode
+  (setq company-minimum-prefix-length 0)
+  ;; I am super fast and I don't like waiting on machines
+  (setq company-idle-delay 0.2))
+
 ;; (global-company-mode)
 (use-package company-quickhelp)
 
