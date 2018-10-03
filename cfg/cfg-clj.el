@@ -132,9 +132,9 @@
    :keymaps 'clojure-mode-map
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
-   "s-\\"     'lispy-eval
    "s-t"      'cider-test-run-ns-tests
-   ;; "s-\\"     'cider-eval-last-sexp
+   ;; "s-\\"     'lispy-eval
+   "s-\\"     'cider-eval-last-sexp
    ;; "s-\\"     'cider-eval-defun-at-point
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
@@ -152,7 +152,7 @@
    "C-p" 'lispy-outline-prev
    
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
-   ;; "s-i s-s" 'cider-inspect-last-sexp
+   "s-i s-i" 'cider-inspect-last-sexp
    )
 
   (:keymaps 'cider-repl-mode-map
@@ -191,6 +191,9 @@
     (message "MYCIDER: enable company-mode")
     (company-mode 1)
     (message "MYCIDER: require macroexpansion and browse-ns")
+    ;; see https://github.com/clojure-emacs/cider/issues/2464
+    (message "HACK TO EMULATE cider-default-connection")
+    (sesman-link-with-buffer (current-buffer) (car (hash-table-values sesman-sessions-hashmap)))
     (require 'cider-macroexpansion)
     (require 'cider-browse-ns)
 
@@ -202,9 +205,6 @@
     (message "MYCIDER: add cljr submap")
     (cljr-add-keybindings-with-prefix "s-,"))
   (defun my-cider-connected-hook ()
-    ;; see https://github.com/clojure-emacs/cider/issues/2464
-    (message "HACK TO EMULATE cider-default-connection")
-    (sesman-link-with-buffer (current-buffer) (car (hash-table-values sesman-sessions-hashmap)))
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
     (message "MYCIDERCONNECT: load lispy middleware")
     (lispy--clojure-middleware-load))
