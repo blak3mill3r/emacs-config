@@ -17,8 +17,8 @@
 (scroll-bar-mode -1)
 
 ;; I use compton for x compositing and without this incantation emacs doesn't cooperate (it's on top of my xmonad-electric overlay)
-;;(set-frame-parameter (selected-frame) 'alpha '(100 . 85))
-(set-frame-parameter nil 'alpha nil)
+(set-frame-parameter (selected-frame) 'alpha '(100 . 85))
+;; (set-frame-parameter nil 'alpha nil)
 ;;(add-to-list 'default-frame-alist '(alpha . nil))
 
 ;; this is the analogue of
