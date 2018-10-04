@@ -211,8 +211,7 @@
       (add-hook 'nrepl-connected-hook
                 'lispy--clojure-eval-hook-lambda t)))
   (defun my-cider-connected-hook ()
-    (unless lispy--clojure-middleware-loaded-p
-      (lispy--clojure-middleware-load)))
+    (lispy-cider-load-file "~/.emacs.d/straight/build/lispy/lispy-clojure.clj"))
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
     (lispy-mode 1)
@@ -286,3 +285,4 @@
 ;; and, since I specify cider-nrepl in profiles.clj it doesn't get the version it wants and is missing
 ;; cider.nrepl....tools.java/parser from cider, which uses tools.jar (but I have tools.jar on the classpath)
 ;; ah, because that tools.java namespace *disappeared* from cider after 0.16.0
+
