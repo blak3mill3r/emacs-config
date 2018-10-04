@@ -40,10 +40,9 @@
    "s-/" 'lispy-describe-inline
    "s-j" 'lispy-eval-and-comment
    "s-J" 'lispy-eval-and-insert
-   "s-\\" 'lispy-eval
-   "s-o" 'lispy-eval
-   "C-]" 'lispy-beginning-of-defun
-   ))
+   ;; "s-\\" 'lispy-eval
+   ;; "s-o" 'lispy-eval
+   "!" 'special-lispy-beginning-of-defun))
 
 ;; strict indentation
 (use-package aggressive-indent

@@ -133,14 +133,14 @@
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
    "s-t"      'cider-test-run-ns-tests
-   ;; "s-\\"     'lispy-eval
-   "s-\\"     'cider-eval-last-sexp
+   ;; "s-\\"     'cider-eval-last-sexp
    ;; "s-\\"     'cider-eval-defun-at-point
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
    "s-;"      'cider-eval-ns-form
    "s-m"      'cider-macroexpand-1-inplace
    "s-S-m"    'cider-macroexpand-1
+   "s-\\"     'lispy-eval
    "s-o"      'cider-pprint-eval-last-sexp
    "s-e"      'cider-enlighten-mode
    ;; "s-p s-\\" 'cider-pprint-eval-defun-at-point
