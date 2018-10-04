@@ -139,9 +139,9 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 (use-package company
   :config
   ;; CAREFUL, perhaps should do this per-mode
-  (setq company-minimum-prefix-length 0)
+  (setq company-minimum-prefix-length 3)
   ;; I am super fast and I don't like waiting on machines
-  (setq company-idle-delay 0.2))
+  (setq company-idle-delay 0.5))
 
 ;; (global-company-mode)
 (use-package company-quickhelp)
