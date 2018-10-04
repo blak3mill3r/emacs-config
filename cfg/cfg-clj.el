@@ -193,7 +193,9 @@
     (message "MYCIDER: require macroexpansion and browse-ns")
     ;; see https://github.com/clojure-emacs/cider/issues/2464
     (message "HACK TO EMULATE cider-default-connection")
-    (sesman-link-with-buffer (current-buffer) (car (hash-table-values sesman-sessions-hashmap)))
+    (let (theonlysession (car (hash-table-values sesman-sessions-hashmap)))
+      (if theonlysession
+          (sesman-link-with-buffer (current-buffer))))
     (require 'cider-macroexpansion)
     (require 'cider-browse-ns)
 
