@@ -211,6 +211,8 @@
       (add-hook 'nrepl-connected-hook
                 'lispy--clojure-eval-hook-lambda t)))
   (defun my-cider-connected-hook ()
+    ;; FIXME what if the necessary dependencies are *not* in the nREPL server?
+    ;; I should make this degrade gracefully...
     (lispy-cider-load-file "~/.emacs.d/straight/build/lispy/lispy-clojure.clj"))
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
