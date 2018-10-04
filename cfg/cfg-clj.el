@@ -203,11 +203,16 @@
 
     ;; (turn-on-eval-sexp-fu-flash-mode)
     (message "MYCIDER: add cljr submap")
-    (cljr-add-keybindings-with-prefix "s-,"))
-  (defun my-cider-connected-hook ()
+    (cljr-add-keybindings-with-prefix "s-,")
+
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
-    (message "MYCIDERCONNECT: load lispy middleware")
-    (lispy--clojure-middleware-load))
+    (add-hook 'cider-connected-hook #'lispy--clojure-middleware-load)
+    (progn
+      (add-hook 'nrepl-connected-hook
+                'lispy--clojure-eval-hook-lambda t)))
+  (defun my-cider-connected-hook ()
+    (unless lispy--clojure-middleware-loaded-p
+      (lispy--clojure-middleware-load)))
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
     (lispy-mode 1)

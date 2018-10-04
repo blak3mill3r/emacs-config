@@ -1,21 +1,19 @@
 (use-package lispy
-  ;; :straight
-  ;; (lispy :type git
-  ;;        :files (:defaults "lispy-clojure.clj")
-  ;;        :host github
-  ;;        :repo "blak3mill3r/lispy"
-  ;;        :upstream (:host github :repo "abo-abo/lispy"))
+  :straight
+  (lispy :type git
+         :files (:defaults "lispy-clojure.clj")
+         :host github
+         :repo "blak3mill3r/lispy"
+         :branch "no-auto-cider-jack-in"
+         :upstream (:host github :repo "abo-abo/lispy"))
 
   ;; (lispy :repo "abo-abo/lispy"
   ;;        :fetcher github
   ;;        :files (:defaults "lispy-clojure.clj" "lispy-clojure-test.clj"))
 
-
-  ;; :straight
-  ;; (lispy :type git
-  ;;        :files (:defaults "lispy-clojure.clj" "lispy-clojure-test.clj")
-  ;;        :host github :repo "blak3mill3r/lispy" :branch "fix/cider-may-not-be-loaded-yet"
-  ;;        :upstream (:host github :repo "abo-abo/lispy"))
+  ;; try lispy-out-forward-newline binding
+  ;; maybe S-return ?
+  ;; handy if you're in a form and want to escape and go new line
 
   :commands
   'lispy-mode
@@ -41,6 +39,9 @@
    "s-." 'lispy-arglist-inline
    "s-/" 'lispy-describe-inline
    "s-j" 'lispy-eval-and-comment
+   "s-J" 'lispy-eval-and-insert
+   "s-\\" 'lispy-eval
+   "s-o" 'lispy-eval
    "C-]" 'lispy-beginning-of-defun
    ))
 
