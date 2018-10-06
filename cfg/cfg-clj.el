@@ -100,7 +100,8 @@
 
 (use-package cider
   :straight
-  (cider :type git :host github :repo "clojure-emacs/cider" :branch "v0.18.0")
+  (cider :type git :host github :repo "clojure-emacs/cider" :branch "v0.18.0"
+         :files (:defaults "cider-test.el"))
 
   :custom
   (cider-known-endpoints
