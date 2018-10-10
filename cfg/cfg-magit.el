@@ -87,22 +87,64 @@
   )
 
 ;; https://magit.vc/manual/ghub/Setting-the-Username.html#Setting-the-Username
-(use-package ghub
-  )
-(use-package magithub
-  :after magit
-  :config
-  (magithub-feature-autoinject t)
+;; (use-package ghub
+;;   )
 
-  ;; what it do? https://github.com/jwiegley/dot-emacs/blob/master/init.el#L2620
+;; (use-package auth-source-pass
+;;   :defer t
+;;   :config
+;;   (auth-source-pass-enable)
 
-  ;; (require 'auth-source-pass)
-  ;; (defvar my-ghub-token-cache nil)
+;;   (defvar auth-source-pass--cache (make-hash-table :test #'equal))
 
-  ;; (advice-add
-  ;;  'ghub--token :around
-  ;;  #'(lambda (orig-func host username package &optional nocreate forge)
-  ;;      (or my-ghub-token-cache
-  ;;          (setq my-ghub-token-cache
-  ;;                (funcall orig-func host username package nocreate forge)))))
-  )
+;;   (defun auth-source-pass--reset-cache ()
+;;     (setq auth-source-pass--cache (make-hash-table :test #'equal)))
+
+;;   (defun auth-source-pass--read-entry (entry)
+;;     "Return a string with the file content of ENTRY."
+;;     (run-at-time 45 nil #'auth-source-pass--reset-cache)
+;;     (let ((cached (gethash entry auth-source-pass--cache)))
+;;       (or cached
+;;           (puthash
+;;            entry
+;;            (with-temp-buffer
+;;              (insert-file-contents (expand-file-name
+;;                                     (format "%s.gpg" entry)
+;;                                     (getenv "PASSWORD_STORE_DIR")))
+;;              (buffer-substring-no-properties (point-min) (point-max)))
+;;            auth-source-pass--cache))))
+
+;;   (defun auth-source-pass-entries ()
+;;     "Return a list of all password store entries."
+;;     (let ((store-dir "/home/blake/.password-store"))
+;;       (mapcar
+;;        (lambda (file) (file-name-sans-extension (file-relative-name file store-dir)))
+;;        (directory-files-recursively store-dir "\.gpg$")))))
+
+;; (use-package magithub
+;;   :after magit
+;;   :config
+;;   (magithub-feature-autoinject t)
+
+;;   (require 'auth-source-pass)
+;;   (defvar my-ghub-token-cache nil)
+
+;;   (advice-add
+;;    'ghub--token :around
+;;    #'(lambda (orig-func host username package &optional nocreate forge)
+;;        (or my-ghub-token-cache
+;;            (setq my-ghub-token-cache
+;;                  (funcall orig-func host username package nocreate forge)))))
+
+;;   ;; what it do? https://github.com/jwiegley/dot-emacs/blob/master/init.el#L2620
+
+;;   ;; (require 'auth-source-pass)
+;;   ;; (defvar my-ghub-token-cache nil)
+
+;;   ;; (advice-add
+;;   ;;  'ghub--token :around
+;;   ;;  #'(lambda (orig-func host username package &optional nocreate forge)
+;;   ;;      (or my-ghub-token-cache
+;;   ;;          (setq my-ghub-token-cache
+;;   ;;                (funcall orig-func host username package nocreate forge)))))
+;;   )
