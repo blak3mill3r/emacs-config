@@ -134,14 +134,14 @@
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
    "s-t"      'cider-test-run-ns-tests
-   ;; "s-\\"     'cider-eval-last-sexp
-   ;; "s-\\"     'cider-eval-defun-at-point
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
    "s-;"      'cider-eval-ns-form
    "s-m"      'cider-macroexpand-1-inplace
    "s-S-m"    'cider-macroexpand-1
-   "s-\\"     'lispy-eval
+   ;; "s-\\"     'lispy-eval
+   "s-\\"     'cider-eval-last-sexp
+   ;; "s-\\"     'cider-eval-defun-at-point
    "s-o"      'cider-pprint-eval-last-sexp
    "s-e"      'cider-enlighten-mode
    ;; "s-p s-\\" 'cider-pprint-eval-defun-at-point
@@ -209,6 +209,7 @@
     (cljr-add-keybindings-with-prefix "s-,")
 
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
+    ;; TRY DISABLING THESE NEXT TWO LINES
     (add-hook 'cider-connected-hook #'lispy--clojure-middleware-load)
     (progn
       (add-hook 'nrepl-connected-hook

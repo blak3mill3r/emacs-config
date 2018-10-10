@@ -71,4 +71,38 @@
    ",S"   'magit-stash-pop)
   (:keymaps 'git-commit-mode-map
    "<C-return>"     'with-editor-finish
-   "<C-backspace>"  'with-editor-cancel))
+   "<C-backspace>"  'with-editor-cancel)
+
+  ;; what it do? https://github.com/jwiegley/dot-emacs/blob/master/init.el#L2596
+  ;; :config
+  ;; (eval-after-load 'magit-remote
+  ;;   '(progn
+  ;;      (magit-define-popup-action 'magit-fetch-popup
+  ;;        ?f 'magit-get-remote #'magit-fetch-from-upstream ?u t)
+  ;;      (magit-define-popup-action 'magit-pull-popup
+  ;;        ?F 'magit-get-upstream-branch #'magit-pull-from-upstream ?u t)
+  ;;      (magit-define-popup-action 'magit-push-popup
+  ;;        ?P 'magit--push-current-to-upstream-desc
+  ;;        #'magit-push-current-to-upstream ?u t)))
+  )
+
+;; https://magit.vc/manual/ghub/Setting-the-Username.html#Setting-the-Username
+(use-package ghub
+  )
+(use-package magithub
+  :after magit
+  :config
+  (magithub-feature-autoinject t)
+
+  ;; what it do? https://github.com/jwiegley/dot-emacs/blob/master/init.el#L2620
+
+  ;; (require 'auth-source-pass)
+  ;; (defvar my-ghub-token-cache nil)
+
+  ;; (advice-add
+  ;;  'ghub--token :around
+  ;;  #'(lambda (orig-func host username package &optional nocreate forge)
+  ;;      (or my-ghub-token-cache
+  ;;          (setq my-ghub-token-cache
+  ;;                (funcall orig-func host username package nocreate forge)))))
+  )

@@ -28,3 +28,14 @@
 * fun stuff
   * https://github.com/vibhavp/emacs-xkcd
 
+
+* GIT, magit, things to improve:
+https://hackernoon.com/fix-conflicts-only-once-with-git-rerere-7d116b2cec67
+https://hub.github.com/hub-sync.1.html
+https://github.com/vermiculus/magithub/issues/22
+https://stackoverflow.com/questions/4318161/can-git-pull-all-update-all-my-local-branches
+https://github.com/jwiegley/dot-emacs/blob/master/init.el#L2596
+https://github.com/vermiculus/ghub-plus
+https://github.com/vermiculus/magithub/blob/master/magithub-completion.el
+https://github.com/magit/magit-imerge
+https://magit.vc/manual/ghub/How-Ghub-uses-Auth_002dSource.html#How-Ghub-uses-Auth_002dSource <-- never got this working and committed change now behavior is annoying
