@@ -38,6 +38,8 @@
 (load "cfg-go.el")
 (load "cfg-haskell.el")
 (load "cfg-shells.el")
+(load "cfg-bash.el")
+(load "cfg-js.el")
 
 ;; *always* byte-compile *everything* (trying this out)
 ;; this is a total disaster
