@@ -183,6 +183,20 @@
    "s-k"        'cider-inspector-previous-inspectable-object)
 
   :init
+  ;; working around the insane difficulty of invoking cider-connect programatically after the latest release of cider
+  ;; which introduced all this fanciness about sessions linking to buffers
+  ;; all of which is quite useless to me... and they made it SUPER HARD to do it non-interactively
+  (defun cider-connect-damnit (cider-plist)
+    (with-temp-buffer
+      (unless (car (hash-table-values sesman-sessions-hashmap))
+        (cider-connect-clj cider-plist))))
+  (defun fucking-cider-and-its-fucking-sessions ()
+    (let ((theonlysession (car (hash-table-values sesman-sessions-hashmap))))
+      (if theonlysession
+          (sesman-link-with-buffer (current-buffer) theonlysession)
+        (message "THERE AINT ONE, FUCK"))))
+
+
   (defun my-cider-mode-hook ()
     (message "MYCIDER: enable yas & clj-ref")
     (yas-minor-mode 1)
@@ -194,9 +208,7 @@
     (message "MYCIDER: require macroexpansion and browse-ns")
     ;; see https://github.com/clojure-emacs/cider/issues/2464
     (message "HACK TO EMULATE cider-default-connection")
-    (let (theonlysession (car (hash-table-values sesman-sessions-hashmap)))
-      (if theonlysession
-          (sesman-link-with-buffer (current-buffer))))
+    (fucking-cider-and-its-fucking-sessions)
     (require 'cider-macroexpansion)
     (require 'cider-browse-ns)
 

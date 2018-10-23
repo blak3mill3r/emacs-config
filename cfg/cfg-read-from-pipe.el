@@ -24,23 +24,31 @@
       (insert-file-contents (fifo-for-pid pid))
       (buffer-string))))
 
-(defun eval-read-fifo (pid)
-  (let ((s (read-fifo pid)))
-    ;; (set-buffer "shit")
-    ;; (end-of-buffer)
-    ;; (insert s)
-    (eval (read s))))
 
-(defun ack (emacs-pid)
+
+(defun eval-read-fifo (pid)
+  (condition-case nil
+      (let ((s (read-fifo pid)))
+        ;; (set-buffer "shit")
+        ;; (end-of-buffer)
+        ;; (insert s)
+        (message "Received ELISP to read & eval:")
+        (message s)
+        (eval (read s)))
+    ((debug error) nil)
+    ;; (error (ack (emacs-pid) ":fail\n"))
+    ))
+
+(defun ack (emacs-pid response)
   (with-temp-buffer
-    (insert ":ok\n")
+    (insert response)
     (append-to-file (point-min) (point-max) (fifo-for-pid-ack emacs-pid))))
 
 (defun eval-read-fifo-for-my-pid ()
   "Read elisp from the named pipe for this emacs instance's pid, and eval it"
   (interactive)
   (eval-read-fifo (emacs-pid))
-  (ack (emacs-pid)))
+  (ack (emacs-pid) ":ok\n"))
 
 (ensure-fifo (fifo-for-pid     (emacs-pid)))
 (ensure-fifo (fifo-for-pid-ack (emacs-pid)))
