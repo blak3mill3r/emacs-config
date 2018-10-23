@@ -14,9 +14,19 @@
         * if it does match then do the fast-path with CRIU snap
           * but what about CLI args?
 
+**** works and is stupidly fast
+     * does not support X
+     * but emacs --daemon is simple to CRIU
+     * but I don't want just one, shared state across all is too cumbersome
+     * emacs --bg-daemon=ropes ; criu it ; start that when launching ropes ctx ; use emacsclient from then on
+     * https://criu.org/Simple_loop (have to use sudo, at least for dump)
+     * with this it is very very fast to launch a client
 *** startup profiling
     https://github.com/jschaf/esup
 
+** whoa
+   /home/blake/bin/emacs --batch --load ~/.emacs.d/init.el --execute '(dump-emacs "myemacs" "/home/blake/bin/emacs")'
+   * except this didn't work
 * Interesting emacs integrations to try
   * https://github.com/Silex/docker.el
   * https://github.com/vermiculus/magithub
