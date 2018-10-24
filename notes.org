@@ -27,6 +27,28 @@
 ** whoa
    /home/blake/bin/emacs --batch --load ~/.emacs.d/init.el --execute '(dump-emacs "myemacs" "/home/blake/bin/emacs")'
    * except this didn't work
+* CRIU is the answer I think
+** the tricky bit is, have to start a --daemon and criu it
+** restore that but it has /tmp/emacs1000/server as the socket
+** need to be able to restore multiple, so the freshly restored one needs to get out of the way on that socket
+** there's crazy CRIU image modifying hackery that can do this I think, however
+** I think emacs can do it, though its awkward, but the following works to change server socket
+*** obviously drops all clients, but that's fine for my purpose
+**** this changes the server socket to "foo"
+    * emacsclient -s /tmp/emacs1000/server -e '(rename-server "foo")' -nw
+      * without the -c it does not work, which is odd... it makes it briefly display emacs in the terminal... not sure what it would do if run non-interactively
+    * criu restore a second time does not like it... I apparently need scripts/criu-ns
+    * and indeed that seems to work, had to clone criu and checkout the branch criu-dev (they say it still has problems)
+      * BUT it does what I want! I get two separate server processes
+      * sudo ~/src/criu/scripts/criu-ns restore -d -vvv -o restore.log && echo OK
+        * I think maybe I have to do all of them with criu-ns
+      * emacsclient -s /tmp/emacs1000/server -e '(rename-server "foo")' -nw
+        * that renames the first one's socket
+      * sudo ~/src/criu/scripts/criu-ns restore -d -vvv -o restore.log && echo OK
+        * restores a new one
+      * emacsclient -s /tmp/emacs1000/doublez -nc
+      * emacsclient -s /tmp/emacs1000/server -nc
+    * BAM! two separate ones spawned by criu
 * Interesting emacs integrations to try
   * https://github.com/Silex/docker.el
   * https://github.com/vermiculus/magithub

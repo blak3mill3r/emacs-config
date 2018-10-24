@@ -1,0 +1,20 @@
+#!/bin/bash
+
+ZENAME=$1
+
+tmux new-session -d -s gargar "emacsclient -s /tmp/emacs1000/server -e \"(rename-server \\\"$ZENAME\\\")\" -nw" >> /tmp/wtf.log 2>&1 
+
+#echo "the tmux exits $?" >> /tmp/wtf.log
+
+while [ ! -e /tmp/emacs1000/$ZENAME ]
+do
+  #echo "awaiting socket /tmp/emacs1000/$ZENAME" >> /tmp/wtf.log 
+  sleep 0.125
+done
+emacsclient -s /tmp/emacs1000/$ZENAME -c -n "${@:2}" >> /tmp/wtf.log 2>&1
+
+#echo "the emacsclient exits $?" >> /tmp/wtf.log
+
+# now what would be slick is
+# md5sum -z ~/.emacs.d/cfg/*.el|md5sum -
+# keep that hash, and somehow automatically make a new CRIU image in the background if it has changed

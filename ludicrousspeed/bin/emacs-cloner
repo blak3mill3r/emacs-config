@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+cd /home/blake/.emacs.d/ludicrousspeed/.images/mine
+
+while :
+do
+  while [ -e /tmp/emacs1000/server ]
+  do
+      echo -n "."
+      sleep 0.1
+  done
+  
+  echo -n "Clone an emacs..."
+  /home/blake/src/criu/scripts/criu-ns restore -d -vvv -o restore.log 2>&1 > /dev/null &
+
+  while [ ! -e /tmp/emacs1000/server ]
+  do
+      echo -n "."
+      sleep 0.1
+  done
+  echo "done"
+    
+done > /var/log/emacs-cloner.log
+
+
+

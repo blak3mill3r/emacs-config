@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+cd /home/blake/.emacs.d/ludicrousspeed/.images
+rm -rf mine && mkdir mine && cd mine
+
+emacs --daemon
+PID=$(ps x|grep emacs|grep daemon|awk '{print $1}')
+
+sudo criu dump -t $PID -vvv -o dump.log \
+    && echo DONE

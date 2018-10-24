@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# Copyright 2018 Blake Miller <blak3mill3r@gmail.com>
+
+### BEGIN INIT INFO
+# Provides:          emacs-cloner
+# Required-Start:    dbus $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Should-Start:      xfs $named slapd
+# Should-Stop:       xfs $named slapd
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Lightning-fast emacsen
+# Description:	     Debian init script for cloning new emacs server processes with CRIU.
+### END INIT INFO
+
+NAME="emacs-cloner"
+DESC="Emacs Cloner"
+DAEMON=/sbin/emacs-cloner
+DAEMON_ARGS=""
+PIDFILE=/var/run/emacs-cloner.lock
+
+#SSD_START_ARGS="-m --pidfile $PIDFILE --name $(basename $DAEMON) --startas $DAEMON"
+#SSD_STOP_ARGS="-m --pidfile $PIDFILE --name $(basename $DAEMON) --retry TERM/5/TERM/5"
+SSD_START_ARGS="-S --quiet --oknodo --pidfile ${PIDFILE} --make-pidfile --background --startas ${DAEMON} -- ${DAEMON_ARGS}"
+SSD_STOP_ARGS="-K --signal TERM --quiet --oknodo --pidfile ${PIDFILE}"
+
+test -x $DAEMON || exit 0
+. /lib/lsb/init-functions
+
+case $1 in
+  start)
+    if [ -e ${PIDFILE} ]; then
+        # Check the actual status of process
+        status_of_proc -p ${PIDFILE} ${DAEMON} ${NAME} && status="0" || status="$?"
+        # If the status is successfull, no need to start again.
+        [ ${status} = "0" ] && exit 0
+    fi
+    # Start the daemon.
+    log_daemon_msg "Starting ${NAME}" 
+    start-stop-daemon $SSD_START_ARGS
+    if [ "$?" == "0" ]; then
+        log_end_msg 0
+    else
+        log_end_msg 1
+    fi
+  ;;
+
+  stop)
+    if [ -e ${PIDFILE} ]; then
+        status_of_proc -p ${PIDFILE} ${DAEMON} ${NAME} && status="0" || status="$?"
+        if [ "$status" = "0" ]; then
+            log_daemon_msg "Stopping ${NAME}" 
+            start-stop-daemon $SSD_STOP_ARGS
+            if [ "$?" == "0" ]; then
+                log_end_msg 0
+                rm -rf ${PIDFILE}
+            else
+                log_end_msg 1
+            fi
+        fi
+    else
+        log_daemon_msg "${NAME} is not running"
+        log_end_msg 0
+    fi
+  ;;
+
+  restart)
+    $0 stop
+    sleep 2
+    $0 start
+  ;;
+
+#  force-reload)
+#  ;;
+
+  status)
+      # Check the status of the process.
+      if [ -e ${PIDFILE} ]; then
+          status_of_proc -p ${PIDFILE} ${DAEMON} ${NAME} && exit 0 || exit $?
+      else
+          log_daemon_msg "${NAME} is not running (no pidfile)"
+          log_end_msg 0
+      fi
+  ;;
+
+  *)
+    echo "Usage: /etc/init.d/emacs-cloner {start|stop|restart|force-reload|status}"
+    exit 1
+  ;;
+esac
+
+# End of file
