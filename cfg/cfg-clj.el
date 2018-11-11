@@ -135,7 +135,7 @@
    "s-["      'cider-pop-back
    "s-t"      'cider-test-run-ns-tests
    "s-\\"     'cider-eval-last-sexp
-   ;; "s-\\"     'cider-eval-defun-at-point
+   "s-l"     'cider-eval-defun-at-point
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
    "s-!"      'cider-eval-ns-form
