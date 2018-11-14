@@ -73,9 +73,9 @@
   :mode "\\.edn$"
   :mode "\\.clj$"
   :mode "\\.cljx$"
-  :general (:states '(normal insert visual)
+  :general (:states '(normal)
             :keymaps 'clojure-mode-map
-            "s-|"    'clojure-align
+            "|"    'clojure-align
             "<f8>" 'prettify-symbols-mode)
   :init
   (defun my-clojure-mode-hook ()
@@ -131,6 +131,7 @@
   :general
   (:states '(normal insert visual)
    :keymaps 'clojure-mode-map
+   "s--"      'clojure-cycle-privacy
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
    "s-t"      'cider-test-run-ns-tests

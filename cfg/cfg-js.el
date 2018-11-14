@@ -1,6 +1,7 @@
 (use-package json-mode
   :general
   (:state '(normal insert visual)
+   :keymaps 'json-mode-map
    "s-t" 'json-toggle-boolean
    "s-<backspace>" 'json-nullify-sexp
    "s--" 'json-decrement-number-at-point
