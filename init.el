@@ -22,7 +22,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/cfg/")
 
-(load "cfg-speedy.el")
+(load "cfg-ludicrousspeed.el")
 (load "cfg-sensitive.el")
 (load "cfg-read-from-pipe.el")
 (load "cfg-prelude.el")

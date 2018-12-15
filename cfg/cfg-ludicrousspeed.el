@@ -3,7 +3,7 @@
 ;; this is so juicy
 
 (defun rename-server (name)
-  "Restart the emacs server listening on a new socket based on the name in ~/.emacs.d/.switch-to-socket
+  "Restart the emacs server listening on a new socket with the provided name.
   For use with a freshly restored CRIU image of a clean-slate emacs --daemon process."
   (setq server-name name)
   (message server-name)

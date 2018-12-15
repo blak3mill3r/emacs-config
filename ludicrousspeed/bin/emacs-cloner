@@ -2,9 +2,12 @@
 
 cd /home/blake/.emacs.d/ludicrousspeed/.images/mine
 
+SOCKET_PATH=/run/user/1000/emacs
+SOCKET_NAME=$SOCKET_PATH/server
+
 while :
 do
-  while [ -e /tmp/emacs1000/server ]
+  while [ -e $SOCKET_NAME ]
   do
       echo -n "."
       sleep 0.1
@@ -13,7 +16,7 @@ do
   echo -n "Clone an emacs..."
   /home/blake/src/criu/scripts/criu-ns restore -d -vvv -o restore.log 2>&1 > /dev/null &
 
-  while [ ! -e /tmp/emacs1000/server ]
+  while [ ! -e $SOCKET_NAME ]
   do
       echo -n "."
       sleep 0.1
