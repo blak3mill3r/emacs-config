@@ -14,7 +14,7 @@ do
   #echo "awaiting socket $SOCKET_PATH/$ZENAME" >> /tmp/wtf.log 
   sleep 0.125
 done
-emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" >> /tmp/wtf.log 2>&1
+emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" -e "(prepare-to-die)" >> /tmp/wtf.log 2>&1
 
 #echo "the emacsclient exits $?" >> /tmp/wtf.log
 

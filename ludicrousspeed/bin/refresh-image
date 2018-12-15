@@ -9,3 +9,10 @@ PID=$(ps x|grep emacs|grep daemon|awk '{print $1}')
 
 sudo criu dump -t $PID -vvv -o dump.log \
     && echo DONE
+
+# hack
+# after criu-dumping emacs --daemon process
+# there's a dangling socket
+# I feel like this didn't always happen...
+# whatever; removing it here should do the trick
+rm /run/user/1000/emacs/server

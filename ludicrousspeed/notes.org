@@ -1,0 +1,21 @@
+* need scripts/criu-ns from criu-dev branch
+* when I had it working it was with v3.9 (latest release)
+  * but I had to grab scripts/criu-ns from criu-dev branch
+
+* then it stopped working at some point and I think I've tracked down why
+  * this systemd socket thing emacs has
+  * don't recall rebuilding emacs but maybe I did...
+  * anyway it has this fancy systemd socket garbage that makes criu dump fail
+
+* try with ./configure --disable-libsystemd
+  * tried and failed with ./configure --without-libsystemd
+  * which still fucking linked with libsystemd (which is lame)
+
+
+* FIXED IT
+** damnit
+*** fuck you systemd
+    https://forums.fedoraforum.org/showthread.php?292543-how-to-permanently-disable-systemd-journald-service
+*** disabled and masked and killed journald and it all works again
+*** at what point did my debian stretch system start running journald for me? FUCK
+   
