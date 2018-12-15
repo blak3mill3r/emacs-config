@@ -216,6 +216,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
    ",w"     'make-frame
    "wd"     'delete-window
    "wb"     'delete-other-windows
+   "fd"     'delete-frame
    ;; general utilities
    "ds"     'desktop-save-in-desktop-dir
    ",s"     'shell

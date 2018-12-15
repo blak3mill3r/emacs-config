@@ -11,7 +11,17 @@
 
 (defun kill-emacs-when-last-frame-is-deleted (frame)
   "Each time a frame is deleted, if there are no more frames, kill emacs."
-  (when (null (frame-list)) (kill-emacs)))
+  ;; there is a "terminal frame" when started with --daemon
+  ;; have to account for that... what I want is: if there are no more frames visible NOT including the terminal frame (which is really not visible)
+  ;; then exit emacs gracefully cleaning up desktop lock files and so on...
+  (when (= 1 (cl-count-if (lambda (f)
+                            (not (null (frame-parameter f 'display))))
+                          (visible-frame-list)))
+    ;; for some reason if I immediately invoke kill-emacs
+    ;; then I get dangling desktop lock files
+    ;; regardless of the order of this fn in the delete-frame-functions list
+    ;; but if I defer killing emacs with run-at-time, then it works
+    (run-at-time "0.1" nil (lambda () (kill-emacs)))))
 
 (add-to-list 'delete-frame-functions #'kill-emacs-when-last-frame-is-deleted)
 

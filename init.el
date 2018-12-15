@@ -16,6 +16,9 @@
 (setq straight-use-package-by-default t)
 (setq debug-on-error nil)
 
+;; I get desktop restore problems with this enabled, as it is by default
+(setq desktop-restore-forces-onscreen nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Load cfg/*.el
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
