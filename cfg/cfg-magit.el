@@ -68,7 +68,10 @@
    ",gc"  'magit-git-command
    ",t"   'magit-tag
    ",s"   'magit-stash
-   ",S"   'magit-stash-pop)
+   ",S"   'magit-stash-pop
+   ",bc"  'magit-branch-config-popup
+   ",gb"  'magit-branch-popup
+   )
   (:keymaps 'git-commit-mode-map
    "<C-return>"     'with-editor-finish
    "<C-backspace>"  'with-editor-cancel)
