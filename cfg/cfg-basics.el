@@ -1,6 +1,11 @@
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
 
+;; direnv seems like a Good Idea
+(use-package direnv
+  :config
+  (direnv-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; recent file list, my "scratch buffers" are files with jibberish names
 ;; disabled because of lock conflicts between multiple instances of emacs
