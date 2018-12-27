@@ -13,41 +13,41 @@
   (interactive)
   (intero-repl-eval-region (point-min) (point-max)) (intero-repl-switch-back))
 
-(use-package intero
-  :bind (:map evil-normal-state-map
-         (",,t" . intero-targets)
-         :map intero-repl-mode-map
-         ("s-\\ s-SPC" . intero-repl-clear-buffer)
-         :map haskell-mode-map
-         ("s-\\ s-SPC" . (lambda ()
-                           (interactive)
-                           (intero-repl-restart)
-                           (intero-repl-load)
-                           (intero-repl-switch-back)))
-         ("s-\\ s-k" . intero-restart)
-         ("s-\\ s-\\" . haskell-eval-line)
-         ("s-." . intero-type-at)
-         ("s-," . intero-info)
-         ("s-\\ s-u" . intero-uses-at)
-         ;; hydra this:
-         ;; ("s-n" . intero-highlight-uses-mode-next)
-         ;; ("s-p" . intero-highlight-uses-mode-prev)
-         ;; ("s-\\ s-r" . intero-highlight-uses-mode-replace)
-         ;; ("s-j" . intero-highlight-uses-mode-stop-here)
-         ("s-r" . haskell-eval-region)
-         ("s-\\ s-j" . intero-repl-load)
-         ("s-]" . intero-goto-definition)
-         ("s-[" . pop-tag-mark)
-         ;; ("s-]" . haskell-mode-jump-to-def-or-tag)
-         ("<tab>" . company-complete)
-         ;; ("s-," . (lambda () (interactive) (intero-get-loc-at  (point-min) (point-max))))
+;; (use-package intero
+;;   :bind (:map evil-normal-state-map
+;;          (",,t" . intero-targets)
+;;          :map intero-repl-mode-map
+;;          ("s-\\ s-SPC" . intero-repl-clear-buffer)
+;;          :map haskell-mode-map
+;;          ("s-\\ s-SPC" . (lambda ()
+;;                            (interactive)
+;;                            (intero-repl-restart)
+;;                            (intero-repl-load)
+;;                            (intero-repl-switch-back)))
+;;          ("s-\\ s-k" . intero-restart)
+;;          ("s-\\ s-\\" . haskell-eval-line)
+;;          ("s-." . intero-type-at)
+;;          ("s-," . intero-info)
+;;          ("s-\\ s-u" . intero-uses-at)
+;;          ;; hydra this:
+;;          ;; ("s-n" . intero-highlight-uses-mode-next)
+;;          ;; ("s-p" . intero-highlight-uses-mode-prev)
+;;          ;; ("s-\\ s-r" . intero-highlight-uses-mode-replace)
+;;          ;; ("s-j" . intero-highlight-uses-mode-stop-here)
+;;          ("s-r" . haskell-eval-region)
+;;          ("s-\\ s-j" . intero-repl-load)
+;;          ("s-]" . intero-goto-definition)
+;;          ("s-[" . pop-tag-mark)
+;;          ;; ("s-]" . haskell-mode-jump-to-def-or-tag)
+;;          ("<tab>" . company-complete)
+;;          ;; ("s-," . (lambda () (interactive) (intero-get-loc-at  (point-min) (point-max))))
 
-         :map intero-repl-mode-map
-         ("s-<return>" . intero-repl-switch-back))
-  :commands (intero-mode)
-  ;; :config
+;;          :map intero-repl-mode-map
+;;          ("s-<return>" . intero-repl-switch-back))
+;;   :commands (intero-mode)
+;;   ;; :config
 
-  )
+;;   )
 
 (use-package haskell-mode
   :mode ("\\.hs$" . haskell-mode)
