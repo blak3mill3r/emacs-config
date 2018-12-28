@@ -4,7 +4,7 @@
          :files (:defaults "lispy-clojure.clj")
          :host github
          :repo "blak3mill3r/lispy"
-         :branch "no-auto-cider-jack-in"
+         :branch "master"
          :upstream (:host github :repo "abo-abo/lispy"))
 
   ;; (lispy :repo "abo-abo/lispy"
