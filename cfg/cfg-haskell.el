@@ -51,12 +51,14 @@
 
 (use-package haskell-mode
   :mode ("\\.hs$" . haskell-mode)
-  :bind (("s-n"         . flycheck-next-error)
-         ("s-p"         . flycheck-previous-error)
-         ("s-/"         . flycheck-list-errors)
-         ("s-]"         . haskell-mode-jump-to-def)
-         ;; ("s-b"         . flycheck-buffer)
-         )
+  :general (:states '(normal)
+            :keymaps 'haskell-mode-map
+            "s-n"         'flycheck-next-error
+            "s-p"         'flycheck-previous-error
+            "s-/"         'flycheck-list-errors
+            "s-]"         'haskell-mode-jump-to-def
+            ;; ("s-b"         . flycheck-buffer)
+            )
   :config
   (progn
     ;; (remove-hook 'haskell-mode-hook 'interactive-haskell-mode)
