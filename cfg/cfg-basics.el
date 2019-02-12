@@ -213,8 +213,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
    "b,"     'previous-buffer
    "bl"     'ibuffer
    "br"     'revert-buffer
-   "b SPC"  'ido-switch-buffer
-   ",b"     'ido-switch-buffer
+   ",b"     'switch-to-buffer
    "bk"     'kill-buffer-and-window
    "bd"     'kill-buffer
    ;; frames and windows
