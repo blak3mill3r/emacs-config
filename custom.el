@@ -19,7 +19,7 @@
                 :weight normal
                 ;; but ... 90 on home office
                 ;; this is 180 on laptop
-                :height 180
+                :height 90
                 :width normal
                 :foundry "PfEd"
                 :family "Inconsolata")))))
