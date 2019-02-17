@@ -53,3 +53,15 @@
   :hook '(org-mode . evil-org-mode)
   :config
   (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading)))
+
+;; something is borked with org + use-package ... org is a little bit insane
+;; it worked when I eval'd the following but then it broke when starting fresh emacs
+
+;;(use-package org
+;;  )
+;;
+;;(use-package ox-hugo
+;;  :after ox
+;;; :config
+;;; (require 'ox-hugo-auto-export)
+;;  )
