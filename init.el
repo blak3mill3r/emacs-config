@@ -57,3 +57,7 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
+
+;; this is poorly named
+;; it really means hitting A in dired will replace the dired buffer with the file rather than opening a new one
+(put 'dired-find-alternate-file 'disabled nil)
