@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+# a daemon which keeps a "warm" emacs clone
+# that is, a criu-restored snapshot of emacs with no frames visible
+# there is always a warm one standing by
+# see bin/clone-one
+
 cd /home/blake/.emacs.d/ludicrousspeed/.images/mine
 
 SOCKET_PATH=/run/user/1000/emacs
@@ -24,6 +29,3 @@ do
   echo "done"
     
 done > /var/log/emacs-cloner.log
-
-
-

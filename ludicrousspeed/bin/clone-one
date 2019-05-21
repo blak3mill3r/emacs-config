@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# the first argument is a unique name for this emacs instance
+# all further arguments will be forwarded to emacsclient, once the new clone is running
+
+# the bin/emacs-clone daemon keeps a warm invisible emacs process available
+# at all times
+# this script connects to that process using emacsclient and:
+#   * calls (rename-server) which restarts the server on a different socket (the argument passed to this script) and displays a new frame
+#   * awaits the presence of that new named socket
+
 ZENAME=$1
 
 SOCKET_PATH=/run/user/1000/emacs
@@ -21,3 +30,7 @@ emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" -e "(prepare-to-die)" >> /tmp
 # now what would be slick is
 # md5sum -z ~/.emacs.d/cfg/*.el|md5sum -
 # keep that hash, and somehow automatically make a new CRIU image in the background if it has changed
+# unfortunately it seems I am stuck with the limitation that all emacs processes have to stop before baking a new CRIU snap
+# is there a way around that? can't run as a different user...
+# if I could just identify the particular daemon that might solve it
+# but how can I do that? I vaguely remember a failed attempt

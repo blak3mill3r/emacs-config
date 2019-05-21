@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#set -euo pipefail
+
+PID=$(ps x|grep emacs|grep daemon|awk '{print $1}')
+[ ! -z "$PID" ] && echo "Stop all instances of Emacs first." && exit 1
 
 cd /home/blake/.emacs.d/ludicrousspeed/.images
 rm -rf mine && mkdir mine && cd mine
@@ -15,4 +19,4 @@ sudo criu dump -t $PID -vvv -o dump.log \
 # there's a dangling socket
 # I feel like this didn't always happen...
 # whatever; removing it here should do the trick
-rm /run/user/1000/emacs/server
+rm -f /run/user/1000/emacs/server
