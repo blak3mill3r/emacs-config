@@ -88,6 +88,9 @@
     (modify-syntax-entry ?> "w"))
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 
+
+;; consider trying this again:
+
 ;; (use-package eval-sexp-fu)
 ;; (use-package cider-eval-sexp-fu
 ;;   :commands (turn-on-eval-sexp-fu-flash-mode)
@@ -134,7 +137,9 @@
    "s--"      'clojure-cycle-privacy
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
-   "s-t"      'cider-test-run-ns-tests
+
+   "s-RET"      'cider-test-run-ns-tests
+
    "s-\\"     'cider-eval-last-sexp
    "s-l"     'cider-eval-defun-at-point
    "s-b"      'cider-eval-buffer
@@ -149,12 +154,15 @@
    ;; "s-p s-s"  'cider-eval-print-last-sexp
    "s-d"      'cider-debug-defun-at-point
    "s-i s-r"  'cider-inspect-last-result
-   "s-SPC"    'cider-nrepl-reset
+   "s-t"    'cider-nrepl-reset
    "C-n" 'lispy-outline-next
    "C-p" 'lispy-outline-prev
 
    ;; muscle memory expects lispy-eval-and-comment, see cfg-lispy.el, but couldn't get that to work with bleeding-edge cider etc
    "s-j" 'lispy-eval-and-comment
+
+   ;; zap to char and eval!
+   "s-SPC" 'zap-to-and-eval
    
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
    "s-i s-i" 'cider-inspect-last-sexp
@@ -190,6 +198,7 @@
   ;; working around the insane difficulty of invoking cider-connect programatically after the latest release of cider
   ;; which introduced all this fanciness about sessions linking to buffers
   ;; all of which is quite useless to me... and they made it SUPER HARD to do it non-interactively
+
   (defun cider-connect-damnit (cider-plist)
     (with-temp-buffer
       (unless (car (hash-table-values sesman-sessions-hashmap))
@@ -200,39 +209,48 @@
           (sesman-link-with-buffer (current-buffer) theonlysession)
         (message "THERE AINT ONE, FUCK"))))
 
-
+  (defun zap-to-and-eval ()
+    (interactive)
+    (evil-avy-goto-char-timer 3)
+    (cider-eval-defun-at-point))
   (defun my-cider-mode-hook ()
-    (message "MYCIDER: enable yas & clj-ref")
+    (message "MYCIDER: enable yas")
     (yas-minor-mode 1)
-    (clj-refactor-mode 1)
+    ;; (clj-refactor-mode 1)
     (message "MYCIDER: enable eldoc")
     (eldoc-mode 1)
     (message "MYCIDER: enable company-mode")
     (company-mode 1)
     (message "MYCIDER: require macroexpansion and browse-ns")
     ;; see https://github.com/clojure-emacs/cider/issues/2464
-    (message "HACK TO EMULATE cider-default-connection")
-    (fucking-cider-and-its-fucking-sessions)
-    (require 'cider-macroexpansion)
-    (require 'cider-browse-ns)
+    ;; (message "HACK TO EMULATE cider-default-connection")
+    ;; (fucking-cider-and-its-fucking-sessions)
+    ;; (require 'cider-macroexpansion)
+    ;; (require 'cider-browse-ns)
 
     ;; not working yet, with no x toolkit anyway... I don't know if it requires that
     ;; had it working at home
     ;; (company-quickhelp-mode)
 
     ;; (turn-on-eval-sexp-fu-flash-mode)
-    (message "MYCIDER: add cljr submap")
-    (cljr-add-keybindings-with-prefix "s-,")
+
+    ;; (message "MYCIDER: add cljr submap")
+    ;; (cljr-add-keybindings-with-prefix "s-,")
 
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
-    (add-hook 'cider-connected-hook #'lispy--clojure-middleware-load)
-    (progn
-      (add-hook 'nrepl-connected-hook
-                'lispy--clojure-eval-hook-lambda t)))
+
+    ;; (require 'lispy)
+    ;; (add-hook 'cider-connected-hook #'lispy--clojure-middleware-load)
+    
+    ;; (add-hook 'nrepl-connected-hook
+    ;;           'lispy--clojure-eval-hook-lambda t)
+    )
   (defun my-cider-connected-hook ()
     ;; FIXME what if the necessary dependencies are *not* in the nREPL server?
     ;; I should make this degrade gracefully...
-    (lispy-cider-load-file "~/.emacs.d/straight/build/lispy/lispy-clojure.clj"))
+    ;; (lispy-cider-load-file "~/.emacs.d/straight/build/lispy/lispy-clojure.clj")
+    (message "NOT DOING IT")
+    )
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
     (lispy-mode 1)
