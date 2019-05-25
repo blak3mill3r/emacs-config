@@ -4,7 +4,7 @@
          :files (:defaults "lispy-clojure.clj")
          :host github
          :repo "blak3mill3r/lispy"
-         :branch "no-auto-cider-jack-in"
+         :branch "classpath-control"
          :upstream (:host github :repo "abo-abo/lispy"))
 
   ;; (lispy :repo "abo-abo/lispy"
@@ -21,6 +21,8 @@
   :config
   ;; without this, lispy's special wrapping of "/" for lispy-splice, overrides cljr-slash so that / just self-inserts
   (lispy-define-key lispy-mode-map "/" 'lispy-splice :inserter 'cljr-slash)
+  ;; (lispy-define-key lispy-mode-map "/" 'lispy-splice :inserter 'self-insert-command)
+
   (lispy-define-key lispy-mode-map "=" 'lispy-oneline)
   (lispy-define-key lispy-mode-map "J" 'lispy-cursor-down)
   (lispy-define-key lispy-mode-map "K" 'lispy-kill)
@@ -30,7 +32,9 @@
 
   :general
   (:states '(normal insert)
-   "C-K" 'lispy-kill-sentence)
+   "C-K" 'lispy-kill-sentence
+   ;; <M-return>
+   "<M-return>" 'lispy-out-forward-newline)
   (:keymaps 'lispy-mode-map-special
    "C-SPC" 'lispy-cursor-ace
    )

@@ -138,10 +138,11 @@
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
 
-   "s-RET"      'cider-test-run-ns-tests
+   "<s-return>"      'cider-test-run-ns-tests
 
-   "s-\\"     'cider-eval-last-sexp
-   "s-l"     'cider-eval-defun-at-point
+   "s-l"     'cider-eval-last-sexp
+   "s-\\"     'cider-eval-defun-at-point
+
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
    "s-!"      'cider-eval-ns-form
@@ -216,7 +217,7 @@
   (defun my-cider-mode-hook ()
     (message "MYCIDER: enable yas")
     (yas-minor-mode 1)
-    ;; (clj-refactor-mode 1)
+    (clj-refactor-mode 1)
     (message "MYCIDER: enable eldoc")
     (eldoc-mode 1)
     (message "MYCIDER: enable company-mode")
@@ -234,8 +235,8 @@
 
     ;; (turn-on-eval-sexp-fu-flash-mode)
 
-    ;; (message "MYCIDER: add cljr submap")
-    ;; (cljr-add-keybindings-with-prefix "s-,")
+    (message "MYCIDER: add cljr submap")
+    (cljr-add-keybindings-with-prefix "s-,")
 
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
 

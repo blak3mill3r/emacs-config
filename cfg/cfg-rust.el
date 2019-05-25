@@ -22,4 +22,7 @@
 
   )
 
+;; without explicitly using flymake-easy:
+;; Error (use-package): flymake-rust/:catch: Cannot open load file: No such file or directory, flymake-easy
+(use-package flymake-easy)
 (use-package flymake-rust)

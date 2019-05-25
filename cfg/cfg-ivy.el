@@ -36,6 +36,7 @@
    ;; getting help
    "hf" 'counsel-describe-function
    "hv" 'counsel-describe-variable
+   ;; yank ring filtering! cool!
    "yr" 'counsel-yank-pop
    "uc" 'counsel-unicode-char
    "pl" 'counsel-list-processes

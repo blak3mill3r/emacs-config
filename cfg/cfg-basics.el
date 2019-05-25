@@ -1,11 +1,6 @@
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
 
-;; direnv seems like a Good Idea
-(use-package direnv
-  :config
-  (direnv-mode))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; recent file list, my "scratch buffers" are files with jibberish names
 ;; disabled because of lock conflicts between multiple instances of emacs
@@ -90,6 +85,12 @@
 ;; first, I find it maddening to have an independent $PATH for emacs, so fix that:
 (use-package exec-path-from-shell :config (exec-path-from-shell-initialize))
 
+;; direnv seems like a Good Idea
+(use-package direnv
+  :config
+  (exec-path-from-shell-initialize)
+  (direnv-mode))
+
 (defun x-urgency-hint (frame arg &optional source)
   "Set the x-urgency hint for the frame to arg:
 
@@ -138,6 +139,9 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
  "s-[" 'xref-pop-marker-stack
  "s-r" 'eval-region
  "s-b" 'eval-buffer)
+
+(general-define-key
+ "<H-tab>" 'hippie-expand)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Completion framework
@@ -196,6 +200,12 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
     (make-directory "~/.emacs.d/undo"))
   (global-undo-tree-mode))
 
+;; Zap to everything
+(use-package avy
+  :config
+  (setq avy-background nil))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make emacs usable by someone with VIM muscle memory
 
@@ -226,6 +236,9 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
    ",s"     'shell
    ",x"     'smex
    ",,x"    'smex-major-mode-commands
+   ;; more ace jumping
+   "ak" 'avy-goto-line-above
+   "aj" 'avy-goto-line-below
    )
   (:keymaps 'visual
    "|"     'align-regexp)
