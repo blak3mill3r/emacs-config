@@ -1,6 +1,6 @@
 ;; TODO, replicate from my old setup
 
-;; these were in evil-magit.el, for magit-mode-map 
+;; these were in evil-magit.el, for magit-mode-map
 ;; a lot of them I don't have in muscle-memory
 ;;   so I guess I never put them into practice, and might as well start over and reconsider it all
 
@@ -20,8 +20,9 @@
    :states '(normal visual)
    "gho" 'browse-at-remote))
 
-(use-package git-gutter
-  :hook '((prog-mode markdown-mode) . git-gutter-mode))
+;; I think I prefer diff-hl and global-diff-hl-mode (maybe, trying it out)
+;; (use-package git-gutter
+;;   :hook '((prog-mode markdown-mode) . git-gutter-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Git
