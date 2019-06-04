@@ -152,7 +152,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
     (add-hook hook #'whitespace-mode))
   (add-hook 'before-save-hook #'whitespace-cleanup)
   :config
-  ;; (setq whitespace-line-column 80) ;; limit line length
+  (setq whitespace-line-column 113) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
 (use-package super-save
@@ -282,6 +282,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 
 ;; this is required for evil-collection which is better than evil-integration
 (setq evil-want-integration nil)
+(setq evil-want-keybinding nil)
 (use-package evil
   :demand 't
   :general
@@ -331,12 +332,15 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
     (ido-vertical-mode)))
 
 ;; multiple cursors that are compatible with evil
-(use-package evil-mc)
+;; ouch, broken
+;; (use-package evil-mc)
 
 (use-package evil-collection
   :after evil
   :custom (evil-collection-setup-minibuffer t)
-  :config (evil-collection-init))
+  :config
+  (evil-collection-init)
+  (evil-collection-ibuffer-setup))
 
 (use-package evil-surround :config (global-evil-surround-mode 1) :defer 3)
 
@@ -404,10 +408,12 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 
 (use-package ibuffer
   :config
+  (require 'ibuf-ext)
+  (add-to-list 'ibuffer-never-show-predicates "^\\*")
   ;; nearly all of this is the default layout
   (setq ibuffer-formats
         '((mark modified read-only " "
-                (name 60 60 :left :elide) ; change: 30s were originally 18s
+                (name 60 60 :left :elide) ; change: 60s were originally 18s
                 " "
                 (filename-and-process 50 50 :left :elide)
                 " "

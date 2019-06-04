@@ -24,6 +24,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d/cfg/")
+(load (concat user-emacs-directory "custom.el"))
+
 
 (load "cfg-ludicrousspeed.el")
 (load "cfg-sensitive.el")

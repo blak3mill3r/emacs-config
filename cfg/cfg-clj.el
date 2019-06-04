@@ -91,12 +91,6 @@
 
 ;; consider trying this again:
 
-(use-package eval-sexp-fu)
-(use-package cider-eval-sexp-fu
-  :commands (turn-on-eval-sexp-fu-flash-mode)
-  :demand t ;; annoying, tried to get rid of :demand without success
-  :hook '((cider-mode emacs-lisp-mode) . turn-on-eval-sexp-fu-flash-mode))
-
 (use-package sesman
   :straight
   (sesman :type git :host github :repo "vspinu/sesman" :branch "master"))
@@ -110,7 +104,7 @@
 
 (use-package cider
   :straight
-  (cider :type git :host github :repo "clojure-emacs/cider" :branch "v0.18.0"
+  (cider :type git :host github :repo "clojure-emacs/cider" :branch "2586df7dc69c168ebd904128a17f90419868d80a"
          :files (:defaults "cider-test.el"))
 
   :custom
@@ -302,6 +296,13 @@
       ;; (insert "(in-ns 'dev) (reset)")
       (cider-repl-return) )))
 
+(use-package eval-sexp-fu)
+(use-package cider-eval-sexp-fu
+  :after cider
+  :commands (turn-on-eval-sexp-fu-flash-mode)
+  :demand t ;; annoying, tried to get rid of :demand without success
+  :hook '((cider-mode emacs-lisp-mode) . turn-on-eval-sexp-fu-flash-mode))
+
 ;; not sure if I like it yet... it seems pretty cool but maybe a bit heavy/bloated
 ;; play with it more for sure
 ;; (use-package sayid
@@ -318,6 +319,8 @@
 (use-package clj-refactor
   :straight
   (clj-refactor :type git :host github :repo "clojure-emacs/clj-refactor.el" :branch "2.4.0")
+  :custom
+  (cljr-clojure-test-declaration "[clojure.test :as t :refer [deftest is]]")
   )
 
 ;; breaks/unbreaks company-quickhelp-mode for cider, filed https://github.com/expez/company-quickhelp/issues/79

@@ -7,6 +7,9 @@
          :branch "classpath-control"
          :upstream (:host github :repo "abo-abo/lispy"))
 
+  :custom
+  (lispy-cider-connect-method 'cider-connect)
+
   ;; (lispy :repo "abo-abo/lispy"
   ;;        :fetcher github
   ;;        :files (:defaults "lispy-clojure.clj" "lispy-clojure-test.clj"))
@@ -31,6 +34,8 @@
   (lispy-eval-display-style "overlay")
 
   :general
+  (:states '(normal)
+   "C-o" 'lispy-tab)
   (:states '(normal insert)
    "C-K" 'lispy-kill-sentence
    ;; <M-return>
