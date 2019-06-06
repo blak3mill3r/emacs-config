@@ -25,6 +25,16 @@ do
 done
 emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" -e "(prepare-to-die)" >> /tmp/wtf.log 2>&1
 
+# ^^ PROBLEM, emacsclient accepts only -e or files ^^
+# not both...
+# but above I use it to (prepare-to-die) which I must've added after the forwarding files or args
+# and, it breaks that
+# however I think I needed prepare-to-die to exit emacs after the last frame is deleted
+# and there was something fuxored about having it happen in init... ?
+# experiment with another way to do it so that this clone-one launcher can fwd args
+
+
+
 #echo "the emacsclient exits $?" >> /tmp/wtf.log
 
 # now what would be slick is
@@ -34,3 +44,11 @@ emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" -e "(prepare-to-die)" >> /tmp
 # is there a way around that? can't run as a different user...
 # if I could just identify the particular daemon that might solve it
 # but how can I do that? I vaguely remember a failed attempt
+# annoyingly emacs does some funky forking so you cannot just bg the proc and get the pid (the actual pid will differ)
+# one thing I might be able to do is get the pid from inside emacs, then pass some --eval '(write-pid-somewhere)'
+# then grab that somewhere from bash...
+# that would work and the fn is (emacs-pid)
+# http://www.virtuouscode.com/2011/06/17/make-emacs-server-write-a-pid-file/
+# that would mean that I could have some emacsen running and still refresh-image
+
+# also it really ought to forward arguments
