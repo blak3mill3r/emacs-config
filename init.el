@@ -14,6 +14,8 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(setq server-socket-dir "/run/user/1000/emacs") ;; FIXME hard-coded user id
+
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 (setq debug-on-error nil)
