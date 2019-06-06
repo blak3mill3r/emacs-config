@@ -146,14 +146,18 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 ;; each 50MB of allocated data (the default is on every 0.76MB)
 (setq gc-cons-threshold 50000000)
 
-(use-package whitespace
-  :init
-  (dolist (hook '(prog-mode-hook text-mode-hook))
-    (add-hook hook #'whitespace-mode))
-  (add-hook 'before-save-hook #'whitespace-cleanup)
-  :config
-  (setq whitespace-line-column 113) ;; limit line length
-  (setq whitespace-style '(face tabs empty trailing lines-tail)))
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;; the following complains about finder-inf.elc being empty... wtf
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;;(use-package whitespace
+;;  :init
+;;  (dolist (hook '(prog-mode-hook text-mode-hook))
+;;    (add-hook hook #'whitespace-mode))
+;;  (add-hook 'before-save-hook #'whitespace-cleanup)
+;;  :config
+;;  (setq whitespace-line-column 113) ;; limit line length
+;;  (setq whitespace-style '(face tabs empty trailing lines-tail)))
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 (use-package super-save
   :config
@@ -406,21 +410,27 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 (use-package which-key
   )
 
-(use-package ibuffer
-  :config
-  (require 'ibuf-ext)
-  (add-to-list 'ibuffer-never-show-predicates "^\\*")
-  ;; nearly all of this is the default layout
-  (setq ibuffer-formats
-        '((mark modified read-only " "
-                (name 60 60 :left :elide) ; change: 60s were originally 18s
-                " "
-                (filename-and-process 50 50 :left :elide)
-                " "
-                (size 9 -1 :right)
-                " "
-                (mode 16 16 :left :elide)
-                )
-          (mark " "
-                (name 16 -1)
-                " " filename))) )
+
+
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;; the following complains about finder-inf.elc being empty... wtf
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;; (use-package ibuffer
+;;   :config
+;;   (require 'ibuf-ext)
+;;   (add-to-list 'ibuffer-never-show-predicates "^\\*")
+;;   ;; nearly all of this is the default layout
+;;   (setq ibuffer-formats
+;;         '((mark modified read-only " "
+;;                 (name 60 60 :left :elide) ; change: 60s were originally 18s
+;;                 " "
+;;                 (filename-and-process 50 50 :left :elide)
+;;                 " "
+;;                 (size 9 -1 :right)
+;;                 " "
+;;                 (mode 16 16 :left :elide)
+;;                 )
+;;           (mark " "
+;;                 (name 16 -1)
+;;                 " " filename))) )
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -104,7 +104,7 @@
 
 (use-package cider
   :straight
-  (cider :type git :host github :repo "clojure-emacs/cider" :branch "2586df7dc69c168ebd904128a17f90419868d80a"
+  (cider :type git :host github :repo "clojure-emacs/cider" :branch "master"
          :files (:defaults "cider-test.el"))
 
   :custom

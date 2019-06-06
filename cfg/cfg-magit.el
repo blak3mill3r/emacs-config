@@ -37,7 +37,8 @@
    magit-log-margin '(t "%Y-%m-%d %H:%M" magit-log-margin-width t 18)
    magit-diff-highlight-indentation '((".*" . tabs))
    magit-branch-rename-push-target 'local-only)
-  (add-to-list 'magit-log-arguments "--follow")
+  ;; this var disappeared:
+  ;; (add-to-list 'magit-log-arguments "--follow")
   )
 
 (use-package evil-magit

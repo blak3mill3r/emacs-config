@@ -46,13 +46,19 @@
   (setq-local company-backends
               (add-to-list 'company-backends 'company-lsp))) 
 
-(use-package irony)
-(use-package flycheck-irony
-  :after flycheck
-  :hook '(cc-mode . flycheck-mode)
-
-  :config
-  (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;; the following complains about finder-inf.elc being empty... wtf
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;; (use-package irony)
+;; (use-package flycheck-irony
+;;   :after flycheck
+;;   :hook '(cc-mode . flycheck-mode)
+;; 
+;;   :config
+;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+;; (use-package irony-eldoc
+;;   )
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ;; http://tsengf.blogspot.com/2011/06/semantic-ia-fast-jump-doesnt-push-tag.html
 (require 'etags)
@@ -63,9 +69,6 @@
     (interactive)
     (ring-insert find-tag-marker-ring (point-marker))
     )
-  )
-
-(use-package irony-eldoc
   )
 
 (defun ciao-goto-symbol ()
