@@ -345,3 +345,42 @@
 
 ;; (use-package company-lsp
 ;;   :commands company-lsp)
+
+(defun cider-inspector-watch-iteration ()
+  (interactive)
+  (let ((window-before (selected-window)))
+    (cider-inspector-pop)
+    ;; (cider-inspector-refresh)
+    (select-window window-before)))
+
+(defun cider-inspector-watch ()
+  (setq cider-inspector-watch-timer (run-with-timer 0 1 'cider-inspector-watch-iteration)))
+
+(defun cider-inspector-unwatch ()
+  (cancel-timer cider-inspector-watch-timer))
+
+(quote
+ (progn
+   (cider-inspector-watch-iteration)
+   (cider-inspector-watch)
+   (cider-inspector-unwatch)
+   (cancel-timer 'cider-inspector-watch-iteration)
+   ))
+
+(quote
+ (progn
+   (cider-pprint-eval-last-sexp)
+   (cider--pprint-eval-form "(do (Thread/sleep 2000) (+ 1 2))")
+   (cider-last-sexp 'bounds)
+   (cider-eval-sexp-at-point)
+   (with-temp-buffer
+     (clojure-mode)
+     (cider-mode)
+     (insert "(+ 1 2)")
+     (goto-char (point-max))
+     (cider-eval-last-sexp)
+     ;; (sit-for 1)
+     )
+
+
+   ))
