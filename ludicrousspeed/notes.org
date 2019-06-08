@@ -22,3 +22,22 @@
   * init script should do that, and also clear out any desktop lock files which prevent desktops from being restored
     * find . -name .emacs.desktop.lock -exec rm {} \;
     * now, I already have an emacs-cloner init script
+* Blog about it
+  * mention the CRAZY SHIT people do in pursuit of faster emacs startup
+    * https://github.com/nilcons/emacs-use-package-fast
+  * and the downsides to running a single server and emacsclient
+* what I ought to do is
+  * get (emacs-pid) out to a pidfile
+  * make clone-one call that (somehow still fwd args)
+  * when launching the server for the CRIU snap, make it write the pid
+    * that gets the pid into bash
+    * that should let me snapshot it without killing all emacsen which is really just a hack to detect the pid of the server
+    * then it becomes possible to script some manager thingummy for it
+      * and it's time to ditch bash at that point
+      * what language? not so sure... maybe joker scripts?
+      * or ... stevedore? bash embedding?
+      * or some lisp-flavored something that is always available like perl
+      * could do it in ruby or python, those are always available
+      * python has hy...
+      * racket? does it compile executables?
+      * how about common lisp or scheme?
