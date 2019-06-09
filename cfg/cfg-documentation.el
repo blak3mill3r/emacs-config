@@ -1,6 +1,7 @@
 
 
 (use-package markdown-mode
+  :demand t
   :mode  (("\\.markdown\\'" . markdown-mode)
           ("\\.md\\'" . markdown-mode))
   :init
@@ -28,6 +29,7 @@
 
 
 (use-package evil-org
+  :demand t
   :commands (evil-org-mode)
   :init
   ;; this approach has some drawbacks: it's too dumb (doesn't understand nesting or indentation)

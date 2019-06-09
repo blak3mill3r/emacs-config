@@ -1,9 +1,11 @@
 (use-package alert
+  :demand t
   :commands (alert)
   :init
   (setq alert-default-style 'libnotify))
 
 (use-package slack
+  :demand t
   :commands (slack-start)
   :init
   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil

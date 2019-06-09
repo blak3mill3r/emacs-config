@@ -1,9 +1,10 @@
 (use-package rainbow-delimiters
+  :demand t
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package flycheck
-  :defer 5
+  :demand t
   :hook '(clojure-mode . flycheck-mode)
   :config
   ;; (global-flycheck-mode)
@@ -70,6 +71,7 @@
 
 
 (use-package clojure-mode
+  :demand t
   :mode "\\.edn$"
   :mode "\\.clj$"
   :mode "\\.cljx$"
@@ -92,10 +94,12 @@
 ;; consider trying this again:
 
 (use-package sesman
+  :demand t
   :straight
   (sesman :type git :host github :repo "vspinu/sesman" :branch "master"))
 
 (use-package parseedn
+  :demand t
   :straight
   (parseedn :type git
             :host github
@@ -103,6 +107,7 @@
             :branch "master"))
 
 (use-package cider
+  :demand t
   :straight
   (cider :type git :host github :repo "clojure-emacs/cider" :branch "master"
          :files (:defaults "cider-test.el"))
@@ -296,11 +301,12 @@
       ;; (insert "(in-ns 'dev) (reset)")
       (cider-repl-return) )))
 
-(use-package eval-sexp-fu)
+(use-package eval-sexp-fu
+  :demand t)
 (use-package cider-eval-sexp-fu
+  :demand t
   :after cider
   :commands (turn-on-eval-sexp-fu-flash-mode)
-  :demand t ;; annoying, tried to get rid of :demand without success
   :hook '((cider-mode emacs-lisp-mode) . turn-on-eval-sexp-fu-flash-mode))
 
 ;; not sure if I like it yet... it seems pretty cool but maybe a bit heavy/bloated
@@ -310,13 +316,17 @@
 ;;   :config
 ;;   (sayid-setup-package))
 
-(use-package clojure-snippets)
+(use-package clojure-snippets
+  :demand t
+  )
 (use-package seq-25
+  :demand t
   :straight
   (seq-25 :type git :host github :repo "NicolasPetton/seq.el"))
 
 ;; ditching it?
 (use-package clj-refactor
+  :demand t
   :straight
   (clj-refactor :type git :host github :repo "clojure-emacs/clj-refactor.el" :branch "2.4.0")
   :custom

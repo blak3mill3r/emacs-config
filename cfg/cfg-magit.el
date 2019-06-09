@@ -14,6 +14,7 @@
 ;; ,,l magit-log
 
 (use-package browse-at-remote
+  :demand t
   :commands (browse-at-remote)
   :general
   (:prefix ","
@@ -31,6 +32,7 @@
 ;; now the community has done that for me (see evil-magit below)
 ;; I still do not use ~80% of what magit provides, and I want to learn
 (use-package magit
+  :demand t
   :config
   (setq
    magit-diff-refine-hunk 'all

@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Bootstrap straight.el
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq straight-use-package-by-default t)
+(setq straight-emacsmirror-use-mirror t)
+(setq debug-on-error t)
 (defvar bootstrap-version)
 (let ((bootstrap-file
 	(expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -16,9 +19,10 @@
 
 (setq server-socket-dir "/run/user/1000/emacs") ;; FIXME hard-coded user id
 
+(add-to-list 'load-path "~/.emacs.d/straight/repos/use-package")
+(require 'use-package)
+
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-(setq debug-on-error nil)
 
 ;; I get desktop restore problems with this enabled, as it is by default
 (setq desktop-restore-forces-onscreen nil)
@@ -29,12 +33,11 @@
 
 (add-to-list 'load-path "~/.emacs.d/cfg/")
 (load (concat user-emacs-directory "custom.el"))
-
+(load "cfg-prelude.el")
 
 (load "cfg-ludicrousspeed.el")
 (load "cfg-sensitive.el")
 (load "cfg-read-from-pipe.el")
-(load "cfg-prelude.el")
 (load "cfg-elisp.el")
 (load "cfg-basics.el")
 (load "cfg-documentation.el")

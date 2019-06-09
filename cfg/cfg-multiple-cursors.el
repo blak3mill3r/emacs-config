@@ -1,6 +1,6 @@
 ;; multiple cursors that have a bigger community but aren't compatible with evil
 ;; this one I use with lispy mode
-(use-package multiple-cursors)
+(use-package multiple-cursors :demand t)
 
 (setq mc/cmds-to-run-for-all 
       '(

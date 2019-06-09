@@ -1,4 +1,5 @@
 (use-package lispy
+  :demand t
   :straight
   (lispy :type git
          :files (:defaults "lispy-clojure.clj")
@@ -55,11 +56,13 @@
 
 ;; strict indentation
 (use-package aggressive-indent
+  :demand t
   :hook '(lispy-mode . aggressive-indent-mode))
 
 ;; don't break parens with vi editing commands
 ;; I usually do not use vi editing commands in a lisp buffer, but they might as well play nicely together
 (use-package lispyville
+  :demand t
   :commands
   'lispyville-mode
   :hook '(lispy-mode . lispyville-mode))

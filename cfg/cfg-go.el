@@ -7,6 +7,7 @@
 ;; go get golang.org/x/tools/cmd/gorename
 
 (use-package go-mode
+  :demand t
   :config
   (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook 'gofmt-before-save nil 'local)))
 
@@ -17,19 +18,23 @@
    "s-[" 'pop-tag-mark))
 
 (use-package go-rename
+  :demand t
   :general
   (:keymaps 'go-mode-map
    :states '(normal insert visual)
    "s-r" 'go-rename))
 
 (use-package go-guru
+  :demand t
   :config
   (go-guru-hl-identifier-mode))
 
 (use-package flycheck
+  :demand t
   :commands 'flycheck-mode)
 
 (use-package company-go
+  :demand t
   :general
   (:keymaps '(go-mode-map)
    ;; reintroduce these without breaking ,

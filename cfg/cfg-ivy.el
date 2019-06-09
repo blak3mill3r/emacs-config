@@ -7,9 +7,10 @@
     (setq ivy-use-virtual-buffers t)
     (setq enable-recursive-minibuffers t) ))
 
-(use-package ag)
+(use-package ag :demand t)
 
 (use-package projectile
+  :demand t
   :config
   (setq projectile-mode-line
         '(:eval
@@ -29,6 +30,7 @@
    ))
 
 (use-package counsel
+  :demand t
   :general
   (:keymaps 'normal
    ;; "/" 'swiper

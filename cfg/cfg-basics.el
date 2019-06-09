@@ -83,10 +83,11 @@
 ;; XWindows, bash
 
 ;; first, I find it maddening to have an independent $PATH for emacs, so fix that:
-(use-package exec-path-from-shell :config (exec-path-from-shell-initialize))
+(use-package exec-path-from-shell :demand t :config (exec-path-from-shell-initialize))
 
 ;; direnv seems like a Good Idea
 (use-package direnv
+  :demand t
   :config
   (exec-path-from-shell-initialize)
   (direnv-mode))
@@ -160,6 +161,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 (use-package super-save
+  :demand t
   :config
   ;; add integration with ace-window
   (add-to-list 'super-save-triggers 'ace-window)
@@ -173,6 +175,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
       scroll-preserve-screen-position 1)
 
 (use-package diff-hl
+  :demand t
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
@@ -207,6 +210,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 (setq global-auto-revert-non-file-buffers t)
 
 (use-package diff-hl
+  :demand t
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
@@ -221,6 +225,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Completion framework
 (use-package company
+  :demand t
   :config
   ;; CAREFUL, perhaps should do this per-mode
   (setq company-minimum-prefix-length 3)
@@ -228,10 +233,10 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
   (setq company-idle-delay 0.5))
 
 ;; (global-company-mode)
-(use-package company-quickhelp)
+(use-package company-quickhelp :demand t)
 
 (use-package company-restclient
-  :defer t
+  :demand t
   :general
   (:keymaps 'restclient-mode-map
    :states '(normal insert visual)
@@ -277,6 +282,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 
 ;; Zap to everything
 (use-package avy
+  :demand t
   :config
   (setq avy-background nil))
 
@@ -288,7 +294,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 (setq evil-want-integration nil)
 (setq evil-want-keybinding nil)
 (use-package evil
-  :demand 't
+  :demand t
   :general
   (:keymaps 'normal
    "SPC" 'avy-goto-char-timer)
@@ -326,7 +332,6 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
    "C-w C-j" 'evil-window-down
    "C-w C-h" 'evil-window-left
    "C-w C-l" 'evil-window-right)
-  :demand t
   :config
   (progn
     (evil-mode 1)
@@ -340,6 +345,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 ;; (use-package evil-mc)
 
 (use-package evil-collection
+  :demand t
   :after evil
   :custom (evil-collection-setup-minibuffer t)
   :config
@@ -362,7 +368,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 (define-key evil-motion-state-map (kbd "C-w C-l") 'evil-window-right)
 
 ;; I really like this: the mental overhead is low and I can adjust emacs windows with the keyboard
-(use-package move-border :straight (move-border :host github :repo "ramnes/move-border"))
+(use-package move-border :straight (move-border :host github :repo "ramnes/move-border") :demand t)
 
 ;; a hydra for window commands
 (defhydra hydraww
@@ -403,12 +409,10 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 ;; TODO a hydra for opening interactive environments like repls, database clients, etc... including TRAMP
 ;; or, should that be xmonad-electric's domain?
 
-(use-package yaml-mode
-  :defer t)
+(use-package yaml-mode :demand t)
 
 ;; good for learning new keybindings
-(use-package which-key
-  )
+(use-package which-key :demand t)
 
 
 

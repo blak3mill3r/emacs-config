@@ -50,6 +50,7 @@
 ;;   )
 
 (use-package haskell-mode
+  :demand t
   :mode ("\\.hs$" . haskell-mode)
   :general (:states '(normal)
             :keymaps 'haskell-mode-map

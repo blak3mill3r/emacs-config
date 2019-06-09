@@ -1,15 +1,19 @@
 (use-package cquery
+  :demand t
   :init
   (setq cquery-executable  "/home/blake/src/cquery/build/release/bin/cquery"))
 
 (use-package yasnippet-snippets
+  :demand t
   :init
   (yas-load-directory (concat user-emacs-directory "/straight/repos/yasnippet-snippets/snippets")))
 
 (use-package yasnippet
+  :demand t
   :after yasnippet-snippets)
 
 (use-package function-args
+  :demand t
   :config
   (fa-config-default))
 
@@ -40,6 +44,7 @@
 
 
 (use-package company-lsp
+  :demand t
   :config
   (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
   (setq cquery-extra-init-params '(:completion (:detailedLabel t)))

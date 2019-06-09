@@ -1,4 +1,5 @@
 (use-package json-mode
+  :demand t
   :general
   (:state '(normal insert visual)
    :keymaps 'json-mode-map
@@ -17,6 +18,7 @@
   (setq json-reformat:indent-width 4))
 
 (use-package jq-mode
+  :demand t
   :general
   (:states '(normal insert visual)
    :keymaps 'json-mode-map

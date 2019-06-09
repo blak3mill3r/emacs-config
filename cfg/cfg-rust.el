@@ -1,5 +1,8 @@
-(use-package cargo)
+(use-package cargo
+  :demand t
+  )
 (use-package racer
+  :demand t
   :general
   (:states '(normal insert)
    :keymaps 'rust-mode-map
@@ -24,5 +27,9 @@
 
 ;; without explicitly using flymake-easy:
 ;; Error (use-package): flymake-rust/:catch: Cannot open load file: No such file or directory, flymake-easy
-(use-package flymake-easy)
-(use-package flymake-rust)
+(use-package flymake-easy
+  :demand t
+  )
+(use-package flymake-rust
+  :demand t
+  )
