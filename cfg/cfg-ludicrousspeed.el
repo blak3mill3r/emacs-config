@@ -24,6 +24,7 @@
     (run-at-time "0.1" nil (lambda () (kill-emacs)))))
 
 ;; this is called by the ludicrousspeed/bin/clone-one script
+;; right after CRIU-unfreezing, it does (rename-server) (prepare-to-die)
 (defun prepare-to-die ()
   (add-to-list 'delete-frame-functions #'kill-emacs-when-last-frame-is-deleted t))
 

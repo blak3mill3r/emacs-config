@@ -14,7 +14,7 @@ ZENAME=$1
 SOCKET_PATH=/run/user/1000/emacs
 SOCKET_NAME=$SOCKET_PATH/server
 
-tmux new-session -d -s gargar "emacsclient -s $SOCKET_NAME -e \"(rename-server \\\"$ZENAME\\\")\" -nw" >> /tmp/wtf.log 2>&1 
+tmux new-session -d -s gargar "emacsclient -s $SOCKET_NAME -e \"(progn (rename-server \\\"$ZENAME\\\") (prepare-to-die))\" -nw" >> /tmp/wtf.log 2>&1 
 
 #echo "the tmux exits $?" >> /tmp/wtf.log
 
@@ -23,7 +23,7 @@ do
   #echo "awaiting socket $SOCKET_PATH/$ZENAME" >> /tmp/wtf.log 
   sleep 0.125
 done
-emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" -e "(prepare-to-die)" >> /tmp/wtf.log 2>&1
+emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" >> /tmp/wtf.log 2>&1
 
 # ^^ PROBLEM, emacsclient accepts only -e or files ^^
 # not both...
