@@ -394,3 +394,8 @@
 
 
    ))
+
+(defun cider-just-connect (h p)
+  "non interactive cider connect"
+  (interactive "^")  
+  (cider-connect `( :host ,h  :port ,p )))
