@@ -1,6 +1,8 @@
 #!/bin/bash
 
-#set -euo pipefail
+set -euo
+
+EMACS_BINARY=/usr/local/bin/emacs
 
 PID=$(ps x|grep emacs|grep daemon|awk '{print $1}')
 [ ! -z "$PID" ] && echo "Stop all instances of Emacs first." && exit 1
@@ -8,10 +10,15 @@ PID=$(ps x|grep emacs|grep daemon|awk '{print $1}')
 cd /home/blake/.emacs.d/ludicrousspeed/.images
 rm -rf mine && mkdir mine && cd mine
 
-emacs --daemon
+$EMACS_BINARY --daemon
 PID=$(ps x|grep emacs|grep daemon|awk '{print $1}')
+if [ -z "$PID" ]
+  then
+    echo "Bad wrong"
+    exit 1
+fi
 
-sudo criu dump -t $PID -vvv -o dump.log \
+sudo criu dump -t $PID -o dump.log \
     && echo DONE
 
 # hack
