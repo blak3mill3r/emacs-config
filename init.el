@@ -55,6 +55,7 @@
 (load "cfg-bash.el")
 (load "cfg-js.el")
 (load "cfg-chat.el")
+(load "cfg-ops.el")
 
 ;; *always* byte-compile *everything* (trying this out)
 ;; this is a total disaster
