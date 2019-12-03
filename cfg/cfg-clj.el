@@ -113,6 +113,13 @@
          :files (:defaults "cider-test.el"))
 
   :custom
+  (cljr-magic-require-namespaces
+   '(("io"   . "clojure.java.io")
+     ("set"  . "clojure.set")
+     ("str"  . "clojure.string")
+     ("walk" . "clojure.walk")
+     ("zip"  . "clojure.zip")
+     ("mc"   . "monger.collection")))
   (cider-known-endpoints
    '(("ropes-blake" "7887")
      ("ropes-blake" "7888")))
@@ -129,7 +136,7 @@
   (cider-repl-use-pretty-printing t)
   ;; (cider-prompt-for-project-on-connect t)
   (cider-prompt-for-symbol nil) ;; makes s-] nicer
-  (cider-macroexpansion-print-metadata t)
+  (cider-macroexpansion-print-metadata nil)
   (nrepl-log-messages t)
   (cider-repl-pop-to-buffer-on-connect nil)
   (cider-repl-use-clojure-font-lock t)
