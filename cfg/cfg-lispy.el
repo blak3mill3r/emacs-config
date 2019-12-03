@@ -30,6 +30,8 @@
   (lispy-define-key lispy-mode-map "=" 'lispy-oneline)
   (lispy-define-key lispy-mode-map "J" 'lispy-cursor-down)
   (lispy-define-key lispy-mode-map "K" 'lispy-kill)
+  (lispy-define-key lispy-mode-map "-" 'lispy-ace-subword)
+  (lispy-define-key lispy-mode-map "\\" 'lispy-splice)
 
   :custom
   (lispy-eval-display-style "overlay")
