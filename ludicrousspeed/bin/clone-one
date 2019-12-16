@@ -6,15 +6,34 @@
 # the bin/emacs-clone daemon keeps a warm invisible emacs process available
 # at all times
 # this script connects to that process using emacsclient and:
-#   * calls (rename-server) which restarts the server on a different socket (the argument passed to this script) and displays a new frame
+#   * passes the pair of pids (this pid and the cloned emacs pid) to nv over a socket
+#   * calls (rename-server) which restarts the emacs server on a different socket (named after the argument passed to this script)
+#   * calls (prepare-to-die) so that when the last frame is deleted, the process exits; what you'd expect from a non-daemon emacs
 #   * awaits the presence of that new named socket
+#   * connects to the new emacs server socket and forwards the rest of the arguments to this script
 
 ZENAME=$1
 
 SOCKET_PATH=/run/user/1000/emacs
 SOCKET_NAME=$SOCKET_PATH/server
 
-tmux new-session -d -s gargar "emacsclient -s $SOCKET_NAME -e \"(progn (rename-server \\\"$ZENAME\\\") (prepare-to-die))\" -nw" >> /tmp/wtf.log 2>&1 
+# the pid of this clone-one process, which is the one your window manager would have if your window manager spawns clone-one
+CLONE_WRAPPER_PID=$BASHPID
+
+# the actual (global) pid of the fresh emacs clone that is standing by waiting for this script to tell it to do something
+EMACS_CLONE_PID=$(cat /home/blake/.emacs.d/ludicrousspeed/fresh.pid)
+
+# before we connect with emacsclient to tell it to rename-server
+# we know the pid of the real emacs we're going to be taking over
+# and, we know our own pid
+# nv process needs the relation between the two because it's going to see a mapped window coming from $CLONE_WRAPPER_PID which is a lie
+# given this relationship it can correct for the lie and know the real cloned emacs' pid
+
+NVHOST=localhost
+NVPORT=9281
+echo "{:event :replace-pid :pid $CLONE_WRAPPER_PID :replacement-pid $EMACS_CLONE_PID}" | nc $NVHOST $NVPORT
+
+tmux new-session -d -s emacs-cloner "emacsclient -s $SOCKET_NAME -e \"(progn (rename-server \\\"$ZENAME\\\") (prepare-to-die) (setq emacs-clone-wrapper-pid $CLONE_WRAPPER_PID) (setq emacs-clone-pid $EMACS_CLONE_PID))\" -nw" >> /tmp/wtf.log 2>&1 
 
 #echo "the tmux exits $?" >> /tmp/wtf.log
 
@@ -24,6 +43,10 @@ do
   sleep 0.125
 done
 emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" >> /tmp/wtf.log 2>&1
+
+# do I want -n above?
+# that's the no-wait option, makes emacsclient exit
+# meaning, the pid is gone by the time clojure looks
 
 # ^^ PROBLEM, emacsclient accepts only -e or files ^^
 # not both...
@@ -50,5 +73,6 @@ emacsclient -s $SOCKET_PATH/$ZENAME -c -n "${@:2}" >> /tmp/wtf.log 2>&1
 # that would work and the fn is (emacs-pid)
 # http://www.virtuouscode.com/2011/06/17/make-emacs-server-write-a-pid-file/
 # that would mean that I could have some emacsen running and still refresh-image
+# THIS WOULD BE AN EXCELLENT IMPROVEMENT ^^
 
 # also it really ought to forward arguments

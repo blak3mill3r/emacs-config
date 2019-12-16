@@ -3,7 +3,8 @@
 # a daemon which keeps a "warm" emacs clone
 # that is, a criu-restored snapshot of emacs with no frames visible
 # there is always a warm one standing by
-# see bin/clone-one
+# waiting to be claimed by a call to bin/clone-one
+# at which point this daemon will restore a fresh warm invisible emacs
 
 cd /home/blake/.emacs.d/ludicrousspeed/.images/mine
 
@@ -21,11 +22,20 @@ do
   echo -n "Clone an emacs..."
   /home/blake/src/criu/scripts/criu-ns restore -d -vvv -o restore.log 2>&1 > /dev/null &
 
+  # -d --restore-detached
+  # -S --restore-sibling
+
   while [ ! -e $SOCKET_NAME ]
   do
       echo -n "."
       sleep 0.1
   done
   echo "done"
+
+  # use the socket as a trick to detect the new (global) pid of the cloned emacs process
+  # (which is in a pid-namespace, within which it has the same pid as the original process that was checkpointed)
+  # write that to a file, so that clone-one can get at it
+  FRESH_PID=$(lsof $SOCKET_NAME|tail -1|awk '{print $2}')
+  echo $FRESH_PID > /home/blake/.emacs.d/ludicrousspeed/fresh.pid
     
 done > /var/log/emacs-cloner.log
