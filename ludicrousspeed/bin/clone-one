@@ -33,6 +33,8 @@ NVHOST=localhost
 NVPORT=9281
 echo "{:event :replace-pid :pid $CLONE_WRAPPER_PID :replacement-pid $EMACS_CLONE_PID}" | nc $NVHOST $NVPORT
 
+# the two elisp vars for the pids are not used for anything, since the above passes the necessaries to nv over the socket
+# but I thought it might be useful to have the emacs clone know its real global pid ... the wrapper pid, probably not
 tmux new-session -d -s emacs-cloner "emacsclient -s $SOCKET_NAME -e \"(progn (rename-server \\\"$ZENAME\\\") (prepare-to-die) (setq emacs-clone-wrapper-pid $CLONE_WRAPPER_PID) (setq emacs-clone-pid $EMACS_CLONE_PID))\" -nw" >> /tmp/wtf.log 2>&1 
 
 #echo "the tmux exits $?" >> /tmp/wtf.log
