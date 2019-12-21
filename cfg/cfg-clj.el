@@ -217,17 +217,20 @@
   ;; which introduced all this fanciness about sessions linking to buffers
   ;; all of which is quite useless to me... and they made it SUPER HARD to do it non-interactively
 
+
   (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
   (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
-  (defun cider-connect-damnit (cider-plist)
-    (with-temp-buffer
-      (unless (car (hash-table-values sesman-sessions-hashmap))
-        (cider-connect-clj cider-plist))))
-  (defun fucking-cider-and-its-fucking-sessions ()
-    (let ((theonlysession (car (hash-table-values sesman-sessions-hashmap))))
-      (if theonlysession
-          (sesman-link-with-buffer (current-buffer) theonlysession)
-        (message "THERE AINT ONE, FUCK"))))
+  ;; (defun cider-connect-damnit (cider-plist)
+  ;;   (with-temp-buffer
+  ;;     (unless (car (hash-table-values sesman-sessions-hashmap))
+  ;;       (letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t))
+  ;;              ((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
+  ;;         (cider-connect-clj cider-plist)))))
+  ;; (defun fucking-cider-and-its-fucking-sessions ()
+  ;;   (let ((theonlysession (car (hash-table-values sesman-sessions-hashmap))))
+  ;;     (if theonlysession
+  ;;         (sesman-link-with-buffer (current-buffer) theonlysession)
+  ;;       (message "THERE AINT ONE, FUCK"))))
 
   (defun ace-fucking-cider-eval ()
     (interactive)
@@ -403,6 +406,8 @@
    ))
 
 (defun cider-just-connect (h p)
-  "non interactive cider connect"
+  "shut up about sessions and dead repl buffers, and connect when I tell you to..."
   (interactive "^")  
-  (cider-connect `( :host ,h  :port ,p )))
+  (letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t))
+         ((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
+    (cider-connect `( :host ,h  :port ,p ))))
