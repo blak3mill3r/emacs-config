@@ -41,3 +41,25 @@
       * python has hy...
       * racket? does it compile executables?
       * how about common lisp or scheme?
+
+
+
+* reimplement logic with babashka and make it better
+   * problem 1)
+     it's annoying to stop the service, killall, refresh image, start
+     not sure I grok why it isn't working smoothly
+     but the whole reason to stop all instances of emacs is not necessary
+     it was just so that criu dump can have the correct pid of the freshly started emacs server proc
+     no reason you cannot have emacsen running
+     however the warm one in reserve is holding the socket...
+     so the cloner has to be "in on" the need to produce a new image
+     that's because due to the nature of emacs-server, you cannot just capture the pid from bash after launching it...
+     instead we use the listening socket to find the real pid of the new emacs-server
+     * solution: single service which handles cloning them AND refreshing the image
+       that way it can receive a message that says "bake me a new one"
+       it can then HOLD OFF on processing any clone requests
+       while it STOPS the warm cloned one and STARTS a fresh one and AWAITS it starting up and then CRIU-DUMPs it
+       and only then it resumes normal processing of "clone one" messages
+   * problem 2)
+     how does it receive these messages? how does nv interact with it?
+     well there should be a simple clone-one script still but the way it works might differ

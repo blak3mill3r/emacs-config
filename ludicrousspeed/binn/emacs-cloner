@@ -1,0 +1,203 @@
+#!/usr/bin/env bb
+;; -*- mode: clojure -*-
+
+;;; Fixing it up for release
+;; well, try using it a while first
+;; Problems:
+;;  * hard-coded everything... blake user, emacs binary, socket path ... what to do about that?
+;;  * when you start it up it should check for an image and automatically bake one if not available
+;;  * integrate it more with nv so it can show a spinner when its rebaking emacs
+;;  * include a way to hash the contents of the elisp config, and rebake when it changes (debounce?)
+
+;; * sometimes I wind up with an existing current-image-dir
+;;   but a failed restore
+;;   service is then stuck
+;;   how's that? fix? detect that restore fails and rebake?
+
+;; * improvement:
+;;   instead of having a single "current" image directory
+;;   track each image in its own directory with a uuid or a hash of all the elisp config
+;;   keep track of a "last working" image reference
+;;   * this would mean that you can still clone emacsen even while rebaking
+
+;; * wtf, criu-ns stays alive with this (but I think it didn't with the old one...?)
+;;   even with restore -d (detach)
+
+;; * wtf, with the daemon running, then stop, there are still clone emacsen running, and criu-ns running
+;; something wrong with stop daemon args?
+
+;; what is required for someone to use it?
+;;  * criu
+;;  * criu-ns
+;;  * tmux
+;;  * babashka
+;;  * install the init scripts and the daemon
+
+(ns emacs-cloner
+  (:import (java.net ServerSocket)
+           (java.io InputStreamReader)
+           (clojure.lang LineNumberingPushbackReader))
+  (:require [clojure.string :as str]
+            [clojure.java.io :as io]
+            [clojure.core.async :as a]
+            [clojure.java.shell :refer [sh]]))
+
+(def logfile "/var/log/emacs-cloner.log")
+(def log (clojure.java.io/writer logfile :append true))
+
+(def emacs-binary "/usr/local/bin/emacs")
+(def cloner-tcp-port 9911)
+(def emacs-socket-path "/run/user/1000/emacs") ;; FIXME, should not hard-code
+(defn user-home [] "/home/blake")
+(defn emacs-dir [] (str (user-home) "/.emacs.d"))
+(defn ludicrousspeed-path [] (str (emacs-dir) "/ludicrousspeed"))
+(defn criu-restore-log-file [] (str (ludicrousspeed-path) "/log/restore.log"))
+(defn fresh-emacs-pid-file [] (str (ludicrousspeed-path) "/fresh.pid"))
+(defn emacs-socket
+  ([] (emacs-socket "server"))
+  ([name] (str emacs-socket-path "/" name)))
+(def criu-images-dir "/home/blake/.emacs.d/ludicrousspeed/.images")
+(defn criu-current-image-dir [] (str criu-images-dir "/mine"))
+(def cloner-actions (a/chan 1))
+(def warm-emacs-pid (atom nil))
+
+(defn on-thread [f] (doto (new Thread f) (.start)))
+
+(defn is-socket-there? [socket] (.exists (File. socket)))
+(defn await-socket [socket] (loop [] (when-not (is-socket-there? socket) (Thread/sleep 50) (recur))))
+(defn pid-of-socket [socket] (-> (sh "lsof" "-Fp" socket) :out (str/split #"\n") first (subs 1)))
+
+(defn do-rebake []
+  (println "Rebaking...")
+  (when-let [warm-pid @warm-emacs-pid]
+    (println "First killing warm pid="warm-pid)
+    (println (:out (sh "kill" warm-pid))))
+  (sh "rm" "-rf" (criu-current-image-dir))
+  (sh "mkdir" (criu-current-image-dir))
+  (println "Starting emacs daemon...")
+  (println (:out (sh "su" "blake" "-c" "bash" "-c" (str emacs-binary " --daemon") :dir "/home/blake")))
+  (println "Done. Awaiting socket..." (emacs-socket))
+  (Thread/sleep 250)
+  (await-socket (emacs-socket)) 
+  (println "Done. Awaiting socket..." (emacs-socket) " IS THERE")
+  (let [pid (pid-of-socket (emacs-socket))]
+    (println "Done. Criu dump pid="pid)
+    (sh "criu" "dump" "-t" pid "-o" "dump.log" :dir (criu-current-image-dir))
+    (println "Done. Log is "(criu-current-image-dir)"/dump.log")
+    (println "Remove dangling socket")
+    (sh "rm" "-f" (emacs-socket))))
+
+(defn do-criu-restore
+  "Restore a CRIU snapshot of a freshly started emacs-server process"
+  []
+  (when-not (.exists (File. (criu-current-image-dir)))
+    (println "No image available.")
+    (do-rebake))
+  (let [p (a/thread (sh "criu-ns" "restore" "-d" "-vvv" "-o" (criu-restore-log-file) :dir (criu-current-image-dir)))]
+    (println "Restored; log in " (criu-restore-log-file))
+    (await-socket (emacs-socket))
+    (println "New warm pid = " (reset! warm-emacs-pid (pid-of-socket (emacs-socket))))))
+
+(defn create-server 
+  [accept-fn port]
+  (let [ss (new ServerSocket port)]
+    (on-thread #(when-not (. ss (isClosed))
+                  (try (accept-fn (. ss (accept))) (catch Exception e))
+                  (recur)))
+    ss))
+
+(defn cloner-service
+  "Reads one EDN form from the socket and puts that value on a channel, then closes the socket"
+  [sock]
+  (let [ins (. sock (getInputStream))
+        e (read (new LineNumberingPushbackReader (new InputStreamReader ins)))]
+    ;; strange, this namespaced keyword (which is returned by edamame for eof) is unparseable?
+    ;; :edamame.impl.parser/eof
+    ;; so instead of testing if the value read is that keyword, we just test if it is a Keyword
+    ;; otherwise it's a message for the service...
+    (when-not (= clojure.lang.Keyword (type e))
+      (a/put! cloner-actions e)
+      (.close sock))))
+
+(defn start-cloner-service
+  "starts the emacs-cloner server on the in-stream of the socket"
+  [s] (on-thread #(cloner-service s )))
+
+(declare do-cloning)
+(defmulti enact (fn [action]  (:command action)))
+(defmethod enact :clone [{:keys [name pid args]}]
+  (do-cloning name pid args))
+
+(defmethod enact :rebake [_] (do-rebake) (do-criu-restore))
+
+(defn service-loop [] (loop [] (enact (a/<!! cloner-actions)) (recur)))
+
+#_(println "sockittome " (pid-of-socket (emacs-socket)))
+
+;; then I can make it participate in refresh-image
+;; with no need to kill all emacsen
+;; instead it does this
+;; use the pid atom to kill the warm one; naturally we aren't criu-restoring a new one during this command
+;; then start it the slow way
+;; wait for it to start, then test its pid using the lsof socket method
+;; then criu-freeze it; (after criu-freezing is it running again?)
+;; and resume normal operation
+
+
+;; that's almost good enough (and there would be no need for a pidfile)
+;; but the pidfile is also passed to nv, by clone-one
+;; and passed into emacs just for kicks in case it comes in handy for emacs to know its own global pid
+
+;; clone-one does this:
+;; detects pid of itself (which is known to nv as the command it spawnOn'd)
+;; detects pid of warm emacs
+;; passes this to nv over a socket
+;; in a new tmux session calls emacsclient on the warm emacs socket
+;;   tells it to rename to the name of the clone, to prepare-to-die, set a couple vars, no window
+;; then awaits the new clone's socket
+;; and uses it to forward arguments and create a new frame -c and do not wait -n (block emacsclient while editing)
+
+;; change this around, leave nv socket for later
+;; still need a clone-one wrapper but all it does is detect the bash pid and pass a command to emacs-cloner via nc, including the args and the bash pid
+;; then the service does its tricks and it knows both pids
+;;  * tbd: let nv know those pids
+;; tmux emacsclient, to rename the warm one, creating the clone
+;; emacsclient to make a frame and pass the args on
+
+(def nvhost "localhost")
+(def nvport 9281)
+(defn inform-nv-of-pid-replacement [pid replacement-pid]
+  (println "Informing nv of pid replacement " pid replacement-pid)
+  (flush)
+  (with-open [s (java.net.Socket. nvhost nvport)]
+    (.write (.getOutputStream s) (-> {:event :replace-pid :pid pid :replacement-pid replacement-pid}
+                                     prn-str (.getBytes "UTF-8")))))
+
+(defn do-cloning
+  [clone-name wrapper-pid args]
+  (let [warm-pid @warm-emacs-pid]
+    (reset! warm-emacs-pid nil)
+    (inform-nv-of-pid-replacement wrapper-pid warm-pid)
+
+    ;; have to run it in tmux because without the -nw argument, (rename-server) does NOT work
+    ;; and -nw needs a terminal or emacsclient exits with an error; so use tmux to give it a terminal, even though we aren't needing to create a frame now
+    ;; because creating a frame temporarily is a necessary workaround to get (rename-server) to work... I do not know why this is
+    (println (sh "su" "blake" "-c"
+                 (str "tmux new-session -d -s emacs-cloner emacsclient -s "(emacs-socket)
+                      " -e '(progn (rename-server \""clone-name"\") (prepare-to-die))' -nw")))
+    
+    (await-socket (emacs-socket clone-name))
+    
+    (a/thread (do-criu-restore))
+
+    (println (:out (sh "su" "blake" "-c"
+                       (str "DISPLAY=:0.0 emacsclient -s "(emacs-socket clone-name)" -c -n " args))))))
+
+(binding [*out* log]
+  
+  (do-criu-restore)
+  (a/thread (service-loop))
+
+  (with-open [server (create-server start-cloner-service cloner-tcp-port)]
+    (println "Listening on " cloner-tcp-port)
+    (loop [] (Thread/sleep 30000) (recur))))

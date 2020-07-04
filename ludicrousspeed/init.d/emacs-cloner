@@ -36,11 +36,9 @@ case $1 in
         # If the status is successfull, no need to start again.
         [ ${status} = "0" ] && exit 0
     fi
-    # Before starting the daemon, bake a fresh CRIU image of an invisible emacs server process
     # delete any lingering desktop lock files (otherwise emacs will refuse to restore the desktop)
     # I am not exactly sure why these are lying around sometimes ... perhaps from unclean emacs-stops
     find /home/blake/.emacs.d/desktops -name .emacs.desktop.lock -exec rm {} \;
-    su blake -c "/home/blake/.emacs.d/ludicrousspeed/bin/refresh-image" >> /var/log/wtfemacscloner
     # Start the daemon.
     log_daemon_msg "Starting ${NAME}" 
     start-stop-daemon $SSD_START_ARGS

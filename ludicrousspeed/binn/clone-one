@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -eou pipefail
+
+CLONER_HOST=localhost
+CLONER_PORT=9911
+
+# a unique name to identify the cloned emacs
+CLONE_NAME=$1
+
+# the pid of this clone-one process, which is the one your window manager would have if your window manager spawns clone-one
+CLONE_WRAPPER_PID=$BASHPID
+EMACS_ARGS="${@:2}"
+
+echo "{:command :clone :name \"$CLONE_NAME\" :pid $CLONE_WRAPPER_PID :args \"$EMACS_ARGS\"}"
+echo "{:command :clone :name \"$CLONE_NAME\" :pid $CLONE_WRAPPER_PID :args \"$EMACS_ARGS\"}" | nc $CLONER_HOST $CLONER_PORT
