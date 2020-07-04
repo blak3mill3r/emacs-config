@@ -23,7 +23,7 @@ PIDFILE=/var/run/emacs-cloner.lock
 #SSD_START_ARGS="-m --pidfile $PIDFILE --name $(basename $DAEMON) --startas $DAEMON"
 #SSD_STOP_ARGS="-m --pidfile $PIDFILE --name $(basename $DAEMON) --retry TERM/5/TERM/5"
 SSD_START_ARGS="-S --quiet --oknodo --pidfile ${PIDFILE} --make-pidfile --background --startas ${DAEMON} -- ${DAEMON_ARGS}"
-SSD_STOP_ARGS="-K --signal TERM --quiet --oknodo --pidfile ${PIDFILE}"
+SSD_STOP_ARGS="-K --signal INT --quiet --oknodo --pidfile ${PIDFILE}"
 
 test -x $DAEMON || exit 0
 . /lib/lsb/init-functions

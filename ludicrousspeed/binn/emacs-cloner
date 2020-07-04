@@ -61,6 +61,15 @@
 (def cloner-actions (a/chan 1))
 (def warm-emacs-pid (atom nil))
 
+;; should have a shutdown hook which stops the warm one
+(defn kill-warm-one []
+  (when-let [warm-pid @warm-emacs-pid]
+    (println "First killing warm pid="warm-pid)
+    (println (:out (sh "kill" warm-pid)))
+    (flush)))
+
+(-> (Runtime/getRuntime) (.addShutdownHook (Thread. #(kill-warm-one))))
+
 (defn on-thread [f] (doto (new Thread f) (.start)))
 
 (defn is-socket-there? [socket] (.exists (File. socket)))
@@ -69,9 +78,7 @@
 
 (defn do-rebake []
   (println "Rebaking...")
-  (when-let [warm-pid @warm-emacs-pid]
-    (println "First killing warm pid="warm-pid)
-    (println (:out (sh "kill" warm-pid))))
+  (kill-warm-one)
   (sh "rm" "-rf" (criu-current-image-dir))
   (sh "mkdir" (criu-current-image-dir))
   (println "Starting emacs daemon...")
