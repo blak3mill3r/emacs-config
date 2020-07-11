@@ -3,6 +3,19 @@
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+(use-package parseedn
+  :demand t
+  :straight
+  (parseedn :type git
+            :host github
+            :repo "clojure-emacs/parseedn"
+            :branch "master"))
+
+(use-package vega-view
+  :demand t
+  :straight
+  (vega-view :type git :host github :repo "blak3mill3r/emacs-vega-view" :branch "master"))
+
 (use-package flycheck
   :demand t
   :hook '(clojure-mode . flycheck-mode)
@@ -98,14 +111,6 @@
   :straight
   (sesman :type git :host github :repo "vspinu/sesman" :branch "master"))
 
-(use-package parseedn
-  :demand t
-  :straight
-  (parseedn :type git
-            :host github
-            :repo "clojure-emacs/parseedn"
-            :branch "master"))
-
 (use-package cider
   :demand t
   :straight
@@ -158,6 +163,7 @@
    "<s-return>"      'cider-test-run-ns-tests
 
    "s-l"     'cider-eval-last-sexp
+   "s-v"     'vega-view
    "s-\\"     'cider-eval-defun-at-point
 
    "s-b"      'cider-eval-buffer

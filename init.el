@@ -51,6 +51,7 @@
 (load "cfg-go.el")
 (load "cfg-haskell.el")
 (load "cfg-rust.el")
+(load "cfg-ruby.el")
 (load "cfg-shells.el")
 (load "cfg-bash.el")
 (load "cfg-js.el")
