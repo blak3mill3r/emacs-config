@@ -126,14 +126,13 @@
       (a/put! cloner-actions e)
       (.close sock))))
 
-(defn start-cloner-service
-  "starts the emacs-cloner server on the in-stream of the socket"
-  [s] (on-thread #(cloner-service s )))
-
 (declare do-cloning)
 (defmulti enact (fn [action]  (:command action)))
+
+;; base64 is used to avoid bash string escaping issues
 (defmethod enact :clone [{:keys [name pid args]}]
-  (do-cloning name pid args))
+  (let [args (-> (java.util.Base64/getDecoder) (.decode args) (String.))]
+    (do-cloning name pid args)))
 
 (defmethod enact :rebake [_] (do-rebake) (do-criu-restore))
 
@@ -197,8 +196,14 @@
     
     (a/thread (do-criu-restore))
 
+    (comment (println "--------------------------------------------------------------------------------")
+             (println (str "DISPLAY=:0.0 emacsclient -s "(emacs-socket clone-name)" -c -n " args))
+             (println "--------------------------------------------------------------------------------"))
+
     (println (:out (sh "su" "blake" "-c"
                        (str "DISPLAY=:0.0 emacsclient -s "(emacs-socket clone-name)" -c -n " args))))))
+
+(defn start-cloner-service [s] (on-thread #(cloner-service s)))
 
 (binding [*out* log]
   

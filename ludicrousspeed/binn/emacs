@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 
+# use 5 random alphanumeric characters as the id for the clone
+# forward all the emacs arguments
+
 NEW_ID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -n 1)
 
-/home/blake/.emacs.d/ludicrousspeed/bin/clone-one $NEW_ID $@
+/home/blake/.emacs.d/ludicrousspeed/binn/clone-one $NEW_ID $@
 
 
 
