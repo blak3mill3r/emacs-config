@@ -1,6 +1,13 @@
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
 
+;; make font-lock NOT slow everything down horribly with long lines and large buffers
+(setq font-lock-support-mode 'jit-lock-mode)
+(setq jit-lock-stealth-time 16
+      jit-lock-defer-contextually t
+      jit-lock-stealth-nice 0.5)
+(setq-default font-lock-multiline t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; recent file list, my "scratch buffers" are files with jibberish names
 ;; disabled because of lock conflicts between multiple instances of emacs
