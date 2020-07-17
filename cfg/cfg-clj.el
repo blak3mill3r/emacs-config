@@ -335,19 +335,19 @@
 (use-package clojure-snippets
   :demand t
   )
-(use-package seq-25
-  :demand t
-  :straight
-  (seq-25 :type git :host github :repo "NicolasPetton/seq.el"))
+;; (use-package seq-25
+;;   :demand t
+;;   :straight
+;;   (seq-25 :type git :host github :repo "NicolasPetton/seq.el"))
 
 ;; ditching it?
-(use-package clj-refactor
-  :demand t
-  :straight
-  (clj-refactor :type git :host github :repo "clojure-emacs/clj-refactor.el" :branch "2.4.0")
-  :custom
-  (cljr-clojure-test-declaration "[clojure.test :as t :refer [deftest is]]")
-  )
+;; (use-package clj-refactor
+;;   :demand t
+;;   :straight
+;;   (clj-refactor :type git :host github :repo "clojure-emacs/clj-refactor.el" :branch "2.4.0")
+;;   :custom
+;;   (cljr-clojure-test-declaration "[clojure.test :as t :refer [deftest is]]")
+;;   )
 
 ;; breaks/unbreaks company-quickhelp-mode for cider, filed https://github.com/expez/company-quickhelp/issues/79
 
