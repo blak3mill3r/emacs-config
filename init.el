@@ -33,9 +33,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/cfg/")
 (load (concat user-emacs-directory "custom.el"))
+(load (substitute-in-file-name "$ELSHOME/elisp/emacs-ludicrous-speed.el"))
 (load "cfg-prelude.el")
-
-(load "cfg-ludicrousspeed.el")
 (load "cfg-sensitive.el")
 (load "cfg-read-from-pipe.el")
 (load "cfg-elisp.el")

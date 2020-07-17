@@ -54,7 +54,10 @@
    "<s-return>" 'org-open-at-point)
   :hook '(org-mode . evil-org-mode)
   :config
-  (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading)))
+  (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading))
+  ;; (add-to-list 'company-backends 'company-org-block)
+  ;; (add-hook 'org-mode-hook (lambda () (company-mode +1)))
+  )
 
 ;; something is borked with org + use-package ... org is a little bit insane
 ;; it worked when I eval'd the following but then it broke when starting fresh emacs
