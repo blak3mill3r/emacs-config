@@ -25,6 +25,8 @@
 ;;       (lsp-cquery-enable)
 ;;     (user-error nil)))
 
+(add-hook 'c++-mode-hook (lambda () (modify-syntax-entry ?_ "w")))
+
 ;; (use-package cquery
 ;;   :commands lsp-cquery-enable
 ;;   :init
