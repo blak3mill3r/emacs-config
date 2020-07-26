@@ -244,6 +244,10 @@
 
   (:keymaps 'cider-repl-mode-map
    "s-SPC" 'cider-repl-clear-buffer)
+  (:keymaps 'cider-repl-mode-map
+   :states '(normal visual)
+   :prefix ","
+   "bd" 'cider-just-kill-repl-buffer)
   (:states '(normal visual)
    :keymaps 'clojure-mode-map
    :prefix ","
@@ -450,3 +454,10 @@
   (letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t))
          ((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
     (cider-connect `( :host ,h  :port ,p ))))
+
+;; understanding elisp macros would be good for DRYing these
+(defun cider-just-kill-repl-buffer ()
+  "shut up about repl process still running and kill the repl buffer"
+  (interactive "^")
+  (letf (((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
+    (kill-this-buffer)))
