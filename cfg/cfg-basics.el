@@ -277,7 +277,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
   (:keymaps 'undo-tree-visualizer-mode-map
    :states '(normal motion)
    :prefix ","
-   "bd" 'kill-buffer)
+   "bd" 'kill-this-buffer)
   :init
   ;; Do not litter undo-tree files all over the place, because that is super annoying
   (setq undo-tree-auto-save-history t
@@ -314,7 +314,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
    "br"     'revert-buffer
    ",b"     'switch-to-buffer
    "bk"     'kill-buffer-and-window
-   "bd"     'kill-buffer
+   "bd"     'kill-this-buffer
    ;; frames and windows
    ",w"     'make-frame
    "wd"     'delete-window
