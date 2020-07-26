@@ -26,6 +26,8 @@
 
 (straight-use-package 'use-package)
 
+(setq straight--wait-for-async-jobs t)
+
 ;; I get desktop restore problems with this enabled, as it is by default
 (setq desktop-restore-forces-onscreen nil)
 
@@ -73,3 +75,7 @@
 ;; this is poorly named
 ;; it really means hitting A in dired will replace the dired buffer with the file rather than opening a new one
 (put 'dired-find-alternate-file 'disabled nil)
+
+(message "Waiting for async comp")
+(straight--wait-for-async-jobs)
+(message "straight--wait-for-async-jobs has returned")
