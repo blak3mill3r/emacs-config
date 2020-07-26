@@ -1,3 +1,10 @@
+(use-package clojure-snippets
+  :demand t
+  :hook '(clojure-mode . yas-minor-mode)
+  :config
+  (setq yas-prompt-functions '(yas-ido-prompt))
+  :diminish yas-minor-mode)
+
 (use-package rainbow-delimiters
   :demand t
   :config
@@ -11,10 +18,7 @@
             :repo "clojure-emacs/parseedn"
             :branch "master"))
 
-(use-package vega-view
-  :demand t
-  :straight
-  (vega-view :type git :host github :repo "blak3mill3r/emacs-vega-view" :branch "master"))
+(use-package vega-view :demand t)
 
 (use-package flycheck
   :demand t
@@ -53,8 +57,14 @@
 ;;  ;; (push '("\\checkmark" . ?✓) prettify-symbols-alist)
 ;;  ;; (push '("\\check" . ?✓) prettify-symbols-alist)
 ;;  ;; (push '("1/4" . ?¼) prettify-symbols-alist)
+;;  ;; (push '("1/5" . ?⅕) prettify-symbols-alist)
+;;  ;; (push '("2/5" . ?⅖) prettify-symbols-alist)
+;;  ;; (push '("3/5" . ?⅗) prettify-symbols-alist)
+;;  ;; (push '("4/5" . ?⅘) prettify-symbols-alist)
 ;;  ;; (push '("1/2" . ?½) prettify-symbols-alist)
 ;;  ;; (push '("3/4" . ?¾) prettify-symbols-alist)
+;;  ;; (push '("1/6" . ?⅙) prettify-symbols-alist)
+;;  ;; (push '("5/6" . ?⅚) prettify-symbols-alist)
 ;;  ;; (push '("1/7" . ?⅐) prettify-symbols-alist)
 ;;  ;; ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅛ ⅜ ⅝ ⅞
 ;;  ;; (push '("ae" . ?æ) prettify-symbols-alist)
@@ -64,23 +74,45 @@
 ;; ᴪᴫᴎᴂᵦᵧᵩᵫὫᾣῼ‡⁌⁍ጮፙ
 ;; ፬፭፹፸፷፶፵፴፳፲፱፼፻፺
 ;; ₰ᴪ
+;; ₪
 (defun my/pretty-syms ()
   (setq prettify-symbols-alist
         '(("<=" . ?≤)
           (">=" . ?≥)
-          ("<-" . ?←)
-          ("->" . ?→)
+          ;; ("<-" . ?←)
+          ;; ("->" . ?→)
+          ;; ("->>" . ?↠)
           ("<=" . ?⇐)
           ("=>" . ?⇒)
           ("fn" . ?λ)
           ("^_^" . ?☻)
+          ("1/4" . ?¼)
+          ("1/5" . ?⅕)
+          ("2/5" . ?⅖)
+          ("3/5" . ?⅗)
+          ("4/5" . ?⅘)
+          ("1/2" . ?½)
+          ("3/4" . ?¾)
+          ("1/6" . ?⅙)
+          ("5/6" . ?⅚)
+          ("1/7" . ?⅐)
           ("transform" . ?ჳ)
           ("multi-transform" . ?ჴ)
           ("multi-path" . ?╞)
-          ("terminal" . ?Ꮿ)
-          ("terminal-val" . ?Ꮂ)
-          ("true" . ?ፐ)
-          ("false" . ?ፑ))))
+          ("terminal" . ?Ⴐ)
+          ("terminal-val" . ?Ⴊ)
+          ("nil->val" . ?⤑)
+          ("Double/POSITIVE_INFINITY" . ?∞)
+          ("try" . ?Ȣ)
+          ("catch" . ?ơ)
+          ("throw" . ?☢)
+          ("loop". ?↻)
+          ("recur". ?↰)
+          
+          (":)" . ?☺)
+          ("):" . ?☹)
+          (":D" . ?☺)
+          )))
 
 
 (use-package clojure-mode
@@ -96,26 +128,44 @@
   (defun my-clojure-mode-hook ()
     (message "my CLOJURE MODE hook")
     (lispy-mode 1)
-    (prettify-symbols-mode 1)
     (my/pretty-syms)
+    (prettify-symbols-mode 1)
     (modify-syntax-entry ?_ "w")
     (modify-syntax-entry ?- "w")
     (modify-syntax-entry ?> "w"))
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 
+;; Weird wtf, without this I get
+;; (void-variable clojure-namespace-regexp)
+;; even though it IS defined in clojure-mode.el
+;; maybe try no-byte-compile for clojure-mode
+(defconst clojure-namespace-regexp
+  (rx line-start "(" (? "clojure.core/") (or "in-ns" "ns" "ns+") symbol-end))
+
+(use-package clj-refactor
+  :straight
+  (clj-refactor :no-byte-compile t :type git :host github :repo "clojure-emacs/clj-refactor.el" :branch "master")
+  :demand t
+  ;;:straight
+  ;;(clj-refactor :type git :host github :repo "clojure-emacs/clj-refactor.el" :branch "2.4.0")
+  :custom
+  (cljr-clojure-test-declaration "[clojure.test :as t :refer [deftest is]]")
+  ;; (cljr-inject-dependencies-at-jack-in nil)
+  )
+
 
 ;; consider trying this again:
 
-(use-package sesman
-  :demand t
-  :straight
-  (sesman :type git :host github :repo "vspinu/sesman" :branch "master"))
+;; (use-package sesman
+;;   :demand t
+;;   :straight
+;;   (sesman :type git :host github :repo "vspinu/sesman" :branch "master"))
 
 (use-package cider
   :demand t
-  :straight
-  (cider :type git :host github :repo "clojure-emacs/cider" :branch "master"
-         :files (:defaults "cider-test.el"))
+  ;; :straight
+  ;; (cider :type git :host github :repo "clojure-emacs/cider" :branch "master"
+  ;;        :files (:defaults "cider-test.el"))
 
   :custom
   (cljr-magic-require-namespaces
@@ -331,23 +381,6 @@
 ;;   :after clojure-mode
 ;;   :config
 ;;   (sayid-setup-package))
-
-(use-package clojure-snippets
-  :demand t
-  )
-;; (use-package seq-25
-;;   :demand t
-;;   :straight
-;;   (seq-25 :type git :host github :repo "NicolasPetton/seq.el"))
-
-;; ditching it?
-;; (use-package clj-refactor
-;;   :demand t
-;;   :straight
-;;   (clj-refactor :type git :host github :repo "clojure-emacs/clj-refactor.el" :branch "2.4.0")
-;;   :custom
-;;   (cljr-clojure-test-declaration "[clojure.test :as t :refer [deftest is]]")
-;;   )
 
 ;; breaks/unbreaks company-quickhelp-mode for cider, filed https://github.com/expez/company-quickhelp/issues/79
 
