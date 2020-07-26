@@ -89,6 +89,6 @@
 
 (general-define-key
  :states '(normal)
- :keymaps '( c++-mode-map c-mode )
+ :keymaps '( c++-mode-map c-mode-map )
  "s-]" 'ciao-goto-symbol
  "s-[" 'pop-tag-mark)
