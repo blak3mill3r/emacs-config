@@ -451,8 +451,8 @@
 (defun cider-just-connect (h p)
   "shut up about sessions and dead repl buffers, and connect when I tell you to..."
   (interactive "^")  
-  (letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t))
-         ((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
+  (letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) nil))
+         ((symbol-function 'y-or-n-p) (lambda (&rest args) nil)))
     (cider-connect `( :host ,h  :port ,p ))))
 
 ;; understanding elisp macros would be good for DRYing these
