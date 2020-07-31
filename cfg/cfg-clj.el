@@ -369,6 +369,14 @@
       (goto-char (point-max))
       (insert "(in-ns 'user) (reset)")
       ;; (insert "(in-ns 'dev) (reset)")
+      (cider-repl-return) ))
+  (defun cider-nrepl-refresh-all ()
+    (interactive)
+    (save-excursion
+      (save-some-buffers)
+      (cider-switch-to-repl-buffer)
+      (goto-char (point-max))
+      (insert "(in-ns 'user) (clojure.tools.namespace.repl/refresh-all)")
       (cider-repl-return) )))
 
 (use-package eval-sexp-fu
