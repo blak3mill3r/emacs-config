@@ -129,7 +129,7 @@
     (message "my CLOJURE MODE hook")
     (lispy-mode 1)
     (my/pretty-syms)
-    (prettify-symbols-mode 1)
+    (prettify-symbols-mode 0)
     (modify-syntax-entry ?_ "w")
     (modify-syntax-entry ?- "w")
     (modify-syntax-entry ?> "w"))
@@ -205,6 +205,9 @@
 
   :general
   (:states '(normal insert visual)
+   :keymaps 'cider-test-report-mode-map
+   "s-<return>" 'kill-this-buffer)
+  (:states '(normal insert visual)
    :keymaps 'clojure-mode-map
    "s--"      'clojure-cycle-privacy
    "s-]"      'cider-find-var
@@ -229,6 +232,7 @@
    "s-d"      'cider-debug-defun-at-point
    "s-i s-r"  'cider-inspect-last-result
    "s-t"    'cider-nrepl-reset
+   "s-u"    'cider-nrepl-refresh-all
    "C-n" 'lispy-outline-next
    "C-p" 'lispy-outline-prev
 
@@ -374,6 +378,8 @@
     (interactive)
     (save-excursion
       (save-some-buffers)
+      (set-buffer "dev.clj")
+      (cider-eval-buffer)
       (cider-switch-to-repl-buffer)
       (goto-char (point-max))
       (insert "(in-ns 'user) (clojure.tools.namespace.repl/refresh-all)")

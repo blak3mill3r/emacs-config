@@ -272,7 +272,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
   :demand t
   :diminish undo-tree-mode
   :custom
-  (undo-tree-auto-save-history t)
+  (undo-tree-auto-save-history nil)
   :general
   (:keymaps 'undo-tree-visualizer-mode-map
    :states '(normal motion)
@@ -280,7 +280,7 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
    "bd" 'kill-this-buffer)
   :init
   ;; Do not litter undo-tree files all over the place, because that is super annoying
-  (setq undo-tree-auto-save-history t
+  (setq undo-tree-auto-save-history nil
         undo-tree-history-directory-alist
         `(("." . "~/.emacs.d/undo")))
   (unless (file-exists-p "~/.emacs.d/undo")

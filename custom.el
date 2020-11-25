@@ -6,7 +6,8 @@
  '(browse-url-browser-function 'browse-url-chrome)
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
-   '((intero-stack-yaml . "/home/blake/w/nerdvana/xmonadsrc/stack.yaml")
+   '((org-hugo-auto-export-on-save . t)
+     (intero-stack-yaml . "/home/blake/w/nerdvana/xmonadsrc/stack.yaml")
      (haskell-process-use-ghci . t)
      (intero-targets "xmonad-blak3mill3r:exe:xmonad"))))
 (custom-set-faces

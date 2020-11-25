@@ -49,6 +49,12 @@
 
 ;;   )
 
+
+
+;; want, but last I tried it I got confused and shit broke:
+;; (use-package intero
+;;   :demand t)
+
 (use-package haskell-mode
   :demand t
   :mode ("\\.hs$" . haskell-mode)
