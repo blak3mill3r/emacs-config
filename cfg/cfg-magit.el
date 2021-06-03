@@ -19,6 +19,7 @@
   :general
   (:prefix ","
    :states '(normal visual)
+   "ghl" 'browse-at-remote-kill
    "gho" 'browse-at-remote))
 
 ;; I think I prefer diff-hl and global-diff-hl-mode (maybe, trying it out)
