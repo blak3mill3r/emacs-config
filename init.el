@@ -8,13 +8,13 @@
 (setq debug-on-error t)
 (defvar bootstrap-version)
 (let ((bootstrap-file
-	(expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-      (url-retrieve-synchronously
-	"https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	'silent 'inhibit-cookies)
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -77,5 +77,5 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (message "Waiting for async comp")
-(straight--wait-for-async-jobs)
+;(straight--wait-for-async-jobs)
 (message "straight--wait-for-async-jobs has returned")

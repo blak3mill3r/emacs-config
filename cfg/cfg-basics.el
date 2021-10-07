@@ -355,6 +355,39 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
   :demand t
   :after evil
   :custom (evil-collection-setup-minibuffer t)
+  :general
+  (:prefix ","
+   :keymaps 'normal
+   "gs"     'magit-status
+   "gb"     'magit-blame)
+  (:keymaps 'normal
+   ;; navigate through revision history of a file
+   "z j"   'magit-blob-next
+   "z k"   'magit-blob-previous)
+  (:keymaps 'magit-status-mode-map
+   ;; my new favorite push/pull
+   "s-]"   'magit-push-current-to-upstream
+   "s-["   'magit-pull-from-upstream
+   ;; backwards compatible for myself if I forget, and for others who may share my old config
+   ",ps"  'magit-push-current-to-upstream
+   ",F"   'magit-pull-from-upstream
+   ;; grow/shrink chunks
+   "}"     'magit-diff-more-context
+   "{"     'magit-diff-less-context
+   ;; most common git actions are under the prefix ,,
+   ",c"   'magit-commit
+   ",ac"  'magit-commit-amend
+   ",f"   'magit-fetch-all
+   ",gc"  'magit-git-command
+   ",t"   'magit-tag
+   ",s"   'magit-stash
+   ",S"   'magit-stash-pop
+   ",bc"  'magit-branch-config-popup
+   ",gb"  'magit-branch-popup
+   )
+  (:keymaps 'git-commit-mode-map
+   "<C-return>"     'with-editor-finish
+   "<C-backspace>"  'with-editor-cancel)
   :config
   (evil-collection-init)
   (evil-collection-ibuffer-setup))

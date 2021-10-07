@@ -6,7 +6,9 @@
  '(browse-url-browser-function 'browse-url-chrome)
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
-   '((org-hugo-auto-export-on-save . t)
+   '((eval define-clojure-indent
+           (codepoint-case 'defun))
+     (org-hugo-auto-export-on-save . t)
      (intero-stack-yaml . "/home/blake/w/nerdvana/xmonadsrc/stack.yaml")
      (haskell-process-use-ghci . t)
      (intero-targets "xmonad-blak3mill3r:exe:xmonad"))))

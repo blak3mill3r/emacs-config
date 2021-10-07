@@ -132,7 +132,10 @@
     (prettify-symbols-mode 0)
     (modify-syntax-entry ?_ "w")
     (modify-syntax-entry ?- "w")
-    (modify-syntax-entry ?> "w"))
+    (modify-syntax-entry ?> "w")
+    (modify-syntax-entry ?. "w")
+    (modify-syntax-entry ?/ "w")
+    )
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 
 ;; Weird wtf, without this I get
@@ -178,6 +181,9 @@
   (cider-known-endpoints
    '(("ropes-blake" "7887")
      ("ropes-blake" "7888")))
+  ;; (cider-print-fn "fipp")
+  ;; (cider-print-options '(("length" 100) ("right-margin" 10)))
+
 
   (cider-jdk-src-paths '("/usr/lib/jvm/openjdk-11/lib/src.zip"))
 
@@ -209,11 +215,13 @@
    "s-<return>" 'kill-this-buffer)
   (:states '(normal insert visual)
    :keymaps 'clojure-mode-map
-   "s--"      'clojure-cycle-privacy
+   "s-="      'clojure-cycle-privacy
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
 
    "<s-return>"      'cider-test-run-ns-tests
+
+   "s-;" 'cider-eval-mark-line
 
    "s-l"     'cider-eval-last-sexp
    "s-v"     'vega-view
@@ -240,7 +248,7 @@
    "s-j" 'lispy-eval-and-comment
 
    ;; ace-line -> cider-eval-defun (without moving the cursor)
-   "s-SPC" 'ace-fucking-cider-eval
+   "s-SPC" 'cider-ace-eval
 
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
    "s-i s-i" 'cider-inspect-last-sexp
@@ -290,17 +298,25 @@
   ;;       (letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t))
   ;;              ((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
   ;;         (cider-connect-clj cider-plist)))))
-  ;; (defun fucking-cider-and-its-fucking-sessions ()
-  ;;   (let ((theonlysession (car (hash-table-values sesman-sessions-hashmap))))
-  ;;     (if theonlysession
-  ;;         (sesman-link-with-buffer (current-buffer) theonlysession)
-  ;;       (message "THERE AINT ONE, FUCK"))))
+  (defun fucking-cider-and-its-fucking-sessions ()
+    (let ((theonlysession (car (hash-table-values sesman-sessions-hashmap))))
+      (if theonlysession
+          (sesman-link-with-buffer (current-buffer) theonlysession)
+        (message "THERE AINT ONE, FUCK"))))
 
-  (defun ace-fucking-cider-eval ()
+  (defun cider-eval-mark-line (char)
+    (interactive (list (read-char)))
+    (save-excursion
+      (evil-goto-mark char)
+      ;; (lispy-different)
+      (cider-eval-last-sexp)))
+
+  (defun cider-ace-eval ()
     (interactive)
     (save-excursion
       (avy-goto-line)
       (cider-eval-defun-at-point)))
+
   (defun my-cider-mode-hook ()
     (message "MYCIDER: enable yas")
     (yas-minor-mode 1)
@@ -312,7 +328,7 @@
     (message "MYCIDER: require macroexpansion and browse-ns")
     ;; see https://github.com/clojure-emacs/cider/issues/2464
     ;; (message "HACK TO EMULATE cider-default-connection")
-    ;; (fucking-cider-and-its-fucking-sessions)
+    (fucking-cider-and-its-fucking-sessions)
     ;; (require 'cider-macroexpansion)
     ;; (require 'cider-browse-ns)
 
@@ -475,3 +491,6 @@
   (interactive "^")
   (letf (((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
     (kill-this-buffer)))
+
+(set-variable 'cider-stacktrace-frames-background-color "#161616")
+(set-variable 'cider-test-items-background-color "#333333")

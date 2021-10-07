@@ -13,6 +13,15 @@
 ;; ,,t magit-tag
 ;; ,,l magit-log
 
+;(use-package magit-todos
+;  :demand t
+;  :hook (magit-mode . magit-todos-mode)
+;  :config
+;  (setq magit-todos-recursive t
+;        magit-todos-depth 100)
+;  (setq magit-todos-keywords (list "TODO" "FIXME"))
+;  )
+
 (use-package browse-at-remote
   :demand t
   :commands (browse-at-remote)
@@ -44,55 +53,6 @@
   ;; (add-to-list 'magit-log-arguments "--follow")
   )
 
-(use-package evil-magit
-  :demand t ;; without this I don't get evil-magit bindings in git-status buffer
-  :commands (magit-status magit-log)
-  :general
-  (:prefix ","
-   :keymaps 'normal
-   "gs"     'magit-status
-   "gb"     'magit-blame)
-  (:keymaps 'normal
-   ;; navigate through revision history of a file
-   "z j"   'magit-blob-next
-   "z k"   'magit-blob-previous)
-  (:keymaps 'magit-status-mode-map
-   ;; my new favorite push/pull
-   "s-]"   'magit-push-current-to-upstream
-   "s-["   'magit-pull-from-upstream
-   ;; backwards compatible for myself if I forget, and for others who may share my old config
-   ",ps"  'magit-push-current-to-upstream
-   ",F"   'magit-pull-from-upstream
-   ;; grow/shrink chunks
-   "}"     'magit-diff-more-context
-   "{"     'magit-diff-less-context
-   ;; most common git actions are under the prefix ,,
-   ",c"   'magit-commit
-   ",ac"  'magit-commit-amend
-   ",f"   'magit-fetch-all
-   ",gc"  'magit-git-command
-   ",t"   'magit-tag
-   ",s"   'magit-stash
-   ",S"   'magit-stash-pop
-   ",bc"  'magit-branch-config-popup
-   ",gb"  'magit-branch-popup
-   )
-  (:keymaps 'git-commit-mode-map
-   "<C-return>"     'with-editor-finish
-   "<C-backspace>"  'with-editor-cancel)
-
-  ;; what it do? https://github.com/jwiegley/dot-emacs/blob/master/init.el#L2596
-  ;; :config
-  ;; (eval-after-load 'magit-remote
-  ;;   '(progn
-  ;;      (magit-define-popup-action 'magit-fetch-popup
-  ;;        ?f 'magit-get-remote #'magit-fetch-from-upstream ?u t)
-  ;;      (magit-define-popup-action 'magit-pull-popup
-  ;;        ?F 'magit-get-upstream-branch #'magit-pull-from-upstream ?u t)
-  ;;      (magit-define-popup-action 'magit-push-popup
-  ;;        ?P 'magit--push-current-to-upstream-desc
-  ;;        #'magit-push-current-to-upstream ?u t)))
-  )
 
 ;; https://magit.vc/manual/ghub/Setting-the-Username.html#Setting-the-Username
 ;; (use-package ghub
