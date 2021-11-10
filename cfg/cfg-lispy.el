@@ -68,3 +68,11 @@
   :commands
   'lispyville-mode
   :hook '(lispy-mode . lispyville-mode))
+
+;;; I think I don't like it
+;; lispy's behavior in insert mode without this package is fine with me
+;; (use-package evil-lispy
+;;   :demand t
+;;   :hook '(clojure-mode . evil-lispy-mode)
+;;   :hook '(emacs-lisp-mode . evil-lispy-mode))
+

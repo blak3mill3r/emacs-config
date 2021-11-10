@@ -1,3 +1,9 @@
+(require 'cl-lib)
+
+(use-package flycheck-clj-kondo
+  :demand t
+  )
+
 (use-package clojure-snippets
   :demand t
   :hook '(clojure-mode . yas-minor-mode)
@@ -31,11 +37,6 @@
             "s-n" 'flycheck-next-error
             "s-p" 'flycheck-previous-error
             ))
-
-(use-package flycheck-joker
-  :demand t
-  ;; :defer 5
-  )
 
 ;; (comment
 ;;  ;; (push '("\\geq" . ?≥) prettify-symbols-alist)
@@ -127,6 +128,7 @@
   :init
   (defun my-clojure-mode-hook ()
     (message "my CLOJURE MODE hook")
+    ;; (evil-lispy-mode 1)
     (lispy-mode 1)
     (my/pretty-syms)
     (prettify-symbols-mode 0)
@@ -136,7 +138,9 @@
     (modify-syntax-entry ?. "w")
     (modify-syntax-entry ?/ "w")
     )
-  (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
+  (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+  :config
+  (require 'flycheck-clj-kondo))
 
 ;; Weird wtf, without this I get
 ;; (void-variable clojure-namespace-regexp)
@@ -285,24 +289,19 @@
    "s-k"        'cider-inspector-previous-inspectable-object)
 
   :init
-  ;; working around the insane difficulty of invoking cider-connect programatically after the latest release of cider
-  ;; which introduced all this fanciness about sessions linking to buffers
-  ;; all of which is quite useless to me... and they made it SUPER HARD to do it non-interactively
 
+  ;; bring these back?
+  ;;(add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+  ;;(add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 
-  (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
-  (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
-  ;; (defun cider-connect-damnit (cider-plist)
-  ;;   (with-temp-buffer
-  ;;     (unless (car (hash-table-values sesman-sessions-hashmap))
-  ;;       (letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t))
-  ;;              ((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
-  ;;         (cider-connect-clj cider-plist)))))
-  (defun fucking-cider-and-its-fucking-sessions ()
+  ;; I only have one repl per emacs instance, intentionally
+  ;; I do not want cider asking me about sessions and connecting buffers, I want the simple way that it used to behave
+  ;; see https://github.com/clojure-emacs/cider/issues/2464
+  (defun emulate-old-cider-behavior ()
     (let ((theonlysession (car (hash-table-values sesman-sessions-hashmap))))
       (if theonlysession
           (sesman-link-with-buffer (current-buffer) theonlysession)
-        (message "THERE AINT ONE, FUCK"))))
+        (message "No sesman repl session to link with this buffer"))))
 
   (defun cider-eval-mark-line (char)
     (interactive (list (read-char)))
@@ -318,17 +317,11 @@
       (cider-eval-defun-at-point)))
 
   (defun my-cider-mode-hook ()
-    (message "MYCIDER: enable yas")
     (yas-minor-mode 1)
     (clj-refactor-mode 1)
-    (message "MYCIDER: enable eldoc")
     (eldoc-mode 1)
-    (message "MYCIDER: enable company-mode")
     (company-mode 1)
-    (message "MYCIDER: require macroexpansion and browse-ns")
-    ;; see https://github.com/clojure-emacs/cider/issues/2464
-    ;; (message "HACK TO EMULATE cider-default-connection")
-    (fucking-cider-and-its-fucking-sessions)
+    (emulate-old-cider-behavior)
     ;; (require 'cider-macroexpansion)
     ;; (require 'cider-browse-ns)
 
@@ -336,7 +329,7 @@
     ;; had it working at home
     ;; (company-quickhelp-mode)
 
-    ;; (turn-on-eval-sexp-fu-flash-mode)
+    (turn-on-eval-sexp-fu-flash-mode)
 
     (message "MYCIDER: add cljr submap")
     (cljr-add-keybindings-with-prefix "s-,")
@@ -353,12 +346,11 @@
     ;; FIXME what if the necessary dependencies are *not* in the nREPL server?
     ;; I should make this degrade gracefully...
     ;; (lispy-cider-load-file "~/.emacs.d/straight/build/lispy/lispy-clojure.clj")
-    (message "NOT DOING IT")
+    (message "<*-*-CIDER-*-*>")
     )
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
-    (lispy-mode 1)
-    ;; (too-long-lines-mode 1)
+                                        ;(lispy-mode 1)
     (aggressive-indent-mode 0)
     (rainbow-delimiters-mode 1))
   ;; (add-to-list 'same-window-buffer-names "*cider-repl localhost*")
@@ -481,15 +473,16 @@
 (defun cider-just-connect (h p)
   "shut up about sessions and dead repl buffers, and connect when I tell you to..."
   (interactive "^")  
-  (letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) nil))
+  (cl-letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) nil))
          ((symbol-function 'y-or-n-p) (lambda (&rest args) nil)))
     (cider-connect `( :host ,h  :port ,p ))))
+
 
 ;; understanding elisp macros would be good for DRYing these
 (defun cider-just-kill-repl-buffer ()
   "shut up about repl process still running and kill the repl buffer"
   (interactive "^")
-  (letf (((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
+  (cl-letf (((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
     (kill-this-buffer)))
 
 (set-variable 'cider-stacktrace-frames-background-color "#161616")
