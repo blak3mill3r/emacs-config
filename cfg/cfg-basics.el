@@ -1,6 +1,11 @@
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
 
+;; at some point I started having problems with dangling desktop lock files (using els)
+;; turns out :wq which is usually how I exit suddenly leaves them around (didn't used to)
+(general-define-key
+ "M-q" 'save-buffers-kill-emacs)
+
 ;; make font-lock NOT slow everything down horribly with long lines and large buffers
 (setq font-lock-support-mode 'jit-lock-mode)
 (setq jit-lock-stealth-time 16

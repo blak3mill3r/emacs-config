@@ -77,5 +77,7 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (message "Waiting for async comp")
-;(straight--wait-for-async-jobs)
+;; this feature was _removed_ from straight
+;; I don't understand why
+;; (straight--wait-for-async-jobs)
 (message "straight--wait-for-async-jobs has returned")
