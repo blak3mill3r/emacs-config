@@ -30,6 +30,8 @@
 
 ;; I get desktop restore problems with this enabled, as it is by default
 (setq desktop-restore-forces-onscreen nil)
+(setq desktop-restore-reuses-frames nil)
+(setq desktop-save nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Load cfg/*.el
