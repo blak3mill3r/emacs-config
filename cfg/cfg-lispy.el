@@ -28,6 +28,11 @@
   ;; (lispy-define-key lispy-mode-map "/" 'lispy-splice :inserter 'self-insert-command)
 
   (lispy-define-key lispy-mode-map "=" 'lispy-oneline)
+
+  ;; grrr, stupid default "y" binding from lispy pisses me off
+  ;; I just want it to do what vim does which in emacs is called storing in the kill-ring (but without deleting)
+  ;; (lispy-define-key lispy-mode-map "y" 'kill-region)
+
   (lispy-define-key lispy-mode-map "J" 'lispy-cursor-down)
   (lispy-define-key lispy-mode-map "K" 'lispy-kill)
   (lispy-define-key lispy-mode-map "-" 'lispy-ace-subword)
@@ -57,9 +62,9 @@
    "!" 'special-lispy-beginning-of-defun))
 
 ;; strict indentation
-(use-package aggressive-indent
-  :demand t
-  :hook '(lispy-mode . aggressive-indent-mode))
+;; (use-package aggressive-indent
+;;   :demand t
+;;   :hook '(lispy-mode . aggressive-indent-mode))
 
 ;; don't break parens with vi editing commands
 ;; I usually do not use vi editing commands in a lisp buffer, but they might as well play nicely together

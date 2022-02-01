@@ -115,6 +115,7 @@
           (":D" . ?☺)
           )))
 
+(defvar-local ttt nil "auto cider-format-buffer timer")
 
 (use-package clojure-mode
   :demand t
@@ -137,6 +138,9 @@
     (modify-syntax-entry ?> "w")
     (modify-syntax-entry ?. "w")
     (modify-syntax-entry ?/ "w")
+    ;; (when ttt (cancel-timer ttt))
+    ;; (setq zzz (current-buffer))
+    ;; (setq ttt (run-with-idle-timer 5.0 t (lambda () (with-current-buffer zzz (cider-format-buffer)))))
     )
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
   :config
@@ -223,11 +227,14 @@
    "s-]"      'cider-find-var
    "s-["      'cider-pop-back
 
-   "<s-return>"      'cider-test-run-ns-tests
+   "<S-s-return>"      'cider-test-run-ns-tests
+   "<s-return>"      'cider-test-run-test
 
    "s-;" 'cider-eval-mark-line
 
    "s-l"     'cider-eval-last-sexp
+   "s-k" 'cider-eval-last-sexp-to-kill-ring
+
    "s-v"     'vega-view
    "s-\\"     'cider-eval-defun-at-point
 
@@ -351,7 +358,7 @@
   (defun my-cider-repl-mode-hook ()
     (eldoc-mode 1)
                                         ;(lispy-mode 1)
-    (aggressive-indent-mode 0)
+    ;; (aggressive-indent-mode 0)
     (rainbow-delimiters-mode 1))
   ;; (add-to-list 'same-window-buffer-names "*cider-repl localhost*")
   (add-hook 'cider-mode-hook #'my-cider-mode-hook)
@@ -372,14 +379,14 @@
 
   (defun cider-nrepl-reset ()
     (interactive)
-    (save-excursion
+    (save-mark-and-excursion
       (save-some-buffers)
       ;; (set-buffer "*cider-repl localhost*")
       (set-buffer "dev.clj")
       (cider-eval-buffer)
       (cider-switch-to-repl-buffer)
       (goto-char (point-max))
-      (insert "(in-ns 'user) (reset)")
+      (insert "(in-ns 'dev) (reset)")
       ;; (insert "(in-ns 'dev) (reset)")
       (cider-repl-return) ))
   (defun cider-nrepl-refresh-all ()

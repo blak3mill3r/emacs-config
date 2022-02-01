@@ -125,10 +125,11 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 ;; XWindow urgency integrates with many other tools, including xmonad-electric
 ;; I've yet to make any use of this but it's a good idea
 ;; demo
-;; ( (lambda
-;;     ()
-;;     (sleep-for 2)
-;;     (x-urgent)) )
+;; ((lambda
+;;    ()
+;;    (sleep-for 2)
+;;    (x-urgent)))
+
 (defun x-urgent (&optional arg)
   (interactive "P")
   (let (frame (selected-frame))
