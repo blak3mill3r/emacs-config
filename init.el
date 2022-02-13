@@ -28,10 +28,15 @@
 
 (setq straight--wait-for-async-jobs t)
 
-;; I get desktop restore problems with this enabled, as it is by default
+;; I need to fool around with these more
+;; consider multiple frames on different subspaces from the same instance of emacs
+;; this is also useful even though my default is to have a single frame, single instance
+;; sometimes I make a new frame and move it to nextdoor subspace
+;; if I save desktop like that, it isn't going to restore there (what will it do?)
 (setq desktop-restore-forces-onscreen nil)
 (setq desktop-restore-reuses-frames nil)
-(setq desktop-save nil)
+(setq desktop-restore-frames nil)
+(setq desktop-save nil) ;; I prefer manually saving the desktops in some nice state
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Load cfg/*.el
