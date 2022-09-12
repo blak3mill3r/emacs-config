@@ -1,6 +1,9 @@
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
 
+;; these are annoying
+(setq x-gtk-use-system-tooltips nil)
+
 ;; at some point I started having problems with dangling desktop lock files (using els)
 ;; turns out :wq which is usually how I exit suddenly leaves them around (didn't used to)
 (general-define-key
