@@ -3,6 +3,7 @@
 
 ;; these are annoying
 (setq x-gtk-use-system-tooltips nil)
+(setq use-dialog-box nil)
 
 ;; at some point I started having problems with dangling desktop lock files (using els)
 ;; turns out :wq which is usually how I exit suddenly leaves them around (didn't used to)
@@ -161,8 +162,9 @@ If you unset the urgency, you still have to visit the frame to make the urgency 
 ;; https://github.com/bbatsov/emacs.d/blob/master/init.el
 ;; reduce the frequency of garbage collection by making it happen on
 ;; each 50MB of allocated data (the default is on every 0.76MB)
-(setq gc-cons-threshold 800000)
-;; (setq gc-cons-threshold 50000000)
+;; (setq gc-cons-threshold 800000)
+(setq read-process-output-max (* 1024 1024))
+(setq gc-cons-threshold 50000000)
 
 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ;; the following complains about finder-inf.elc being empty... wtf

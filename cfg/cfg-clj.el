@@ -422,19 +422,6 @@
 ;; one that does not fuck with the classpath loader?
 ;; I suspect it is responsible for fishy bugs with loading namespaces failing...
 
-;; (use-package lsp-mode
-;;   :commands lsp
-;;   :config
-;;   (add-to-list 'lsp-language-id-configuration '(clojure-mode . "clojure-mode"))
-;;   :init
-;;   (setq lsp-enable-indentation nil)
-;;   (add-hook 'clojure-mode-hook #'lsp)
-;;   (add-hook 'clojurec-mode-hook #'lsp)
-;;   (add-hook 'clojurescript-mode-hook #'lsp))
-
-;; (use-package lsp-ui
-;;   :commands lsp-ui-mode)
-
 ;; (use-package company-lsp
 ;;   :commands company-lsp)
 
@@ -494,3 +481,37 @@
 
 (set-variable 'cider-stacktrace-frames-background-color "#161616")
 (set-variable 'cider-test-items-background-color "#333333")
+
+(use-package lsp-mode
+  :demand t
+  :hook ((clojure-mode . lsp)
+         (clojurec-mode . lsp)
+         (clojurescript-mode . lsp))
+  :config
+  (dolist (m '(clojure-mode
+               clojurec-mode
+               clojurescript-mode
+               clojurex-mode))
+    (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
+  :general 
+  (:states '(insert)
+   :keymaps 'clojure-mode-map
+   :prefix ","
+   "]"  'lsp-clojure-cycle-coll
+   "-"  'lsp-clojure-cycle-privacy
+   "tf" 'lsp-clojure-thread-first
+   "tF" 'lsp-clojure-thread-first-all
+   "tl" 'lsp-clojure-thread-last
+   "tL" 'lsp-clojure-thread-last-all
+   "ef" 'lsp-clojure-extract-function
+   "el" 'lsp-clojure-expand-let
+   "il" 'lsp-clojure-introduce-let
+   "ml" 'lsp-clojure-move-to-let
+   "r" 'lsp-rename
+   )
+  )
+
+(use-package lsp-ui
+  :demand t
+  :commands lsp-ui-mode)
+
