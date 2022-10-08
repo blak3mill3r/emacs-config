@@ -39,5 +39,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((((class color) (min-colors 89)) (:foreground "#839496" :background "#002b36"
-                                              :weight normal :height 180
+                                              :weight normal :height 220
                                               :family "Inconsolata")))))
