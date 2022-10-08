@@ -66,5 +66,3 @@
   :after magit
   :config
   (magit-todos-mode))
-
-;; TODO(Blake): test todos
