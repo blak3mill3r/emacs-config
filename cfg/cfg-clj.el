@@ -1,5 +1,18 @@
 (require 'cl-lib)
 
+;; find-definition from
+;; https://github.com/borkdude/prelude/blob/18fb017b90c3acc8e62ea25edb3a9e5b404e7066/personal/init.el#L398-L411
+(defun clj-find-definition ()
+  "Try to find definition of cursor via LSP otherwise fallback to cider."
+  (interactive)
+  (let ((cursor (point))
+        (buffer (current-buffer)))
+    (lsp-find-definition)
+    (when (and (eq buffer (current-buffer))
+               (eq cursor (point)))
+      (cider-find-var))))
+
+
 (use-package flycheck-clj-kondo
   :demand t
   )
@@ -224,7 +237,8 @@
   (:states '(normal insert visual)
    :keymaps 'clojure-mode-map
    "s-="      'clojure-cycle-privacy
-   "s-]"      'cider-find-var
+   ;; "s-]"      'cider-find-var
+   "s-]"      'clj-find-definition
    "s-["      'cider-pop-back
 
    "<S-s-return>"      'cider-test-run-ns-tests
