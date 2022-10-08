@@ -31,10 +31,13 @@
      (org-hugo-auto-export-on-save . t)
      (intero-stack-yaml . "/home/blake/w/nerdvana/xmonadsrc/stack.yaml")
      (haskell-process-use-ghci . t)
-     (intero-targets "xmonad-blak3mill3r:exe:xmonad"))))
+     (intero-targets "xmonad-blak3mill3r:exe:xmonad")))
+ '(warning-suppress-types '((comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#002b36" :foreground "#839496" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 180 :width normal :foundry "PfEd" :family "Inconsolata")))))
+ '(default ((((class color) (min-colors 89)) (:foreground "#839496" :background "#002b36"
+                                              :weight normal :height 160
+                                              :family "iosevka")))))
