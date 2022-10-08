@@ -63,6 +63,8 @@
 
 (use-package magit-todos
   :demand t
-  :after magit)
+  :after magit
+  :config
+  (magit-todos-mode))
 
 ;; TODO(Blake): test todos
