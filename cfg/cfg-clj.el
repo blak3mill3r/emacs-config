@@ -146,6 +146,7 @@
     (lispy-mode 1)
     (my/pretty-syms)
     (prettify-symbols-mode 0)
+    (tooltip-mode 0)
     (modify-syntax-entry ?_ "w")
     (modify-syntax-entry ?- "w")
     (modify-syntax-entry ?> "w")
