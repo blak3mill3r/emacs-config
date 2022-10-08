@@ -59,3 +59,10 @@
 
 (setq auth-sources '("~/.authinfo.gpg"))
 (setq github.user "blak3mill3r")
+
+
+(use-package magit-todos
+  :demand t
+  :after magit)
+
+;; TODO(Blake): test todos
