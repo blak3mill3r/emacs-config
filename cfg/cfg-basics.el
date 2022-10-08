@@ -1,6 +1,8 @@
 ;; make it more pretty, and remove all the fluff
 (load-theme 'solarized-dark t)
 
+(magit-todos-mode 1)
+
 ;; these are annoying
 (setq x-gtk-use-system-tooltips nil)
 (setq use-dialog-box nil)
