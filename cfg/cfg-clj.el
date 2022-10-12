@@ -1,5 +1,9 @@
 (require 'cl-lib)
 
+;; NOTE: something I'd like to add
+;; a key binding in clojure mode
+;; when on a symbol, eval that symbol and then clojure.reflect/reflect it
+
 ;; find-definition from
 ;; https://github.com/borkdude/prelude/blob/18fb017b90c3acc8e62ea25edb3a9e5b404e7066/personal/init.el#L398-L411
 (defun clj-find-definition ()
