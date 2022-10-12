@@ -143,6 +143,7 @@
   (defun my-clojure-mode-hook ()
     (message "my CLOJURE MODE hook")
     ;; (evil-lispy-mode 1)
+    (lsp-headerline-breadcrumb-mode 0)
     (lispy-mode 1)
     (my/pretty-syms)
     (prettify-symbols-mode 0)
