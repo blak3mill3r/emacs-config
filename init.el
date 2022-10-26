@@ -84,5 +84,5 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (message "Waiting for async comp")
-(straight--wait-for-async-jobs)
-(message "straight--wait-for-async-jobs has returned")
+(block-on-native-comp)
+(message "(block-on-native-comp) has returned")
