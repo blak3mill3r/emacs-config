@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-set -eou pipefail
-
-CLONER_HOST=localhost
-CLONER_PORT=9911
-
-echo "{:command :rebake}\n" | nc $CLONER_HOST $CLONER_PORT

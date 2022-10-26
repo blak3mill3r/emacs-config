@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-emacsclient -s $1 -e '(kill-emacs)'
