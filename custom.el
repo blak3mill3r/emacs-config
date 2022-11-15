@@ -26,7 +26,10 @@
  '(evil-undo-system 'undo-tree nil nil "Customized with use-package evil")
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
-   '((eval define-clojure-indent
+   '((eval progn
+           (make-variable-buffer-local 'cider-jack-in-nrepl-middlewares)
+           (add-to-list 'cider-jack-in-nrepl-middlewares "shadow.cljs.devtools.server.nrepl/middleware"))
+     (eval define-clojure-indent
            (codepoint-case 'defun))
      (org-hugo-auto-export-on-save . t)
      (intero-stack-yaml . "/home/blake/w/nerdvana/xmonadsrc/stack.yaml")
