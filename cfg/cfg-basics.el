@@ -7,6 +7,7 @@
 
 ;; at some point I started having problems with dangling desktop lock files (using els)
 ;; turns out :wq which is usually how I exit suddenly leaves them around (didn't used to)
+(define-key prog-mode-map "M-q" nil)
 (general-define-key
  "M-q" 'save-buffers-kill-emacs)
 
