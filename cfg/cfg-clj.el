@@ -252,8 +252,8 @@
 
    "s-;" 'cider-eval-mark-line
 
-   "s-l"     'cider-eval-last-sexp
-   "s-k" 'cider-eval-last-sexp-to-kill-ring
+   "s-6"     'cider-eval-last-sexp
+   "s-5" 'cider-eval-last-sexp-to-kill-ring
 
    "s-v"     'vega-view
    "s-\\"     'cider-eval-defun-at-point
@@ -261,29 +261,29 @@
    "s-b"      'cider-eval-buffer
    "s-r"      'cider-eval-region
    "s-!"      'cider-eval-ns-form
-   "s-m"      'cider-macroexpand-1-inplace
-   "s-S-m"    'cider-macroexpand-1
+   "s-1"      'cider-macroexpand-1-inplace
+   "s-S-1"    'cider-macroexpand-1
    ;; "s-\\"     'lispy-eval
-   "s-o"      'cider-pprint-eval-last-sexp
+   "s-9"      'cider-pprint-eval-last-sexp
    "s-e"      'cider-enlighten-mode
    ;; "s-p s-\\" 'cider-pprint-eval-defun-at-point
    ;; "s-p s-s"  'cider-eval-print-last-sexp
    "s-d"      'cider-debug-defun-at-point
    "s-i s-r"  'cider-inspect-last-result
    "s-t"    'cider-nrepl-reset
-   "s-u"    'cider-nrepl-refresh-all
+   "s-7"    'cider-nrepl-refresh-all
    "C-n" 'lispy-outline-next
    "C-p" 'lispy-outline-prev
 
    ;; muscle memory expects lispy-eval-and-comment, see cfg-lispy.el, but couldn't get that to work with bleeding-edge cider etc
-   "s-j" 'lispy-eval-and-comment
+   "s-4" 'lispy-eval-and-comment
 
    ;; ace-line -> cider-eval-defun (without moving the cursor)
    ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
    "s-0" 'cider-ace-eval
 
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
-   "s-i s-i" 'cider-inspect-last-sexp
+   "s-8 s-8" 'cider-inspect-last-sexp
    )
 
   (:keymaps 'cider-repl-mode-map
@@ -315,8 +315,8 @@
    ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
    "s-0"      'cider-inspector-operate-on-point
    "<s-return>" 'cider-inspector-operate-on-point
-   "s-j"        'cider-inspector-next-inspectable-object
-   "s-k"        'cider-inspector-previous-inspectable-object)
+   "s-4"        'cider-inspector-next-inspectable-object
+   "s-5"        'cider-inspector-previous-inspectable-object)
 
   :init
 
@@ -362,7 +362,7 @@
     (turn-on-eval-sexp-fu-flash-mode)
 
     (message "MYCIDER: add cljr submap")
-    (cljr-add-keybindings-with-prefix "s-,")
+    (cljr-add-keybindings-with-prefix "s-2")
 
     ;; lispy seems to *assume* I am using cider-jack-in, which I am not... FIXME CONFIRM THIS
 

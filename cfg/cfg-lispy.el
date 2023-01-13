@@ -52,13 +52,13 @@
    "C-SPC" 'lispy-cursor-ace
    )
   (:keymaps 'lispy-mode-map
-   "s-u" 'lispy-undo
-   "s-." 'lispy-arglist-inline
+   "s-7" 'lispy-undo
+   "s-3" 'lispy-arglist-inline
    "s-/" 'lispy-describe-inline
-   "s-j" 'lispy-eval-and-comment
-   "s-J" 'lispy-eval-and-insert
+   "s-4" 'lispy-eval-and-comment
+   "s-<down>" 'lispy-eval-and-insert
    ;; "s-\\" 'lispy-eval
-   ;; "s-o" 'lispy-eval
+   "s-9" 'lispy-eval
    "!" 'special-lispy-beginning-of-defun))
 
 ;; strict indentation
