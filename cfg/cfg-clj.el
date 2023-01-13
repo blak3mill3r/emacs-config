@@ -205,9 +205,9 @@
      ("walk" . "clojure.walk")
      ("zip"  . "clojure.zip")
      ("mc"   . "monger.collection")))
-  (cider-known-endpoints
-   '(("ropes-blake" "7887")
-     ("ropes-blake" "7888")))
+  ;; (cider-known-endpoints
+  ;;  '(("ropes-blake" "7887")
+  ;;    ("ropes-blake" "7888")))
   ;; (cider-print-fn "fipp")
   ;; (cider-print-options '(("length" 100) ("right-margin" 10)))
 
@@ -279,14 +279,16 @@
    "s-j" 'lispy-eval-and-comment
 
    ;; ace-line -> cider-eval-defun (without moving the cursor)
-   "s-SPC" 'cider-ace-eval
+   ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
+   "s-0" 'cider-ace-eval
 
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
    "s-i s-i" 'cider-inspect-last-sexp
    )
 
   (:keymaps 'cider-repl-mode-map
-   "s-SPC" 'cider-repl-clear-buffer)
+   ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
+   "s-0" 'cider-repl-clear-buffer)
   (:keymaps 'cider-repl-mode-map
    :states '(normal visual)
    :prefix ","
@@ -310,7 +312,8 @@
    "s-["        'cider-inspector-pop
    "s-n"        'cider-inspector-next-page
    "s-p"        'cider-inspector-prev-page
-   "s-SPC"      'cider-inspector-operate-on-point
+   ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
+   "s-0"      'cider-inspector-operate-on-point
    "<s-return>" 'cider-inspector-operate-on-point
    "s-j"        'cider-inspector-next-inspectable-object
    "s-k"        'cider-inspector-previous-inspectable-object)
