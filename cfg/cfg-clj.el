@@ -282,8 +282,9 @@
    ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
    "s-0" 'cider-ace-eval
 
+   ;; FIXME: maybe I want this, inspect last sexp (rather than 2 actions: eval and then inspect last)
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
-   "s-8 s-8" 'cider-inspect-last-sexp
+   ;; "s-8 s-8" 'cider-inspect-last-sexp
    )
 
   (:keymaps 'cider-repl-mode-map
