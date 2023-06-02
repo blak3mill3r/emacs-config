@@ -538,3 +538,5 @@
   :demand t
   :commands lsp-ui-mode)
 
+
+(define-key clojure-mode-map (kbd "M-q") nil)
