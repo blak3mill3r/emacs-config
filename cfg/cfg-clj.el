@@ -269,7 +269,7 @@
    ;; "s-p s-\\" 'cider-pprint-eval-defun-at-point
    ;; "s-p s-s"  'cider-eval-print-last-sexp
    "s-d"      'cider-debug-defun-at-point
-   "s-i s-r"  'cider-inspect-last-result
+   "s-8 s-r"  'cider-inspect-last-result
    "s-t"    'cider-nrepl-reset
    "s-7"    'cider-nrepl-refresh-all
    "C-n" 'lispy-outline-next
