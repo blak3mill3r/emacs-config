@@ -53,12 +53,12 @@
   ;; (add-to-list 'magit-log-arguments "--follow")
   )
 
-(use-package forge
-  :demand t
-  :after magit)
+;; (use-package forge
+;;   :demand t
+;;   :after magit)
 
-(setq auth-sources '("~/.authinfo.gpg"))
-(setq github.user "blak3mill3r")
+;; (setq auth-sources '("~/.authinfo.gpg"))
+;; (setq github.user "blak3mill3r")
 
 
 (use-package magit-todos
