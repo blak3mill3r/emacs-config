@@ -220,7 +220,8 @@
   (nrepl-hide-special-buffers t)
   (cider-save-file-on-load t) ;; always save without prompt
   (cider-repl-popup-stacktraces t)
-  (cider-auto-select-error-buffer t)
+  (cider-auto-select-error-buffer nil)
+  (cider-show-error-buffer nil)
   (cider-repl-use-pretty-printing t)
   ;; (cider-prompt-for-project-on-connect t)
   (cider-prompt-for-symbol nil) ;; makes s-] nicer
@@ -242,6 +243,7 @@
    "s-<return>" 'kill-this-buffer)
   (:states '(normal insert visual)
    :keymaps 'clojure-mode-map
+   "s-<backspace>" 'cider-interrupt
    "s-="      'clojure-cycle-privacy
    ;; "s-]"      'cider-find-var
    "s-]"      'clj-find-definition
@@ -250,10 +252,11 @@
    "<S-s-return>"      'cider-test-run-ns-tests
    "<s-return>"      'cider-test-run-test
 
+   "s-5" 'cider-selector
+
    "s-;" 'cider-eval-mark-line
 
    "s-6"     'cider-eval-last-sexp
-   "s-5" 'cider-eval-last-sexp-to-kill-ring
 
    "s-v"     'vega-view
    "s-\\"     'cider-eval-defun-at-point
@@ -489,20 +492,20 @@
 
    ))
 
+(defmacro without-confirmation (&rest body)
+  `(cl-letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) nil))
+             ((symbol-function 'y-or-n-p) (lambda (&rest args) nil)))
+     ,@body))
+
 (defun cider-just-connect (h p)
-  "shut up about sessions and dead repl buffers, and connect when I tell you to..."
+  "programmatic cider-connect without user input"
   (interactive "^")  
-  (cl-letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) nil))
-         ((symbol-function 'y-or-n-p) (lambda (&rest args) nil)))
-    (cider-connect `( :host ,h  :port ,p ))))
+  (without-confirmation (cider-connect `( :host ,h  :port ,p ))))
 
-
-;; understanding elisp macros would be good for DRYing these
 (defun cider-just-kill-repl-buffer ()
-  "shut up about repl process still running and kill the repl buffer"
+  "kill repl buffer without asking"
   (interactive "^")
-  (cl-letf (((symbol-function 'y-or-n-p) (lambda (&rest args) t)))
-    (kill-this-buffer)))
+  (without-confirmation (kill-this-buffer)))
 
 (set-variable 'cider-stacktrace-frames-background-color "#161616")
 (set-variable 'cider-test-items-background-color "#333333")
