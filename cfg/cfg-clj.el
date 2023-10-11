@@ -1,5 +1,15 @@
 (require 'cl-lib)
 
+;; NOTE: lsp now uses "s-l" as a keymap prefix
+;; lsp-keymap-prefix
+;; this conflicted with my own "s-l" cider-eval-last-sexp
+;; which is actually defined as "s-6" because, with some version of the emacs binary at some point,
+;; it was using my xkb config in a different way and my nearby numpad with s-l is s-6
+;; now with the emacs deb package in debian 12 it's back to "normal"
+;; but do I want to keep s-l as cider-eval-last-sexp ?
+;; and change the lsp-keymap-prefix ?
+;; or do away with my muscle memory for evalling?
+
 ;; NOTE: something I'd like to add
 ;; a key binding in clojure mode
 ;; when on a symbol, eval that symbol and then clojure.reflect/reflect it
@@ -252,11 +262,11 @@
    "<S-s-return>"      'cider-test-run-ns-tests
    "<s-return>"      'cider-test-run-test
 
-   "s-5" 'cider-selector
+   "s-k" 'cider-selector
 
    "s-;" 'cider-eval-mark-line
 
-   "s-6"     'cider-eval-last-sexp
+   "s-l"     'cider-eval-last-sexp
 
    "s-v"     'vega-view
    "s-\\"     'cider-eval-defun-at-point
@@ -267,14 +277,14 @@
    "s-1"      'cider-macroexpand-1-inplace
    "s-S-1"    'cider-macroexpand-1
    ;; "s-\\"     'lispy-eval
-   "s-9"      'cider-pprint-eval-last-sexp
+   "s-o"      'cider-pprint-eval-last-sexp
    "s-e"      'cider-enlighten-mode
    ;; "s-p s-\\" 'cider-pprint-eval-defun-at-point
    ;; "s-p s-s"  'cider-eval-print-last-sexp
    "s-d"      'cider-debug-defun-at-point
-   "s-8 s-r"  'cider-inspect-last-result
+   "s-i s-r"  'cider-inspect-last-result
    "s-t"    'cider-nrepl-reset
-   "s-7"    'cider-nrepl-refresh-all
+   "s-u"    'cider-nrepl-refresh-all
    "C-n" 'lispy-outline-next
    "C-p" 'lispy-outline-prev
 
@@ -283,16 +293,16 @@
 
    ;; ace-line -> cider-eval-defun (without moving the cursor)
    ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
-   "s-0" 'cider-ace-eval
+   "s-SPC" 'cider-ace-eval
 
    ;; FIXME: maybe I want this, inspect last sexp (rather than 2 actions: eval and then inspect last)
    ;; maybe something closer to s-\\ ? it evals it and then cider-inspects it
-   ;; "s-8 s-8" 'cider-inspect-last-sexp
+   "s-i s-e" 'cider-inspect-last-sexp
    )
 
   (:keymaps 'cider-repl-mode-map
    ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
-   "s-0" 'cider-repl-clear-buffer)
+   "s-SPC" 'cider-repl-clear-buffer)
   (:keymaps 'cider-repl-mode-map
    :states '(normal visual)
    :prefix ","
@@ -317,10 +327,10 @@
    "s-n"        'cider-inspector-next-page
    "s-p"        'cider-inspector-prev-page
    ;; NOTE: this is really s-SPC but... when I pulled emacs master Jan 2023, it now respects my X keymap, which I modify to have a numpad on uiojklm,.SPC using the super key
-   "s-0"      'cider-inspector-operate-on-point
+   "s-SPC"      'cider-inspector-operate-on-point
    "<s-return>" 'cider-inspector-operate-on-point
-   "s-4"        'cider-inspector-next-inspectable-object
-   "s-5"        'cider-inspector-previous-inspectable-object)
+   "s-j"        'cider-inspector-next-inspectable-object
+   "s-k"        'cider-inspector-previous-inspectable-object)
 
   :init
 
