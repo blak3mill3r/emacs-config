@@ -5,24 +5,33 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq straight-use-package-by-default t)
 (setq straight-emacsmirror-use-mirror t)
-(setq debug-on-error t)
+(setq debug-on-error t
+      )
+
+
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
+      (bootstrap-version 6))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+
+
+
+
+
 (setq server-socket-dir "/run/user/1000/emacs") ;; FIXME hard-coded user id
 
-(add-to-list 'load-path "~/.emacs.d/straight/repos/use-package")
-(require 'use-package)
+;(add-to-list 'load-path "~/.emacs.d/straight/repos/use-package")
+;(require 'use-package)
 
 (straight-use-package 'use-package)
 
