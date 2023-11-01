@@ -1,12 +1,5 @@
 (use-package lispy
   :demand t
-  :straight
-  (lispy :type git
-         :files (:defaults "lispy-clojure.clj")
-         :host github
-         :repo "blak3mill3r/lispy"
-         :branch "classpath-control"
-         :upstream (:host github :repo "abo-abo/lispy"))
 
   :custom
   (lispy-cider-connect-method 'cider-connect)
