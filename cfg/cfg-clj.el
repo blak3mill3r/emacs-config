@@ -43,15 +43,15 @@
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-(use-package parseedn
-  :demand t
-  :straight
-  (parseedn :type git
-            :host github
-            :repo "clojure-emacs/parseedn"
-            :branch "master"))
+;; (use-package parseedn
+;;   :demand t
+;;   :straight
+;;   (parseedn :type git
+;;             :host github
+;;             :repo "clojure-emacs/parseedn"
+;;             :branch "master"))
 
-(use-package vega-view :demand t)
+;; (use-package vega-view :demand t)
 
 (use-package flycheck
   :demand t
