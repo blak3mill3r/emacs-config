@@ -16,6 +16,9 @@
   'lispy-mode
 
   :config
+
+  ;; lispy introduced a binding which shadows M-q and that annoys me
+  (define-key lispy-mode-map (kbd "M-q") nil)
   ;; without this, lispy's special wrapping of "/" for lispy-splice, overrides cljr-slash so that / just self-inserts
   (lispy-define-key lispy-mode-map "/" 'lispy-splice :inserter 'cljr-slash)
   ;; (lispy-define-key lispy-mode-map "/" 'lispy-splice :inserter 'self-insert-command)
