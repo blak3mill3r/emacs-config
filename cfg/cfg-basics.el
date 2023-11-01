@@ -72,16 +72,16 @@
 
 ;; Emacs backups and auto-save files
 ;; keep backup files forever, in a separate directory, and version them
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq version-control t)
+(setq backup-directory-alist '(("." . "~/.emacs-bullshit/backups")))
+(setq version-control nil)
 (setq delete-old-versions -1)
-(setq vc-make-backup-files t)
+(setq vc-make-backup-files nil)
 ;; keep auto-save files somewhere sensible
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+(setq auto-save-file-name-transforms '((".*" "~/.emacs-bullshit/auto-save-list/" t)))
 
 ;; emacs history customization: put it somewhere sensible, never truncate, don't store dupes, remember kill-ring and search-ring
-(setq savehist-file "~/.emacs.d/savehist")
-(savehist-mode 1)
+(setq savehist-file "~/.emacs-bullshit/savehist")
+(savehist-mode 0)
 (setq history-length 2048)
 (setq history-delete-duplicates t)
 (setq savehist-save-minibuffer-history 1)
